@@ -1,0 +1,719 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Mónica De Salazar | Links</title>
+    <meta name="description"
+        content="Estrategia, IA y creatividad aplicada. Enlaces, artículos y herramientas de Mónica De Salazar.">
+    <meta property="og:title" content="Mónica De Salazar | Links">
+    <meta property="og:description" content="Estrategia, IA y creatividad aplicada. Encuentra todos mis enlaces aquí.">
+    <meta property="og:type" content="website">
+
+    <!-- Google Tag Manager -->
+    <!-- Replace GTM-XXXXXX with your actual container ID -->
+    <!--
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-XXXXXX');</script>
+    -->
+
+    <!-- OR Google Analytics 4 -->
+    <!-- Replace G-XXXXXXX with your actual Measurement ID -->
+    <!--
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXX"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-XXXXXXX');
+    </script>
+    -->
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Wix+Madefor+Display:wght@400;500;600;700;800&family=Wix+Madefor+Text:ital,wght@0,400;0,500;1,400&family=Dancing+Script:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
+
+    <style>
+        /* === LifeStrategics V2 2026 Design System === */
+
+        .font-heading {
+            font-family: 'Wix Madefor Display', sans-serif;
+            text-transform: uppercase;
+            font-weight: 700;
+        }
+
+        body {
+            font-family: 'Wix Madefor Display', sans-serif;
+            background-color: #242426;
+            color: #ffffff;
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+
+        /* Force mobile-centered layout even on desktop */
+        .mobile-shell {
+            width: 100%;
+            max-width: 480px;
+            margin: 0 auto;
+            min-height: 100vh;
+            min-height: 100dvh;
+            position: relative;
+        }
+
+        /* Particle Canvas */
+        #particle-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            pointer-events: none;
+            z-index: 0;
+            opacity: 0.7;
+        }
+
+        /* Handwritten Name */
+        .name-script {
+            font-family: 'Dancing Script', cursive;
+            color: #C5A149;
+            font-weight: 700;
+            line-height: 1.1;
+        }
+
+        /* Accent Colors */
+        .color-understand {
+            color: #58AFCD;
+        }
+
+        .color-decide {
+            color: #C5A149;
+        }
+
+        .color-action {
+            color: #D15152;
+        }
+
+        /* Animations */
+        @keyframes heroFadeUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideUpFade {
+            0% {
+                transform: translateY(100%);
+                opacity: 0;
+            }
+
+            100% {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        /* Glassmorphism Link Cards */
+        .link-card {
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.10);
+            border-radius: 20px;
+            padding: 18px 22px;
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            text-decoration: none;
+            color: #ffffff;
+            cursor: pointer;
+        }
+
+        .link-card:hover,
+        .link-card:active {
+            border-color: rgba(255, 255, 255, 0.22);
+            background: rgba(255, 255, 255, 0.07);
+            transform: translateY(-4px);
+            box-shadow: 0 12px 32px rgba(0, 0, 0, 0.35);
+        }
+
+        .link-card .link-icon {
+            width: 38px;
+            height: 38px;
+            border-radius: 11px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            transition: all 0.3s ease;
+        }
+
+        .link-card:hover .link-icon {
+            transform: scale(1.08);
+        }
+
+        .link-card .link-badge {
+            margin-left: auto;
+            flex-shrink: 0;
+        }
+
+        .link-card .link-arrow {
+            opacity: 0;
+            transform: translateX(-6px);
+            transition: all 0.3s ease;
+            margin-left: auto;
+            flex-shrink: 0;
+        }
+
+        .link-card:hover .link-arrow {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        /* Expandable / Accordion Card */
+        .expandable-card {
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.10);
+            border-radius: 20px;
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .expandable-card.open {
+            border-color: rgba(255, 255, 255, 0.18);
+            background: rgba(255, 255, 255, 0.06);
+        }
+
+        .expandable-trigger {
+            padding: 18px 22px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .expandable-trigger:hover {
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        .expandable-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .expandable-card.open .expandable-content {
+            max-height: 1400px;
+        }
+
+        .expandable-chevron {
+            transition: transform 0.3s ease;
+            flex-shrink: 0;
+        }
+
+        .expandable-card.open .expandable-chevron {
+            transform: rotate(180deg);
+        }
+
+        /* Glowing Wrapper CTA */
+        .glowing-wrapper {
+            position: relative;
+            border-radius: 2rem;
+            background-color: transparent;
+            isolation: isolate;
+            overflow: hidden;
+            box-shadow: inset 0 0 16px rgba(0, 0, 0, 0.7), 0 16px 40px rgba(0, 0, 0, 0.35);
+        }
+
+        .glowing-wrapper::before {
+            content: "";
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: conic-gradient(from 0deg, transparent 10%, #C5A149 15%, #C5A149 28%, transparent 35%, transparent 45%, #58AFCD 50%, #58AFCD 63%, transparent 70%, transparent 80%, #D15152 85%, #D15152 100%);
+            animation: border-spin 6s linear infinite;
+            z-index: -2;
+            opacity: 0.85;
+        }
+
+        .glowing-wrapper::after {
+            content: "";
+            position: absolute;
+            inset: 2px;
+            background: rgba(30, 30, 32, 0.95);
+            backdrop-filter: blur(20px);
+            border-radius: calc(2rem - 2px);
+            z-index: -1;
+        }
+
+        @keyframes border-spin {
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* Glowing Button (pill) */
+        .glowing-btn-wrapper {
+            position: relative;
+            display: inline-flex;
+            border-radius: 9999px;
+            padding: 2px;
+            overflow: hidden;
+            cursor: pointer;
+            isolation: isolate;
+            transition: transform 0.3s ease;
+            text-decoration: none;
+        }
+
+        .glowing-btn-wrapper:hover {
+            transform: scale(1.02);
+        }
+
+        .glowing-btn-wrapper::before {
+            content: "";
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: conic-gradient(from 0deg,
+                    transparent 10%, #C5A149 20%,
+                    transparent 40%, #58AFCD 50%,
+                    transparent 70%, #D15152 80%,
+                    transparent 90%);
+            animation: border-spin 4s linear infinite;
+            z-index: -2;
+            opacity: 0.8;
+            transition: opacity 0.3s ease;
+        }
+
+        .glowing-btn-wrapper:hover::before {
+            opacity: 1;
+        }
+
+        .glowing-btn-inner {
+            position: relative;
+            background: #1A1A1C;
+            border-radius: 9999px;
+            z-index: 1;
+            transition: background 0.3s ease;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .glowing-btn-wrapper:hover .glowing-btn-inner {
+            background: #2a2a2e;
+        }
+
+        /* Typewriter */
+        .typewriter-cursor {
+            display: inline-block;
+            width: 3px;
+            height: 1em;
+            background-color: white;
+            animation: blink 0.8s step-end infinite;
+            vertical-align: bottom;
+            margin-left: 3px;
+        }
+
+        @keyframes blink {
+
+            0%,
+            100% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 0;
+            }
+        }
+
+        /* Bio narrative styling */
+        .bio-text {
+            font-size: 0.88rem;
+            line-height: 1.7;
+            color: #9CA3AF;
+            font-weight: 300;
+        }
+
+        .bio-text strong {
+            color: #e5e7eb;
+            font-weight: 500;
+        }
+
+        .bio-tag {
+            display: inline-block;
+            font-size: 0.65rem;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            padding: 3px 8px;
+            border-radius: 6px;
+            font-weight: 700;
+            font-family: 'Wix Madefor Display', sans-serif;
+        }
+
+        /* Dot separator */
+        .dot-separator {
+            display: flex;
+            justify-content: center;
+            gap: 6px;
+            padding: 12px 0;
+        }
+
+        .dot-separator span {
+            width: 3px;
+            height: 3px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.12);
+        }
+    </style>
+</head>
+
+<body class="antialiased flex flex-col items-center">
+
+    <!-- Google Tag Manager (noscript) -->
+    <!--
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-XXXXXX"
+    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    -->
+
+    <!-- Particle Canvas -->
+    <canvas id="particle-canvas"></canvas>
+
+    <!-- Mobile Shell (locked width) -->
+    <main class="mobile-shell px-6 py-10 relative z-10 flex flex-col items-center">
+
+        <!-- Handwritten Name Header -->
+        <div
+            class="flex flex-col items-center mt-8 mb-10 opacity-0 animate-[heroFadeUp_1.2s_cubic-bezier(0.16,1,0.3,1)_forwards]">
+            <img src="firma_MDS.png" alt="Mónica De Salazar" class="w-[280px] sm:w-[320px] h-auto object-contain">
+        </div>
+
+        <!-- Link Cards -->
+        <div class="w-full flex flex-col gap-3 mb-4">
+
+            <!-- 1. Sitio Web (con badge MUY PRONTO) -->
+            <div class="link-card opacity-0 animate-[heroFadeUp_0.8s_cubic-bezier(0.16,1,0.3,1)_0.3s_forwards]"
+                style="cursor: default;">
+                <div class="link-icon bg-white/5 border border-white/10">
+                    <svg class="w-5 h-5 text-white/70" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                            d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9" />
+                    </svg>
+                </div>
+                <div class="flex flex-col">
+                    <span class="text-white font-medium text-[0.9rem]">Sitio Web</span>
+                    <span class="text-gray-500 text-[0.7rem] font-light">lifestrategics.com</span>
+                </div>
+                <span class="link-badge text-[#D15152] text-[0.65rem] font-heading tracking-[0.15em]">MUY PRONTO</span>
+            </div>
+
+            <!-- 2. Artículo | Renta Básica Universal -->
+            <a href="https://monixette.substack.com/p/renta-basica-universal-una-exploracion" target="_blank"
+                rel="noopener"
+                class="link-card opacity-0 animate-[heroFadeUp_0.8s_cubic-bezier(0.16,1,0.3,1)_0.4s_forwards]">
+                <div class="link-icon bg-[#C5A149]/10 border border-[#C5A149]/20">
+                    <svg class="w-5 h-5 text-[#C5A149]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                            d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
+                    </svg>
+                </div>
+                <div class="flex flex-col">
+                    <span class="text-white font-medium text-[0.9rem]">Artículo | Renta Básica Universal</span>
+                </div>
+                <svg class="link-arrow w-4 h-4 text-[#C5A149]/50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                        d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                </svg>
+            </a>
+
+            <!-- 3. Herramienta interactiva | Mi consumo vs. IA -->
+            <a href="https://monixette.github.io/flujodemateriales_vs_ai/flujo-materiales-v2026/" target="_blank"
+                rel="noopener"
+                class="link-card opacity-0 animate-[heroFadeUp_0.8s_cubic-bezier(0.16,1,0.3,1)_0.5s_forwards]">
+                <div class="link-icon bg-[#58AFCD]/10 border border-[#58AFCD]/20">
+                    <svg class="w-5 h-5 text-[#58AFCD]" fill="currentColor" viewBox="0 0 24 24">
+                        <path
+                            d="M17 8C8 10 5.9 16.17 3.82 21.34L5.71 22l1-2.3A4.49 4.49 0 008 20c4 0 5-4 5-4s1 4 5 4a4.49 4.49 0 001.29-.3L20.18 22l1.89-.66C19.84 16 17.64 10 17 8zM8 18c-1 0-1.85-.46-2.4-1.2L7 13.48C7.78 10.82 9 8.5 12 7c.67 2 1.57 4.67 3.23 7.5C14.5 16 14 18 12 18h-1c-1.1 0-2-.42-2.5-1A3.48 3.48 0 018 18z" />
+                        <path d="M12 2C9.24 2 7 4.24 7 7h2a3 3 0 016 0h2c0-2.76-2.24-5-5-5z" />
+                    </svg>
+                </div>
+                <div class="flex flex-col">
+                    <span class="text-white font-medium text-[0.9rem]">Herramienta interactiva | Mi consumo vs.
+                        IA</span>
+                </div>
+                <svg class="link-arrow w-4 h-4 text-[#58AFCD]/50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                        d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                </svg>
+            </a>
+
+            <!-- 4. Otros artículos -->
+            <a href="https://monixette.medium.com" target="_blank" rel="noopener"
+                class="link-card opacity-0 animate-[heroFadeUp_0.8s_cubic-bezier(0.16,1,0.3,1)_0.6s_forwards]">
+                <div class="link-icon bg-[#C5A149]/10 border border-[#C5A149]/20">
+                    <svg class="w-5 h-5 text-[#C5A149]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                            d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
+                    </svg>
+                </div>
+                <div class="flex flex-col">
+                    <span class="text-white font-medium text-[0.9rem]">Otros artículos</span>
+                </div>
+                <svg class="link-arrow w-4 h-4 text-[#C5A149]/50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                        d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                </svg>
+            </a>
+
+        </div>
+
+        <!-- Separator -->
+        <div class="dot-separator opacity-0 animate-[heroFadeUp_0.6s_cubic-bezier(0.16,1,0.3,1)_0.65s_forwards]">
+            <span></span><span></span><span></span>
+        </div>
+
+        <!-- ¿Quién es Mónica De Salazar? (Expandable) -->
+        <div class="w-full mt-2 mb-6 opacity-0 animate-[heroFadeUp_0.8s_cubic-bezier(0.16,1,0.3,1)_0.7s_forwards]">
+            <div class="expandable-card" id="bio-card">
+                <div class="expandable-trigger" onclick="toggleBio()">
+                    <span class="text-white font-medium text-[0.9rem]">¿Quién es Mónica De Salazar?</span>
+                    <svg class="expandable-chevron w-4 h-4 text-gray-400" fill="none" stroke="currentColor"
+                        viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 9l-7 7-7-7" />
+                    </svg>
+                </div>
+                <div class="expandable-content">
+                    <div class="px-6 pb-6 pt-1">
+
+                        <!-- Competencies pills -->
+                        <div class="flex flex-wrap gap-2 mb-5">
+                            <span class="bio-tag bg-[#C5A149]/15 text-[#C5A149]">Estrategia</span>
+                            <span class="bio-tag bg-[#58AFCD]/15 text-[#58AFCD]">IA Aplicada</span>
+                            <span class="bio-tag bg-[#D15152]/15 text-[#D15152]">Creatividad</span>
+                        </div>
+
+                        <!-- Narrative bio -->
+                        <div class="bio-text space-y-4">
+                            <p>
+                                Soy <strong>comunicóloga, estratega y facilitadora certificada en Creative Problem
+                                    Solving por Buffalo State University</strong> con casi 20 años conectando puntos
+                                entre disciplinas que normalmente no se hablan.
+                            </p>
+                            <p>
+                                Mi carrera empezó en el mundo editorial para revistas especializadas de la
+                                <strong>Industria del Plástico Industrial, Automatización y Franquicias y
+                                    Negocios</strong>, donde aprendí sobre sistemas, procesos y negocios. De ahí salté
+                                al <strong>marketing digital</strong>, liderando estrategia para marcas como Avon,
+                                Clorox, Halls, Electrolux, Frigidaire, integraciones de marca con Televisa y Pepsi
+                                Events, entre otros.
+                            </p>
+                            <p>
+                                Paralelamente, impartí clases en diversas universidades:
+                            </p>
+                            <ul class="space-y-2 pl-4 text-[0.85rem]">
+                                <li class="flex items-start gap-2">
+                                    <span class="w-1 h-1 mt-2 rounded-full bg-[#D15152] flex-shrink-0"></span>
+                                    <span><strong class="text-gray-300">Creatividad para comunicación</strong> <span
+                                            class="text-gray-500">· UNAM</span></span>
+                                </li>
+                                <li class="flex items-start gap-2">
+                                    <span class="w-1 h-1 mt-2 rounded-full bg-[#58AFCD] flex-shrink-0"></span>
+                                    <span><strong class="text-gray-300">Estrategia digital, marketing digital</strong>
+                                        <span class="text-gray-500">· ITAM, ITESM</span></span>
+                                </li>
+                                <li class="flex items-start gap-2">
+                                    <span class="w-1 h-1 mt-2 rounded-full bg-[#C5A149] flex-shrink-0"></span>
+                                    <span><strong class="text-gray-300">Comunicación y marketing con enfoque
+                                            socioambiental</strong> <span class="text-gray-500">· Universidad del Medio
+                                            Ambiente</span></span>
+                                </li>
+                            </ul>
+                            <p>
+                                También me dediqué a proyectos de <strong>Social Listening</strong>, colaborando con
+                                marcas como New Era Caps, HSBC, Mastercard y Clip.
+                            </p>
+                            <p>
+                                Entre diversos proyectos, descubrí que lo que más me apasionaba no era solo ejecutar
+                                campañas, sino <strong>ayudar a las personas y organizaciones a pensar
+                                    distinto</strong>. Me certifiqué en <strong>Coaching Ejecutivo</strong>, luego en
+                                <strong>Liderazgo Creativo y Facilitación para la Innovación (Buffalo State
+                                    University)</strong>, y empecé a facilitar procesos de creatividad aplicada a
+                                negocios, equipos y retos profesionales.
+                            </p>
+                            <p>
+                                Cursé un <strong>Green MBA</strong> enfocado en emprendimiento social y sostenible,
+                                fundé una incubadora comunitaria, y trabajé en startups donde viví de primera mano el
+                                burnout que rompe carreras y la reinvención que las transforma. Después de dos burnouts
+                                y notar la ola de cambios relacionados con la IA decidí comenzar a pensar en soluciones
+                                orientadas a la adaptabilidad para el cambio en una época de disrupciones continuas.
+                            </p>
+                            <p>
+                                Hoy integro todo eso: <strong>estrategia de negocio, IA aplicada (no-code y
+                                    automatización), coaching de vida y carrera, y facilitación creativa</strong>. Cursé
+                                la especialización <strong>No-Code AI for Business del MIT</strong>. Creo que la
+                                tecnología sirve cuando la persona detrás tiene claridad sobre lo que quiere lograr.
+                            </p>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Newsletter + Social Follow Card -->
+        <div class="w-full mt-2 mb-6 opacity-0 animate-[heroFadeUp_1s_cubic-bezier(0.16,1,0.3,1)_0.8s_forwards]">
+            <div class="glowing-wrapper w-full p-7">
+                <div class="flex flex-col items-center text-center relative z-10 gap-5">
+                    <div class="flex flex-col items-center gap-1">
+                        <h2 class="text-lg font-light text-white leading-snug tracking-tight">
+                            Unirse al Newsletter
+                        </h2>
+                        <span class="text-[#D15152] text-[0.65rem] font-heading tracking-[0.15em]">MUY PRONTO</span>
+                    </div>
+
+                    <div class="w-full h-px bg-white/10"></div>
+
+                    <p class="text-gray-500 text-[0.78rem] font-light">Sígueme en</p>
+                    <div class="flex items-center gap-5">
+                        <!-- LinkedIn -->
+                        <a href="https://www.linkedin.com/in/monicadesalazar/" target="_blank" rel="noopener"
+                            class="flex items-center gap-2 text-gray-400 hover:text-[#58AFCD] transition-colors group">
+                            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                                <path
+                                    d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" />
+                            </svg>
+                            <span
+                                class="text-[0.8rem] font-medium group-hover:text-[#58AFCD] transition-colors">LinkedIn</span>
+                        </a>
+                        <!-- TikTok -->
+                        <a href="https://www.tiktok.com/@monixette" target="_blank" rel="noopener"
+                            class="flex items-center gap-2 text-gray-400 hover:text-white transition-colors group">
+                            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                                <path
+                                    d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1v-3.51a6.37 6.37 0 00-.79-.05A6.34 6.34 0 003.15 15.2a6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.34-6.34V9.05a8.27 8.27 0 004.76 1.51V7.12a4.83 4.83 0 01-1-.43z" />
+                            </svg>
+                            <span
+                                class="text-[0.8rem] font-medium group-hover:text-white transition-colors">TikTok</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div
+            class="mt-auto pt-8 pb-4 flex flex-col items-center gap-2 opacity-0 animate-[heroFadeUp_0.8s_cubic-bezier(0.16,1,0.3,1)_1s_forwards]">
+            <div class="flex items-center gap-2 opacity-40">
+                <span class="text-[9px] font-heading tracking-[0.15em] text-gray-500 uppercase">LifeStrategics</span>
+                <span class="text-gray-600 text-[9px]">•</span>
+                <span class="text-[9px] text-gray-600 font-light">Understand. Decide. Take Action.</span>
+            </div>
+            <span class="text-[9px] text-gray-600 font-light">&copy; 2026 LifeStrategics. Todos los derechos
+                reservados.</span>
+        </div>
+
+    </main>
+
+    <script>
+        // --- Toggle Bio Expandable ---
+        function toggleBio() {
+            const card = document.getElementById('bio-card');
+            card.classList.toggle('open');
+        }
+
+        // --- Particle Canvas Engine (V1 clone) ---
+        const canvas = document.getElementById('particle-canvas');
+        if (canvas) {
+            const ctx = canvas.getContext('2d');
+            let particles = [];
+            let mouse = { x: null, y: null };
+
+            function init() {
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+                particles = [];
+                const count = window.innerWidth < 600 ? 30 : 45;
+                for (let i = 0; i < count; i++) {
+                    particles.push({
+                        x: Math.random() * canvas.width,
+                        y: Math.random() * canvas.height,
+                        vx: (Math.random() - 0.5) * 0.35,
+                        vy: (Math.random() - 0.5) * 0.35,
+                        size: Math.random() * 1.8 + 0.4
+                    });
+                }
+            }
+
+            function animate() {
+                requestAnimationFrame(animate);
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                particles.forEach((p, i) => {
+                    p.x += p.vx;
+                    p.y += p.vy;
+                    if (p.x < 0 || p.x > canvas.width) p.vx *= -1;
+                    if (p.y < 0 || p.y > canvas.height) p.vy *= -1;
+                    ctx.beginPath();
+                    ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+                    ctx.fillStyle = 'rgba(255,255,255,0.35)';
+                    ctx.fill();
+
+                    for (let j = i + 1; j < particles.length; j++) {
+                        const p2 = particles[j];
+                        const dx = p.x - p2.x;
+                        const dy = p.y - p2.y;
+                        const dist = Math.sqrt(dx * dx + dy * dy);
+                        if (dist < 140) {
+                            ctx.beginPath();
+                            ctx.strokeStyle = `rgba(255, 255, 255, ${0.08 - dist / 1750})`;
+                            ctx.lineWidth = 0.4;
+                            ctx.moveTo(p.x, p.y);
+                            ctx.lineTo(p2.x, p2.y);
+                            ctx.stroke();
+                        }
+                    }
+
+                    if (mouse.x !== null && mouse.y !== null) {
+                        const mdx = p.x - mouse.x;
+                        const mdy = p.y - mouse.y;
+                        const mDist = Math.sqrt(mdx * mdx + mdy * mdy);
+                        if (mDist < 160) {
+                            ctx.beginPath();
+                            ctx.strokeStyle = `rgba(255, 255, 255, ${0.3 - mDist / 530})`;
+                            ctx.lineWidth = 0.7;
+                            ctx.moveTo(p.x, p.y);
+                            ctx.lineTo(mouse.x, mouse.y);
+                            ctx.stroke();
+                        }
+                    }
+                });
+            }
+
+            window.addEventListener('resize', init);
+            window.addEventListener('mousemove', (e) => { mouse.x = e.x; mouse.y = e.y; });
+            window.addEventListener('touchmove', (e) => {
+                if (e.touches.length > 0) { mouse.x = e.touches[0].clientX; mouse.y = e.touches[0].clientY; }
+            });
+            window.addEventListener('touchend', () => { mouse.x = null; mouse.y = null; });
+            init();
+            animate();
+        }
+    </script>
+
+</body>
+
+</html>
