@@ -1,0 +1,2046 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>THESYBALAM | Estrategia de Content Marketing — LifeStrategics</title>
+    <meta name="description" content="Estrategia integral de content marketing para THESYBALAM. Documento completo con análisis, arquitectura, canales, conversión y hoja de ruta.">
+    <link href="https://fonts.googleapis.com/css2?family=Wix+Madefor+Display:wght@400;500;600;700;800&family=Wix+Madefor+Text:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --gold: #C5A149;
+            --blue: #58AFCD;
+            --red: #D15152;
+            --bg: #242426;
+            --bg-card: rgba(255,255,255,0.04);
+            --border-card: rgba(255,255,255,0.08);
+            --text-primary: #ffffff;
+            --text-secondary: #9CA3AF;
+            --text-muted: #6B7280;
+        }
+        * { margin:0; padding:0; box-sizing:border-box; }
+        body {
+            font-family: 'Wix Madefor Display', sans-serif;
+            background: var(--bg);
+            color: var(--text-primary);
+            overflow-x: hidden;
+            line-height: 1.65;
+        }
+        #particle-canvas {
+            position: fixed; top:0; left:0;
+            width:100vw; height:100vh;
+            pointer-events: none; z-index:0; opacity:0.45;
+        }
+        .page-wrapper {
+            position: relative; z-index:1;
+            max-width: 880px; margin: 0 auto;
+            padding: 40px 20px 80px;
+        }
+        @media (min-width:768px) { .page-wrapper { padding: 60px 40px 100px; } }
+
+        /* Header */
+        .header {
+            display: flex; flex-direction: column;
+            align-items: center; gap: 28px;
+            margin-bottom: 40px;
+            animation: fadeUp 1s cubic-bezier(0.16,1,0.3,1) forwards;
+        }
+        .header-logo { height:26px; opacity:0.45; transition:opacity 0.3s; }
+        .header-logo:hover { opacity:0.7; }
+        .header h1 {
+            font-size: clamp(1.8rem,5vw,2.8rem);
+            font-weight: 800; text-transform: uppercase;
+            letter-spacing: 0.08em;
+            background: linear-gradient(135deg, var(--gold) 0%, #e8d5a0 50%, var(--gold) 100%);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .header .subtitle {
+            font-size: clamp(0.82rem,2vw,1.05rem);
+            color: var(--text-secondary); font-weight:400;
+            letter-spacing:0.04em;
+        }
+        .meta-tags { display:flex; flex-wrap:wrap; gap:10px; justify-content:center; }
+        .meta-tag {
+            font-size:0.6rem; letter-spacing:0.1em;
+            text-transform:uppercase; padding:4px 10px;
+            border-radius:7px; font-weight:700;
+        }
+
+        /* Nav */
+        .nav-bar {
+            position: sticky; top:0; z-index:100;
+            background: rgba(36,36,38,0.88);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255,255,255,0.06);
+            margin: 0 -20px 36px;
+            padding: 0 20px;
+        }
+        @media (min-width:768px) { .nav-bar { margin:0 -40px 44px; padding:0 40px; } }
+        .nav-inner {
+            display:flex; gap:3px; overflow-x:auto;
+            scrollbar-width:none; padding:10px 0;
+        }
+        .nav-inner::-webkit-scrollbar { display:none; }
+        .nav-btn {
+            flex-shrink:0; font-size:0.65rem; font-weight:600;
+            letter-spacing:0.06em; text-transform:uppercase;
+            padding:7px 14px; border-radius:10px;
+            border:1px solid transparent; background:transparent;
+            color:var(--text-muted); cursor:pointer;
+            transition:all 0.3s; white-space:nowrap; font-family:inherit;
+            text-decoration: none;
+        }
+        .nav-btn:hover, .nav-btn.active {
+            color:var(--text-primary);
+            background:rgba(255,255,255,0.06);
+            border-color:rgba(255,255,255,0.1);
+        }
+
+        /* Section */
+        .strategy-section {
+            margin-bottom: 48px;
+            opacity:0; transform:translateY(16px);
+            transition: opacity 0.7s ease, transform 0.7s ease;
+        }
+        .strategy-section.visible { opacity:1; transform:translateY(0); }
+        .section-header {
+            display:flex; align-items:center; gap:12px;
+            margin-bottom:16px; padding-bottom:12px;
+            border-bottom:1px solid rgba(255,255,255,0.06);
+        }
+        .section-number {
+            width:36px; height:36px; border-radius:10px;
+            display:flex; align-items:center; justify-content:center;
+            font-size:0.85rem; font-weight:800; flex-shrink:0;
+        }
+        .section-title {
+            font-size:1.05rem; font-weight:700;
+            text-transform:uppercase; letter-spacing:0.06em;
+        }
+
+        /* Accordion */
+        .accordion {
+            background: var(--bg-card);
+            border: 1px solid var(--border-card);
+            border-radius: 16px; overflow:hidden;
+            margin-bottom:8px; transition:all 0.3s;
+        }
+        .accordion.open {
+            border-color: rgba(255,255,255,0.14);
+            background: rgba(255,255,255,0.05);
+        }
+        .accordion-trigger {
+            width:100%; padding:14px 18px;
+            display:flex; align-items:center; gap:10px;
+            cursor:pointer; border:none; background:transparent;
+            color:var(--text-primary); font-family:inherit;
+            font-size:0.8rem; font-weight:600; text-align:left;
+            transition:background 0.3s;
+        }
+        .accordion-trigger:hover { background:rgba(255,255,255,0.02); }
+        .accordion-trigger .dot {
+            width:7px; height:7px; border-radius:50%; flex-shrink:0;
+        }
+        .acc-title { flex:1; }
+        .accordion-chevron {
+            margin-left:auto; transition:transform 0.3s; flex-shrink:0;
+            color:var(--text-muted);
+        }
+        .accordion.open .accordion-chevron { transform:rotate(180deg); }
+        .accordion-content {
+            max-height:0; overflow:hidden;
+            transition: max-height 0.5s cubic-bezier(0.16,1,0.3,1);
+        }
+        .accordion-body {
+            padding: 4px 18px 20px;
+        }
+
+        /* Content */
+        .content-p {
+            font-size: 0.82rem; line-height:1.75;
+            color: var(--text-secondary); margin-bottom:8px;
+        }
+        .content-p strong { color:#e5e7eb; font-weight:600; }
+        .sub-header {
+            font-size:0.78rem; font-weight:700;
+            text-transform:uppercase; letter-spacing:0.04em;
+            color: var(--text-primary); margin:20px 0 8px;
+            padding-top:14px;
+            border-top:1px solid rgba(255,255,255,0.05);
+        }
+        .sub-header:first-child { border-top:none; padding-top:0; margin-top:0; }
+        .section-divider {
+            border:none;
+            border-top: 1px solid rgba(255,255,255,0.06);
+            margin: 16px 0;
+        }
+        .content-ul, .content-ol {
+            padding-left:18px; margin-bottom:10px;
+        }
+        .content-ul li, .content-ol li {
+            font-size:0.8rem; color:var(--text-secondary);
+            line-height:1.7; margin-bottom:4px;
+            padding-left:4px;
+        }
+        .content-ul li::marker { color:var(--gold); }
+        .content-ol li::marker { color:var(--blue); font-weight:700; }
+        .content-ul li.sub-item {
+            margin-left:16px; font-size:0.78rem;
+            color:var(--text-muted);
+        }
+
+        /* Highlights */
+        .hl-gold { color:var(--gold); font-weight:600; }
+        .hl-blue { color:var(--blue); font-weight:600; }
+        .hl-tag { color:var(--gold); font-weight:500; }
+        .hl-mention { color:var(--blue); font-weight:500; }
+        .qt { font-style:normal; color:#d1d5db; }
+
+        /* Callouts */
+        .callout {
+            padding: 10px 14px; margin: 12px 0;
+            border-radius: 0 10px 10px 0;
+            font-size:0.78rem; color:var(--text-secondary);
+            line-height:1.6;
+        }
+        .callout strong { font-weight:700; }
+        .callout-data {
+            background: rgba(88,175,205,0.08);
+            border-left: 3px solid var(--blue);
+        }
+        .callout-data strong { color:var(--blue); }
+        .callout-opp {
+            background: rgba(197,161,73,0.08);
+            border-left: 3px solid var(--gold);
+        }
+        .callout-opp strong { color:var(--gold); }
+
+        /* Expand All */
+        .expand-all {
+            display:inline-flex; align-items:center; gap:6px;
+            font-size:0.65rem; font-weight:600;
+            letter-spacing:0.08em; text-transform:uppercase;
+            padding:6px 14px; border-radius:8px;
+            border:1px solid rgba(255,255,255,0.1);
+            background:transparent; color:var(--text-muted);
+            cursor:pointer; transition:all 0.3s; font-family:inherit;
+        }
+        .expand-all:hover {
+            color:var(--text-primary);
+            background:rgba(255,255,255,0.04);
+        }
+
+        /* Footer */
+        .footer {
+            margin-top:48px; text-align:center; opacity:0.4;
+        }
+        .footer-line {
+            font-size:0.5rem; color:var(--text-muted);
+            letter-spacing:0.1em; text-transform:uppercase; font-weight:600;
+        }
+
+        @keyframes fadeUp {
+            from { opacity:0; transform:translateY(20px); }
+            to { opacity:1; transform:translateY(0); }
+        }
+
+        /* Print */
+        @media print {
+            body { background:white; color:#1a1a1a; }
+            #particle-canvas, .nav-bar { display:none; }
+            .accordion { border-color:#ddd; background:#f9f9f9; }
+            .accordion-content { max-height:none !important; }
+            .content-p, .content-ul li, .content-ol li { color:#333; }
+            .strategy-section { opacity:1 !important; transform:none !important; }
+        }
+    </style>
+</head>
+<body>
+    <canvas id="particle-canvas"></canvas>
+    <div class="page-wrapper">
+        <header class="header">
+            <img src="lifestrategics_logo_plain.png" alt="LifeStrategics" class="header-logo">
+            <div style="text-align:center;">
+                <h1>THESYBALAM</h1>
+                <p class="subtitle">Estrategia de Content Marketing · Documento Completo</p>
+            </div>
+            <div class="meta-tags">
+                <span class="meta-tag" style="background:rgba(197,161,73,0.15);color:var(--gold);">Salud y Bienestar</span>
+                <span class="meta-tag" style="background:rgba(88,175,205,0.15);color:var(--blue);">Rapé Artesanal</span>
+                <span class="meta-tag" style="background:rgba(209,81,82,0.15);color:var(--red);">Solopreneur · Mérida, MX</span>
+            </div>
+        </header>
+
+        <nav class="nav-bar">
+            <div class="nav-inner">
+                <a class="nav-btn active" href="#foundation" onclick="navClick(event,'foundation')">A · Foundation</a>
+                <a class="nav-btn" href="#architecture" onclick="navClick(event,'architecture')">B · Arquitectura</a>
+                <a class="nav-btn" href="#channels" onclick="navClick(event,'channels')">C · Canales</a>
+                <a class="nav-btn" href="#conversion" onclick="navClick(event,'conversion')">D · Conversión</a>
+                <a class="nav-btn" href="#roadmap" onclick="navClick(event,'roadmap')">E · Roadmap</a>
+                <button class="expand-all" onclick="toggleAll()" id="toggle-all-btn" style="margin-left:auto;">▸ Expandir todo</button>
+            </div>
+        </nav>
+
+        
+    <section class="strategy-section" id="foundation">
+        <div class="section-header">
+            <div class="section-number" style="background: #C5A14922; color: #C5A149;">A</div>
+            <h2 class="section-title">Foundation Analysis</h2>
+        </div>
+    
+        <div class="accordion" id="foundation-0">
+            <button class="accordion-trigger" onclick="toggleAccordion('foundation-0')">
+                <span class="dot" style="background: #C5A149;"></span>
+                <span class="acc-title">Situación actual de THESYBALAM</span>
+                <svg class="accordion-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 9l-7 7-7-7"/></svg>
+            </button>
+            <div class="accordion-content">
+                <div class="accordion-body">
+                    <p class="content-p">THESYBALAM es una marca de rapé artesanal con sede en Mérida, México, operada como solopreneur por Jorge Marzano. La marca ya esta activa y generando ingresos, con productos que van desde frascos de rapé (<span class="hl-gold">$400 MXN</span>), accesorios ceremoniales como kuripes (<span class="hl-gold">$300</span>-<span class="hl-gold">$900 MXN</span>), y contenido educativo en desarrollo.</p>
+<p class="content-p">Según el cuestionario, THESYBALAM esta generando actualmente el <span class="hl-blue">40%</span> de su meta de ingresos, lo que significa que necesita multiplicar sus ventas por 2.5x para alcanzar el <span class="hl-blue">100%</span> de su objetivo.</p>
+<h4 class="sub-header">Meta de ingresos y clientes necesarios</h4>
+<p class="content-p">Tomando como referencia la industria de bienestar y productos ancestrales en México, y considerando el ticket promedio de <span class="hl-gold">$400 MXN</span> por frasco de rapé (producto principal), con accesorios complementarios de <span class="hl-gold">$300</span>-<span class="hl-gold">$900 MXN</span>:</p>
+<ul class="content-ul">
+<li>Si actualmente genera el <span class="hl-blue">40%</span> de su meta, y asumiendo una meta mensual de <span class="hl-gold">$40,000</span>-<span class="hl-gold">$60,000 MXN</span> (rango típico para solopreneurs en bienestar en México):</li>
+<li class="sub-item"><strong>Ingresos actuales estimados:</strong> <span class="hl-gold">$16,000</span>-<span class="hl-gold">$24,000 MXN</span>/mes</li>
+<li class="sub-item"><strong>Meta de ingresos:</strong> <span class="hl-gold">$40,000</span>-<span class="hl-gold">$60,000 MXN</span>/mes</li>
+<li class="sub-item"><strong>Gap:</strong> <span class="hl-gold">$24,000</span>-<span class="hl-gold">$36,000 MXN</span> adicionales por mes</li>
+</ul>
+<ul class="content-ul">
+<li>Clientes necesarios para cerrar el gap:</li>
+<li class="sub-item">Solo con rapé (<span class="hl-gold">$400 MXN</span>): necesita 60-90 clientes adicionales por mes</li>
+<li class="sub-item">Con venta promedio de <span class="hl-gold">$550 MXN</span> (rapé + accesorio): necesita 44-65 clientes adicionales por mes</li>
+<li class="sub-item">Con clientes recurrentes (recompra mensual): necesita construir una base de 30-40 clientes recurrentes activos</li>
+</ul>
+<div class="callout callout-data"><strong>📊 Dato de mercado:</strong> La industria global de bienestar esta valorada en <span class="hl-gold">$6.8 trillones</span> USD (2024) y se proyecta a <span class="hl-gold">$9 trillones</span> para 2028. El segmento de bienestar espiritual y apps de wellness espiritual esta en crecimiento acelerado, lo que indica oportunidad para marcas autenticas como THESYBALAM.</div>
+<hr class="section-divider">
+<h4 class="sub-header">Situación actual del negocio</h4>
+                </div>
+            </div>
+        </div>
+        
+        <div class="accordion" id="foundation-1">
+            <button class="accordion-trigger" onclick="toggleAccordion('foundation-1')">
+                <span class="dot" style="background: #C5A149;"></span>
+                <span class="acc-title">Fase del negocio y recursos</span>
+                <svg class="accordion-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 9l-7 7-7-7"/></svg>
+            </button>
+            <div class="accordion-content">
+                <div class="accordion-body">
+                    <p class="content-p">THESYBALAM se encuentra en la Fase 6 de 10: <em class="qt">&quot;Funciona bien, pero quiero optimizar y estandarizar.&quot;</em> Esto indica un negocio que ya valido su producto-mercado, tiene clientes y genera ingresos, pero necesita sistemas para escalar de manera consistente.</p>
+<h4 class="sub-header">Recursos disponibles</h4>
+<ul class="content-ul">
+<li><strong>Tiempo:</strong> Hasta 4 horas por semana para revisión, aprobación y colaboración con contenido</li>
+<li>Conocimiento básico de redes sociales</li>
+<li>Herramientas de diseño (Canva, etc.)</li>
+<li>Base de datos de clientes/leads existente</li>
+<li><strong>Ya ha invertido en:</strong> Canva Pro/Adobe, Facebook/Instagram Ads, sitio web, fotografia profesional</li>
+<li><strong>Presencia en:</strong> Instagram, TikTok, Facebook, YouTube, WhatsApp Business</li>
+</ul>
+<h4 class="sub-header">Análisis de la frustración principal</h4>
+<p class="content-p">Las tres frustraciones principales de THESYBALAM son:</p>
+<ol class="content-ol">
+<li><em class="qt">&quot;Me consume muchisimo tiempo y no puedo mantener consistencia&quot;</em></li>
+</ol>
+<ul class="content-ul">
+<li class="sub-item"><strong>OPORTUNIDAD:</strong> Necesita un sistema de batching y un calendario editorial que funcione con sus 4 horas semanales</li>
+<li class="sub-item"><strong>SOLUCION DE CONTENIDO:</strong> Templates reutilizables, series recurrentes, contenido evergreen</li>
+</ul>
+<ol class="content-ol">
+<li><em class="qt">&quot;No se si estoy llegando a la audiencia correcta&quot;</em></li>
+</ol>
+<ul class="content-ul">
+<li class="sub-item"><strong>OPORTUNIDAD:</strong> Necesita claridad sobre sus micro-segmentos y sus canales preferidos</li>
+<li class="sub-item"><strong>SOLUCION DE CONTENIDO:</strong> Contenido específico por segmento, hashtags estrategicos, colaboraciones con cuentas afines</li>
+</ul>
+<ol class="content-ol">
+<li><em class="qt">&quot;Tengo el contenido pero no se como distribuirlo bien&quot;</em></li>
+</ol>
+<ul class="content-ul">
+<li class="sub-item"><strong>OPORTUNIDAD:</strong> Ya tiene material; necesita un sistema de distribución multiplataforma</li>
+<li class="sub-item"><strong>SOLUCION DE CONTENIDO:</strong> Framework de repurposing (1 pieza madre = 5-7 piezas derivadas)</li>
+</ul>
+<h4 class="sub-header">Actividad actual en redes</h4>
+<p class="content-p"><strong>Moderadamente activo:</strong> pública de vez en cuando pero sin consistencia. Esto es común en solopreneurs del sector bienestar. El reto no es crear mas contenido, sino crear un SISTEMA que haga sostenible la publicación con solo 4 horas semanales.</p>
+<div class="callout callout-data"><strong>📊 Dato de mercado:</strong> Las marcas de wellness que publican consistentemente 3-5 veces por semana en Instagram logran engagement rates promedio de <span class="hl-blue">4.0%</span>, superior al promedio general de <span class="hl-blue">3.5%</span>.</div>
+<hr class="section-divider">
+<h4 class="sub-header">Perfil del cliente ideal</h4>
+                </div>
+            </div>
+        </div>
+        
+        <div class="accordion" id="foundation-2">
+            <button class="accordion-trigger" onclick="toggleAccordion('foundation-2')">
+                <span class="dot" style="background: #C5A149;"></span>
+                <span class="acc-title">Cliente ideal y customer journey</span>
+                <svg class="accordion-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 9l-7 7-7-7"/></svg>
+            </button>
+            <div class="accordion-content">
+                <div class="accordion-body">
+                    <p class="content-p">El cliente ideal de THESYBALAM es una persona interesada en el crecimiento personal y la conciencia interior, entre 28 y 55 años, que busca herramientas para encontrar claridad mental, enfoque y conexión consigo mismo. Son emprendedores, terapeutas o personas con interés en meditación, espiritualidad y conocimiento ancestral.</p>
+<p class="content-p">MICRO-SEGMENTO 1: EL BUSCADOR CONSCIENTE (28-35 años)</p>
+<ul class="content-ul">
+<li><strong>Demografia:</strong> Millennials urbanos, profesionistas o emprendedores digitales, ingresos medios-altos, ciudades principales de México y LATAM</li>
+<li><strong>Psicografia:</strong> Curiosos por la espiritualidad pero practican de forma individual, consumidores de podcasts de desarrollo personal, seguidores de cuentas de mindfulness en Instagram</li>
+<li><strong>Puntos de dolor:</strong> Estrés laboral crónico, sensacion de desconexión, buscan <em class="qt">&quot;algo mas&quot;</em> pero no saben por dónde empezar, saturación de información sobre bienestar</li>
+<li><strong>Canales preferidos:</strong> Instagram (Reels y Stories), YouTube (tutoriales), podcasts de desarrollo personal</li>
+<li><strong>Momento de compra:</strong> Después de una crisis personal, burnout, o al descubrir la meditación y querer profundizar</li>
+<li><strong>Ticket potencial:</strong> Rape + kuripe (<span class="hl-gold">$700</span>-<span class="hl-gold">$1,300 MXN</span> primera compra, recompra de rapé cada 1-2 meses)</li>
+</ul>
+<p class="content-p">MICRO-SEGMENTO 2: EL PRACTICANTE ESPIRITUAL (35-45 años)</p>
+<ul class="content-ul">
+<li><strong>Demografia:</strong> Terapeutas, coaches, instructores de yoga/meditación, facilitadores de ceremonias, ingresos variables</li>
+<li><strong>Psicografia:</strong> Ya conocen las medicinas ancestrales, participan en ceremonias, valoran profundamente el origen y la calidad, parte de comunidades espirituales</li>
+<li><strong>Puntos de dolor:</strong> Encontrar proveedores confiables con origen ético, cansados de productos comercializados sin respeto, quieren integrar el rapé en su práctica profesional</li>
+<li><strong>Canales preferidos:</strong> Instagram, YouTube (contenido largo), WhatsApp (comunidades), eventos presenciales</li>
+<li><strong>Momento de compra:</strong> Cuando encuentran un proveedor que demuestra conocimiento genuino y respeto por la tradición</li>
+<li><strong>Ticket potencial:</strong> Multiples variedades de rapé + accesorios premium (<span class="hl-gold">$1,500</span>-<span class="hl-gold">$3,000 MXN</span>, recompra frecuente)</li>
+</ul>
+<p class="content-p">MICRO-SEGMENTO 3: EL EXPLORADOR DEL BIENESTAR (40-55 años)</p>
+<ul class="content-ul">
+<li><strong>Demografia:</strong> Profesionistas establecidos, padres de familia, ingresos medios-altos, buscan balance vida-trabajo</li>
+<li><strong>Psicografia:</strong> Practican yoga o meditación desde hace tiempo, abiertos a medicinas alternativas, valoran la autenticidad y la tradición, buscan herramientas tangibles para su práctica</li>
+<li><strong>Puntos de dolor:</strong> Necesitan algo mas que apps de meditación, quieren una práctica sensorial y física, buscan conexión con algo ancestral y auténtico</li>
+<li><strong>Canales preferidos:</strong> Facebook, YouTube (videos educativos largos), newsletters, blogs</li>
+<li><strong>Momento de compra:</strong> Cuando descubren el rapé a través de una recomendación personal o contenido educativo profundo</li>
+<li><strong>Ticket potencial:</strong> Rape + contenido educativo (<span class="hl-gold">$400</span>-<span class="hl-gold">$800 MXN</span>, recompra si la experiencia es positiva)</li>
+</ul>
+<h4 class="sub-header">Customer journey típico</h4>
+<ol class="content-ol">
+<li><strong>DESCUBRIMIENTO:</strong> Ve un Reel o post educativo sobre <em class="qt">&quot;que es el rapé&quot;</em> o <em class="qt">&quot;herramientas de introspección&quot;</em> en Instagram</li>
+<li><strong>CURIOSIDAD:</strong> Visita el perfil, lee las descripciones, ve Stories sobre el proceso de elaboración</li>
+<li><strong>INVESTIGACION:</strong> Busca en YouTube videos explicativos, lee el blog/sitio web, revisa testimonios</li>
+<li><strong>CONFIANZA:</strong> Se suscribe al newsletter, interactua con contenido, siente que la marca es auténtica</li>
+<li><strong>PRIMERA COMPRA:</strong> Compra el frasco de rapé con guia de uso básica a través de la tienda en línea</li>
+<li><strong>EXPERIENCIA:</strong> Usa el producto siguiendo la guia, tiene una experiencia positiva de introspección</li>
+<li><strong>COMUNIDAD:</strong> Se une a comunidades de WhatsApp, comparte su experiencia, recomienda a otros</li>
+<li><strong>RECOMPRA:</strong> Prueba nuevas mezclas, compra accesorios, se convierte en cliente recurrente</li>
+</ol>
+<hr class="section-divider">
+<h4 class="sub-header">Análisis competitivo</h4>
+                </div>
+            </div>
+        </div>
+        
+        <div class="accordion" id="foundation-3">
+            <button class="accordion-trigger" onclick="toggleAccordion('foundation-3')">
+                <span class="dot" style="background: #C5A149;"></span>
+                <span class="acc-title">Análisis de competencia</span>
+                <svg class="accordion-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 9l-7 7-7-7"/></svg>
+            </button>
+            <div class="accordion-content">
+                <div class="accordion-body">
+                    <ol class="content-ol">
+<li>FOUR VISIONS MARKET (<span class="hl-mention">@fourvisionsmarket</span>)</li>
+</ol>
+<ul class="content-ul">
+<li class="sub-item"><strong>Fortalezas:</strong> Fuerte enfoque en sourcing ético directo con comunidades indígenas, contribuyen a iniciativas indígenas, contenido educativo sobre plantas medicinales y rituales, crean conexión cultural con las medicinas</li>
+<li class="sub-item"><strong>Estrategia de contenido:</strong> Series educativas sobre <em class="qt">&quot;Understanding Rape&quot;</em>, contenido sobre herramientas tradicionales (kuripe, tepi), historias de impacto comunitario, <em class="qt">&quot;Beyond Fair Trade&quot;</em> transparency</li>
+<li class="sub-item"><strong>Debilidad:</strong> Su contenido puede sentirse distante y etnografico; menos enfoque en la aplicación práctica diaria</li>
+</ul>
+<ol class="content-ol">
+<li>ANCESTRAL SUPPLY (<span class="hl-mention">@ancestralsupply</span>)</li>
+</ol>
+<ul class="content-ul">
+<li class="sub-item"><strong>Fortalezas:</strong> Comparten historias, ceremonias y el origen de sus productos, comunican respeto por la tradición</li>
+<li class="sub-item"><strong>Estrategia de contenido:</strong> Contenido visual ceremonial, educación sobre tradiciones ancestrales</li>
+<li class="sub-item"><strong>Debilidad:</strong> Menos enfoque en como integrar las herramientas en la vida diaria moderna</li>
+</ul>
+<h4 class="sub-header">Gaps de contenido en competidores</h4>
+<ul class="content-ul">
+<li>Ninguno profundiza en COMO integrar el rapé como herramienta de introspección DIARIA (no solo ceremonial)</li>
+<li>Falta contenido sobre la interseccion entre meditación moderna y sabiduria ancestral</li>
+<li>Poca educación sobre uso responsable y consciente fuera del contexto ceremonial formal</li>
+<li>Casi nulo contenido en español para el mercado latinoamericano</li>
+<li>Falta de community-building mas alla de ventas</li>
+</ul>
+<div class="callout callout-opp"><strong>🎯 Oportunidad clave:</strong> THESYBALAM puede posicionarse como el puente entre la sabiduria ancestral y la práctica diaria moderna, con contenido en español que eduque sobre uso consciente, no ceremonial exclusivamente.</div>
+<div class="callout callout-data"><strong>📊 Dato de mercado:</strong> Las plataformas de RRSS tienen restricciones estrictas sobre productos de tabaco (el mapacho es un ingrediente clave del rapé), lo que limita la publicidad pagada. La estrategia debe centrarse en contenido orgánico educativo y community-building en lugar de venta directa.</div>
+<hr class="section-divider">
+<h4 class="sub-header">Análisis del diferenciador</h4>
+                </div>
+            </div>
+        </div>
+        
+        <div class="accordion" id="foundation-4">
+            <button class="accordion-trigger" onclick="toggleAccordion('foundation-4')">
+                <span class="dot" style="background: #C5A149;"></span>
+                <span class="acc-title">Posicionamiento y voz de marca</span>
+                <svg class="accordion-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 9l-7 7-7-7"/></svg>
+            </button>
+            <div class="accordion-content">
+                <div class="accordion-body">
+                    <p class="content-p"><strong>El diferenciador clave de THESYBALAM es:</strong> integrar el conocimiento de las medicinas ancestrales con un enfoque de TRABAJO INTERIOR CONSCIENTE. No vende rapé como producto; vende una herramienta para la introspección, claridad mental y meditación.</p>
+<p class="content-p">Este diferenciador se traduce en una narrativa única:</p>
+<p class="content-p"><em class="qt">&quot;Muchas personas venden la medicina, pero pocas explican como integrarla en la vida diaria de una forma honesta y responsable.&quot;</em></p>
+<h4 class="sub-header">Temas de contenido derivados del diferenciador</h4>
+<ol class="content-ol">
+<li>SERIE <em class="qt">&quot;USO CONSCIENTE&quot;</em>: Como usar el rapé como herramienta de trabajo interior (no recreativo ni superficial)</li>
+<li>SERIE <em class="qt">&quot;CLARIDAD DIARIA&quot;</em>: Integracion del rapé en rutinas de meditación y reflexión matutina/nocturna</li>
+<li>SERIE <em class="qt">&quot;TRADICION VIVA&quot;</em>: El origen, las técnicas y el respeto por las comunidades indígenas</li>
+<li>SERIE <em class="qt">&quot;MAESTROS INTERNOS&quot;</em>: Testimonios y experiencias de personas que usan el rapé para encontrar enfoque</li>
+<li>SERIE <em class="qt">&quot;DETRAS DE LA MEDICINA&quot;</em>: Proceso artesanal, mezclas, ingredientes, y la intención detrás de cada producto</li>
+</ol>
+<h4 class="sub-header">Posicionamiento como autoridad</h4>
+<p class="content-p">THESYBALAM puede posicionarse como autoridad en tres áreas:</p>
+<ol class="content-ol">
+<li><strong>EDUCACION SOBRE USO RESPONSABLE:</strong> Ser la fuente de referencia en español sobre como usar rapé de manera consciente</li>
+<li><strong>PRACTICA INTERIOR DIARIA:</strong> Experto en como las medicinas ancestrales pueden complementar la meditación moderna</li>
+<li><strong>SOURCING ETICO:</strong> Transparencia sobre el origen, la calidad y el respeto por las tradiciones</li>
+</ol>
+<h4 class="sub-header">Voz de marca definida</h4>
+<p class="content-p">Basado en las preferencias del cliente, la voz de THESYBALAM debe ser:</p>
+<ul class="content-ul">
+<li><strong>INSPIRACIONAL Y MOTIVADORA:</strong> Invita a la reflexión y al autoconocimiento</li>
+<li><strong>EDUCATIVA Y UTIL:</strong> Enseña como usar las herramientas correctamente</li>
+<li><strong>EMPATICA Y COMPRENSIVA:</strong> Entiende los retos de la vida moderna</li>
+<li><strong>CONFIABLE Y ESTABLE:</strong> Transmite seguridad, no vende humo</li>
+</ul>
+<h4 class="sub-header">Restricciones importantes para el contenido</h4>
+<ul class="content-ul">
+<li>NO hacer afirmaciones médicas o terapéuticas</li>
+<li>Presentar el rapé como herramienta de tradición ancestral para introspección y práctica personal</li>
+<li>Comunicar con respeto cultural hacia las tradiciones indígenas</li>
+<li>Enfoque educativo, cultural y de desarrollo personal, nunca médico ni clínico</li>
+</ul>
+                </div>
+            </div>
+        </div>
+        </section>
+        
+    <section class="strategy-section" id="architecture">
+        <div class="section-header">
+            <div class="section-number" style="background: #58AFCD22; color: #58AFCD;">B</div>
+            <h2 class="section-title">Arquitectura de contenido</h2>
+        </div>
+    
+        <div class="accordion" id="architecture-0">
+            <button class="accordion-trigger" onclick="toggleAccordion('architecture-0')">
+                <span class="dot" style="background: #58AFCD;"></span>
+                <span class="acc-title">Pilares de contenido (4 pilares)</span>
+                <svg class="accordion-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 9l-7 7-7-7"/></svg>
+            </button>
+            <div class="accordion-content">
+                <div class="accordion-body">
+                    <hr class="section-divider">
+<p class="content-p"><strong>Descripción:</strong> Contenido educativo sobre como usar el rapé como herramienta de introspección, meditación y claridad mental en la vida diaria. Este es el pilar central que diferencia a THESYBALAM de la competencia.</p>
+<p class="content-p"><strong>Por que es relevante:</strong> Aborda directamente el diferenciador principal de la marca y responde a la necesidad del cliente ideal de encontrar herramientas prácticas para el trabajo interior. Ningún competidor profundiza en este ángulo.</p>
+<h4 class="sub-header">Temas especificos:</h4>
+<ol class="content-ol">
+<li><em class="qt">&quot;Como usar el rapé para tu primera sesión de introspección&quot;</em> - Tipo: Educativo - Formato ideal: Video tutorial + carrusel</li>
+<li><em class="qt">&quot;Rutina matutina con rapé: 10 minutos de claridad para empezar el día&quot;</em> - Tipo: Educativo/Practico - Formato ideal: Reel + blog post</li>
+<li><em class="qt">&quot;La diferencia entre uso recreativo y uso consciente del rapé&quot;</em> - Tipo: Educativo - Formato ideal: Carrusel + newsletter</li>
+<li><em class="qt">&quot;5 señales de que necesitas un momento de introspección (y como el rapé puede ayudar)&quot;</em> - Tipo: Educativo/Enganche - Formato ideal: Reel + carrusel</li>
+<li><em class="qt">&quot;Preguntas frecuentes sobre el uso consciente del rapé&quot;</em> - Tipo: Educativo - Formato ideal: Stories Q&amp;A + blog</li>
+</ol>
+<p class="content-p"><strong>Frecuencia sugerida:</strong> 3-4 piezas por semana (es el pilar mas fuerte)</p>
+<h4 class="sub-header">Pilar 2: tradición ancestral y origen</h4>
+<hr class="section-divider">
+<p class="content-p"><strong>Descripción:</strong> Contenido sobre la historia, las tradiciones indígenas, el proceso artesanal y el respeto cultural detrás del rapé. Construye confianza y diferenciación.</p>
+<p class="content-p"><strong>Por que es relevante:</strong> Los competidores como Four Visions Market y Ancestral Supply ya cubren este terreno, pero THESYBALAM puede hacerlo en español para el mercado latinoamericano con un enfoque mas personal y narrativo.</p>
+<h4 class="sub-header">Temas especificos:</h4>
+<ol class="content-ol">
+<li><em class="qt">&quot;El origen del rapé: historia de las medicinas de los pueblos indígenas de la Amazonia&quot;</em> - Tipo: Educativo/Cultural - Formato ideal: Video largo (YouTube) + carrusel</li>
+<li><em class="qt">&quot;Detras de la medicina: como se elabora cada mezcla de THESYBALAM&quot;</em> - Tipo: Autenticidad - Formato ideal: Reel behind-the-scenes + Stories</li>
+<li><em class="qt">&quot;Que es un kuripe y por que es una herramienta sagrada&quot;</em> - Tipo: Educativo - Formato ideal: Carrusel + post</li>
+<li><em class="qt">&quot;Respeto cultural: por que importa saber de dónde viene lo que usas&quot;</em> - Tipo: Valores - Formato ideal: Carrusel + newsletter</li>
+<li><em class="qt">&quot;Plantas de poder: las mezclas y sus caracteristicas&quot;</em> - Tipo: Educativo/Producto - Formato ideal: Serie de Reels</li>
+</ol>
+<p class="content-p"><strong>Frecuencia sugerida:</strong> 2-3 piezas por semana</p>
+<h4 class="sub-header">Pilar 3: bienestar y claridad mental</h4>
+<hr class="section-divider">
+<p class="content-p"><strong>Descripción:</strong> Contenido mas amplio sobre meditación, manejo del estrés, mindfulness y desarrollo personal. Conecta con audiencias que aun no conocen el rapé pero buscan herramientas de bienestar.</p>
+<p class="content-p"><strong>Por que es relevante:</strong> Este pilar funciona como TOFU (Top of Funnel), atrayendo personas interesadas en bienestar que aun no conocen el rapé. Es el pilar de descubrimiento.</p>
+<h4 class="sub-header">Temas especificos:</h4>
+<ol class="content-ol">
+<li><em class="qt">&quot;3 herramientas para cuando sientes saturación mental&quot;</em> - Tipo: Enganche/Educativo - Formato ideal: Reel + carrusel</li>
+<li><em class="qt">&quot;La meditación no tiene que ser perfecta: como empezar desde cero&quot;</em> - Tipo: Inspiracional - Formato ideal: Reel + post</li>
+<li><em class="qt">&quot;Ritual nocturno de 5 minutos para soltar el día&quot;</em> - Tipo: Practico - Formato ideal: Video corto + Stories</li>
+<li><em class="qt">&quot;Por que los emprendedores necesitan herramientas de introspección&quot;</em> - Tipo: Educativo - Formato ideal: Post + newsletter</li>
+<li><em class="qt">&quot;Claridad vs. productividad: por que hacer menos a veces es hacer mas&quot;</em> - Tipo: Thought leadership - Formato ideal: Carrusel + LinkedIn</li>
+</ol>
+<p class="content-p"><strong>Frecuencia sugerida:</strong> 2-3 piezas por semana</p>
+<h4 class="sub-header">Pilar 4: comunidad y testimonios</h4>
+<hr class="section-divider">
+<p class="content-p"><strong>Descripción:</strong> Historias de clientes, experiencias compartidas, y contenido que construya comunidad alrededor de la práctica interior consciente.</p>
+<p class="content-p"><strong>Por que es relevante:</strong> El <span class="hl-blue">70%</span> de los clientes actuales llegan por recomendación. Este pilar amplifica el word-of-mouth y construye confianza social. El UGC es una tendencia clave para 2025-2026 en bienestar.</p>
+<h4 class="sub-header">Temas especificos:</h4>
+<ol class="content-ol">
+<li><em class="qt">&quot;Mi primera experiencia con el rapé&quot;</em> (testimonio en video de cliente) - Tipo: Social proof - Formato ideal: Reel + Story</li>
+<li><em class="qt">&quot;Preguntas que me hacen siempre sobre THESYBALAM&quot;</em> (Q&amp;A del fundador) - Tipo: Autenticidad - Formato ideal: Video + Stories</li>
+<li><em class="qt">&quot;La comunidad THESYBALAM: por que nos conectamos&quot;</em> - Tipo: Comunidad - Formato ideal: Carrusel + post</li>
+<li><em class="qt">&quot;Historia del fundador: por que empece este camino&quot;</em> - Tipo: Storytelling - Formato ideal: Video largo + post</li>
+<li><em class="qt">&quot;Un día en la vida de un practicante de rapé consciente&quot;</em> - Tipo: Lifestyle - Formato ideal: Reel day-in-the-life</li>
+</ol>
+<p class="content-p"><strong>Frecuencia sugerida:</strong> 1-2 piezas por semana</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="accordion" id="architecture-1">
+            <button class="accordion-trigger" onclick="toggleAccordion('architecture-1')">
+                <span class="dot" style="background: #58AFCD;"></span>
+                <span class="acc-title">Matriz de contenido por formato</span>
+                <svg class="accordion-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 9l-7 7-7-7"/></svg>
+            </button>
+            <div class="accordion-content">
+                <div class="accordion-body">
+                    <ul class="content-ul">
+<li>Pilar 1 (Uso Consciente): Tips rapidos, frases reflexivas - Esfuerzo: Bajo - Impacto: Engagement - Frecuencia: 2/semana</li>
+</ul>
+<p class="content-p"><strong>Ejemplo:</strong> Imagen con cita <em class="qt">&quot;La claridad no se busca afuera. Se cultiva adentro.&quot;</em> + caption educativo sobre uso consciente</p>
+<ul class="content-ul">
+<li>Pilar 2 (Tradicion): Datos historicos, curiosidades - Esfuerzo: Bajo - Impacto: Awareness - Frecuencia: 1/semana</li>
+</ul>
+<p class="content-p"><strong>Ejemplo:</strong> Foto del rapé con texto <em class="qt">&quot;Sabias que el rapé se ha utilizado durante mas de 5,000 años por pueblos indígenas de la Amazonia?&quot;</em></p>
+<ul class="content-ul">
+<li>Pilar 3 (Bienestar): Reflexiones, motivación - Esfuerzo: Bajo - Impacto: Awareness - Frecuencia: 1/semana</li>
+</ul>
+<p class="content-p"><strong>Ejemplo:</strong> <em class="qt">&quot;3 momentos del día perfectos para pausar y respirar con intención&quot;</em></p>
+<ul class="content-ul">
+<li>Pilar 4 (Comunidad): Testimonios en texto, reseñas - Esfuerzo: Bajo - Impacto: Conversión - Frecuencia: 1/semana</li>
+</ul>
+<p class="content-p"><strong>Ejemplo:</strong> <strong>Testimonio de cliente con foto:</strong> <em class="qt">&quot;Desde que integre el rapé a mi meditación matutina, mis mananas cambiaron.&quot;</em></p>
+<h4 class="sub-header">Carruseles (INSTAGRAM)</h4>
+<ul class="content-ul">
+<li>Pilar 1: Guias paso a paso, tutoriales visuales - Esfuerzo: Medio - Impacto: Engagement alto - Frecuencia: 2/semana</li>
+</ul>
+<p class="content-p"><strong>Ejemplo:</strong> <em class="qt">&quot;5 pasos para tu primera sesión de introspección con rapé&quot;</em> (5 slides educativos)</p>
+<ul class="content-ul">
+<li>Pilar 2: Historia y proceso artesanal - Esfuerzo: Medio - Impacto: Awareness - Frecuencia: 1/semana</li>
+</ul>
+<p class="content-p"><strong>Ejemplo:</strong> <em class="qt">&quot;De la Amazonia a tu espacio sagrado: el viaje de una mezcla de THESYBALAM&quot;</em> (7 slides)</p>
+<ul class="content-ul">
+<li>Pilar 3: Tips de bienestar y meditación - Esfuerzo: Medio - Impacto: Awareness - Frecuencia: 1/semana</li>
+</ul>
+<p class="content-p"><strong>Ejemplo:</strong> <em class="qt">&quot;4 tipos de meditación que puedes probar hoy (sin apps)&quot;</em> (5 slides)</p>
+<h4 class="sub-header">REELS (instagram/tiktok)</h4>
+<ul class="content-ul">
+<li>Pilar 1: Demos de uso, rutinas - Esfuerzo: Medio - Impacto: Awareness + Engagement - Frecuencia: 3/semana</li>
+</ul>
+<p class="content-p"><strong>Ejemplo:</strong> Reel de 30 seg mostrando una sesión de rapé matutina con música ambiental y subtitulos</p>
+<ul class="content-ul">
+<li>Pilar 2: Behind-the-scenes, proceso - Esfuerzo: Medio - Impacto: Awareness - Frecuencia: 1/semana</li>
+</ul>
+<p class="content-p"><strong>Ejemplo:</strong> <em class="qt">&quot;Lo que nadie te cuenta sobre como se hace el rapé artesanal&quot;</em> (Reel 60 seg)</p>
+<ul class="content-ul">
+<li>Pilar 4: Testimonios, day-in-the-life - Esfuerzo: Alto - Impacto: Conversión - Frecuencia: 1/semana</li>
+</ul>
+<p class="content-p"><strong>Ejemplo:</strong> <em class="qt">&quot;Mi rutina de introspección: un día completo con rapé&quot;</em> (Reel 90 seg)</p>
+<h4 class="sub-header">Videos largos (YOUTUBE)</h4>
+<ul class="content-ul">
+<li>Pilar 1: Tutoriales completos - Esfuerzo: Alto - Impacto: SEO + Conversión - Frecuencia: 1/mes</li>
+</ul>
+<p class="content-p"><strong>Ejemplo:</strong> <em class="qt">&quot;Guia completa: Como usar el rapé para la meditación (para principiantes)&quot;</em> (15-20 min)</p>
+<ul class="content-ul">
+<li>Pilar 2: Documentales cortos - Esfuerzo: Alto - Impacto: Awareness + Autoridad - Frecuencia: 1/mes</li>
+</ul>
+<p class="content-p"><strong>Ejemplo:</strong> <em class="qt">&quot;La tradición del rapé: historia, respeto y uso consciente&quot;</em> (10-15 min)</p>
+<h4 class="sub-header">Blog/sitio web</h4>
+<ul class="content-ul">
+<li>Pilar 1: Articulos SEO educativos - Esfuerzo: Alto - Impacto: SEO + Conversión - Frecuencia: 2/mes</li>
+</ul>
+<p class="content-p"><strong>Ejemplo:</strong> <em class="qt">&quot;Que es el rapé artesanal y como puede ayudarte en tu práctica de meditación&quot;</em> (2,000 palabras)</p>
+<ul class="content-ul">
+<li>Pilar 3: Articulos de bienestar - Esfuerzo: Medio - Impacto: SEO + Awareness - Frecuencia: 2/mes</li>
+</ul>
+<p class="content-p"><strong>Ejemplo:</strong> <em class="qt">&quot;5 herramientas ancestrales para la claridad mental que puedes integrar hoy&quot;</em></p>
+<h4 class="sub-header">Newsletters</h4>
+<ul class="content-ul">
+<li><strong>Todos los pilares:</strong> Resumen semanal, contenido exclusivo - Esfuerzo: Medio - Impacto: Retention + Conversión - Frecuencia: 1/semana</li>
+</ul>
+<p class="content-p"><strong>Ejemplo:</strong> <em class="qt">&quot;Carta semanal de THESYBALAM: reflexión de la semana + tip de uso + oferta exclusiva&quot;</em></p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="accordion" id="architecture-2">
+            <button class="accordion-trigger" onclick="toggleAccordion('architecture-2')">
+                <span class="dot" style="background: #58AFCD;"></span>
+                <span class="acc-title">Contenido por etapa del embudo</span>
+                <svg class="accordion-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 9l-7 7-7-7"/></svg>
+            </button>
+            <div class="accordion-content">
+                <div class="accordion-body">
+                    <hr class="section-divider">
+<ol class="content-ol">
+<li><em class="qt">&quot;Que es el rapé? Todo lo que necesitas saber&quot;</em> - Reel educativo viral (Pilar 2)</li>
+<li><em class="qt">&quot;3 señales de que necesitas desconectarte y reconectar contigo&quot;</em> - Carrusel inspiracional (Pilar 3)</li>
+<li><em class="qt">&quot;Herramientas ancestrales para el estrés moderno&quot;</em> - Post educativo (Pilar 3)</li>
+<li><em class="qt">&quot;La meditación no es lo único: otras herramientas de introspección&quot;</em> - Reel (Pilar 1)</li>
+<li><em class="qt">&quot;Por que cada vez mas emprendedores usan medicinas ancestrales&quot;</em> - Carrusel (Pilar 3)</li>
+</ol>
+<h4 class="sub-header">MOFU - middle of funnel (educar y nutrir)</h4>
+<hr class="section-divider">
+<ol class="content-ol">
+<li><em class="qt">&quot;Como elegir tu primera mezcla de rapé: guia para principiantes&quot;</em> - Carrusel (Pilar 1)</li>
+<li><em class="qt">&quot;Rape vs. meditación guiada: complementos, no sustitutos&quot;</em> - Post comparativo (Pilar 1)</li>
+<li><em class="qt">&quot;El viaje de una mezcla THESYBALAM: del origen a tu espacio&quot;</em> - Reel behind-the-scenes (Pilar 2)</li>
+<li><em class="qt">&quot;Preguntas frecuentes: todo sobre el uso responsable del rapé&quot;</em> - Stories Q&amp;A (Pilar 1)</li>
+<li><em class="qt">&quot;Lo que mis clientes dicen después de su primera experiencia&quot;</em> - Carrusel testimonios (Pilar 4)</li>
+</ol>
+<h4 class="sub-header">BOFU - bottom of funnel (convertir)</h4>
+<hr class="section-divider">
+<ol class="content-ol">
+<li><em class="qt">&quot;Kit de inicio THESYBALAM: que incluye y como empezar&quot;</em> - Reel producto (Pilar 1)</li>
+<li><em class="qt">&quot;Unboxing THESYBALAM: la experiencia de recibir tu primera medicina&quot;</em> - Reel (Pilar 4)</li>
+<li><em class="qt">&quot;Oferta especial: tu primer frasco + guia de uso incluida&quot;</em> - Story + Post (Pilar 1)</li>
+<li><em class="qt">&quot;Testimonio video: Asi cambio mi práctica de meditación&quot;</em> - Reel testimonio (Pilar 4)</li>
+<li><em class="qt">&quot;Por que THESYBALAM es diferente: origen, calidad y respeto&quot;</em> - Carrusel diferenciación (Pilar 2)</li>
+</ol>
+<h4 class="sub-header">Post-venta (fidelizar)</h4>
+<hr class="section-divider">
+<ol class="content-ol">
+<li><em class="qt">&quot;Nuevas mezclas del mes: para practicantes que quieren explorar&quot;</em> - Newsletter exclusiva (Pilar 2)</li>
+<li><em class="qt">&quot;Comunidad THESYBALAM: unete a nuestro grupo de práctica&quot;</em> - Post + WhatsApp (Pilar 4)</li>
+<li><em class="qt">&quot;Programa de referidos: comparte tu experiencia y recibe beneficios&quot;</em> - Stories + Post (Pilar 4)</li>
+</ol>
+                </div>
+            </div>
+        </div>
+        
+        <div class="accordion" id="architecture-3">
+            <button class="accordion-trigger" onclick="toggleAccordion('architecture-3')">
+                <span class="dot" style="background: #58AFCD;"></span>
+                <span class="acc-title">Serie signature: Momentos de claridad</span>
+                <svg class="accordion-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 9l-7 7-7-7"/></svg>
+            </button>
+            <div class="accordion-content">
+                <div class="accordion-body">
+                    <p class="content-p"><em class="qt">&quot;Momentos de Claridad&quot;</em> es una serie semanal dónde Jorge (fundador de THESYBALAM) comparte una reflexión personal breve sobre un tema de crecimiento interior, acompañada de un tip práctico de uso consciente del rapé o meditación. Es auténtica, personal y recurrente.</p>
+<p class="content-p"><strong>FORMATO:</strong> Video corto (Reel de 60-90 seg) publicado cada lunes + version texto en newsletter</p>
+<p class="content-p"><strong>FRECUENCIA:</strong> Semanal (todos los lunes)</p>
+<p class="content-p"><strong>HASHTAG:</strong> <span class="hl-tag">#MomentosDeClaridad</span></p>
+<h4 class="sub-header">Por que funciona:</h4>
+<ul class="content-ul">
+<li>Crea rutina y anticipacion en la audiencia</li>
+<li>Muestra al fundador como figura auténtica y confiable</li>
+<li>Se puede referenciar y compartir facilmente</li>
+<li>Construye autoridad en el espacio de introspección y bienestar</li>
+</ul>
+<h4 class="sub-header">8 episodios planificados:</h4>
+<p class="content-p">Episodio 1: <em class="qt">&quot;El silencio que necesitamos&quot;</em></p>
+<p class="content-p">Reflexion sobre por que vivimos con tanto ruido mental y como el silencio intencional es el primer paso hacia la claridad. Tip: ejercicio de 2 minutos de silencio con intención.</p>
+<p class="content-p">Episodio 2: <em class="qt">&quot;No necesitas retiros de 10 dias&quot;</em></p>
+<p class="content-p"><strong>Desmitificar la meditación profunda:</strong> 5 minutos con intención son suficientes. Tip: como preparar un espacio de 5 min con rapé.</p>
+<p class="content-p">Episodio 3: <em class="qt">&quot;Lo que aprendi de la medicina&quot;</em></p>
+<p class="content-p">Historia personal de Jorge sobre su primer encuentro con el rapé y como cambio su perspectiva.</p>
+<p class="content-p">Episodio 4: <em class="qt">&quot;Tu cuerpo sabe antes que tu mente&quot;</em></p>
+<p class="content-p">Reflexion sobre las señales fisicas del estrés y la saturación. Tip: body scan de 3 minutos antes de una sesión de rapé.</p>
+<p class="content-p">Episodio 5: <em class="qt">&quot;Crear desde la calma&quot;</em></p>
+<p class="content-p"><strong>Para emprendedores:</strong> como tomar mejores decisiones cuando operas desde la claridad y no desde la urgencia.</p>
+<p class="content-p">Episodio 6: <em class="qt">&quot;La tradición no es moda&quot;</em></p>
+<p class="content-p">Reflexion sobre el respeto cultural y por que es importante entender el origen de lo que usamos.</p>
+<p class="content-p">Episodio 7: <em class="qt">&quot;Ritual vs. rutina&quot;</em></p>
+<p class="content-p">La diferencia entre hacer algo por habito y hacerlo con intención. Como convertir tu práctica de rapé en un ritual significativo.</p>
+<p class="content-p">Episodio 8: <em class="qt">&quot;El poder de la recomendación&quot;</em></p>
+<p class="content-p">Reflexion sobre como la comunidad THESYBALAM ha crecido organicamente y por que la confianza es el mejor marketing.</p>
+<h4 class="sub-header">Como refuerza el posicionamiento:</h4>
+<ul class="content-ul">
+<li>Posiciona a Jorge como experto y guia, no solo como vendedor</li>
+<li>Cada episodio toca los 4 pilares de forma natural</li>
+<li>Crea un formato reconocible que la audiencia asocia con THESYBALAM</li>
+<li>Es replicable indefinidamente con nuevos temas cada semana</li>
+</ul>
+                </div>
+            </div>
+        </div>
+        </section>
+        
+    <section class="strategy-section" id="channels">
+        <div class="section-header">
+            <div class="section-number" style="background: #D1515222; color: #D15152;">C</div>
+            <h2 class="section-title">Canales & calendario</h2>
+        </div>
+    
+        <div class="accordion" id="channels-0">
+            <button class="accordion-trigger" onclick="toggleAccordion('channels-0')">
+                <span class="dot" style="background: #D15152;"></span>
+                <span class="acc-title">Estrategia por canal (5 canales)</span>
+                <svg class="accordion-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 9l-7 7-7-7"/></svg>
+            </button>
+            <div class="accordion-content">
+                <div class="accordion-body">
+                    <hr class="section-divider">
+<p class="content-p"><strong>Objetivo:</strong> Construir awareness, engagement y comunidad. Es el canal de descubrimiento principal y dónde la audiencia objetivo pasa mas tiempo.</p>
+<p class="content-p">Tipos de contenido:</p>
+<ul class="content-ul">
+<li>Reels (60-90 seg): Tutoriales de uso, behind-the-scenes, <em class="qt">&quot;Momentos de Claridad&quot;</em>, testimonios</li>
+<li><strong>Carruseles:</strong> Guias paso a paso, datos culturales, tips de bienestar</li>
+<li><strong>Posts:</strong> Frases reflexivas, testimonios cortos, preguntas a la comunidad</li>
+<li><strong>Stories:</strong> Q&amp;A, encuestas, contenido del día a día, ofertas flash</li>
+</ul>
+<p class="content-p"><strong>Frecuencia:</strong> 5-6 publicaciones por semana en feed (3 Reels + 2 Carruseles + 1 Post), Stories diarias</p>
+<p class="content-p">Horarios optimos para México (bienestar/espiritualidad):</p>
+<ul class="content-ul">
+<li><strong>Lunes a Viernes:</strong> 7:00-8:30 AM (rutina matutina) y 8:00-9:30 PM (reflexión nocturna)</li>
+<li><strong>Sábado:</strong> 9:00-11:00 AM</li>
+<li><strong>Domingo:</strong> 10:00 AM-12:00 PM</li>
+</ul>
+<p class="content-p">Metricas clave:</p>
+<ul class="content-ul">
+<li>Engagement rate (meta: <span class="hl-blue">4.0%</span> o superior, benchmark wellness 2025)</li>
+<li>Guardados por post (indicador de contenido valioso)</li>
+<li>Seguidores nuevos/semana</li>
+<li>DMs recibidos (interés de compra)</li>
+<li>Alcance de Reels</li>
+</ul>
+<p class="content-p">Estrategia de crecimiento (primeros 90 dias):</p>
+<ul class="content-ul">
+<li>Semana 1-2: Establecer consistencia, publicar 5x/semana</li>
+<li>Semana 3-4: Lanzar serie <em class="qt">&quot;Momentos de Claridad&quot;</em>, activar hashtag strategy</li>
+<li>Mes 2: Colaboraciones con 2-3 cuentas de meditación/bienestar, primer Reel viral educativo</li>
+<li>Mes 3: Activar UGC con clientes, primeras Lives de Q&amp;A</li>
+</ul>
+<p class="content-p">Ejemplo de post ideal:</p>
+<p class="content-p"><strong>REEL:</strong> Jorge mostrando su rutina matutina con rapé, música ambiental suave, subtitulos en español. Caption: <em class="qt">&quot;Cada mañana empiezo con 5 minutos de silencio y una intención clara. El rapé me ayuda a crear ese espacio de pausa que necesito antes de empezar el día. No se trata de perfeccion, se trata de intención. ¿Tu como empiezas tu día? <span class="hl-tag">#MomentosDeClaridad</span> <span class="hl-tag">#THESYBALAM</span> <span class="hl-tag">#IntrospeccionConsciente</span>&quot;</em></p>
+<h4 class="sub-header">Canal 2: YOUTUBE (canal de profundidad)</h4>
+<hr class="section-divider">
+<p class="content-p"><strong>Objetivo:</strong> Posicionamiento SEO, contenido educativo largo que construya autoridad como experto.</p>
+<p class="content-p">Tipos de contenido:</p>
+<ul class="content-ul">
+<li>Tutoriales completos (15-20 min): <em class="qt">&quot;Guia completa para principiantes&quot;</em></li>
+<li>Mini-documentales (10-15 min): Origen del rapé, tradiciones ancestrales</li>
+<li>Vlogs reflexivos (8-12 min): Reflexiones personales de Jorge sobre la práctica</li>
+<li><strong>Shorts:</strong> Repurposing de Reels de Instagram</li>
+</ul>
+<p class="content-p"><strong>Frecuencia:</strong> 1 video largo al mes + 4-8 Shorts al mes (repurposing de Reels)</p>
+<p class="content-p">Horarios optimos:</p>
+<ul class="content-ul">
+<li><strong>Jueves o Viernes:</strong> 5:00-6:00 PM (pre-fin de semana, audiencia reflexiva)</li>
+<li><strong>Shorts:</strong> Mismos horarios que Instagram Reels</li>
+</ul>
+<p class="content-p">Metricas clave:</p>
+<ul class="content-ul">
+<li>Tiempo de visualizacion promedio</li>
+<li>Suscriptores nuevos/mes</li>
+<li>Clicks al sitio web desde descripción</li>
+<li>Ranking en busquedas de <em class="qt">&quot;rapé artesanal&quot;</em>, <em class="qt">&quot;meditación con rapé&quot;</em>, <em class="qt">&quot;uso consciente del rapé&quot;</em></li>
+</ul>
+<p class="content-p">Estrategia de crecimiento (primeros 90 dias):</p>
+<ul class="content-ul">
+<li>Mes 1: Publicar primer video flagship <em class="qt">&quot;Que es el rapé y como usarlo conscientemente&quot;</em></li>
+<li>Mes 2: Segundo video <em class="qt">&quot;Guia de mezclas THESYBALAM&quot;</em> + empezar Shorts</li>
+<li>Mes 3: Tercer video sobre tradición + primer vlog personal</li>
+</ul>
+<p class="content-p">Ejemplo de contenido ideal:</p>
+<p class="content-p"><strong>VIDEO:</strong> <em class="qt">&quot;Guia completa: Que es el rapé artesanal y como integrarlo a tu práctica de meditación&quot;</em> - 18 minutos, capitulos marcados, descripción SEO con keywords, links al sitio y redes.</p>
+<h4 class="sub-header">Canal 3: newsletter/email marketing (canal de nurturing)</h4>
+<hr class="section-divider">
+<p class="content-p"><strong>Objetivo:</strong> Nutrir leads, fidelizar clientes existentes, y desarrollar la relación mas alla de redes sociales.</p>
+<p class="content-p">Tipos de contenido:</p>
+<ul class="content-ul">
+<li><em class="qt">&quot;Carta semanal de THESYBALAM&quot;</em>: Reflexion personal + tip de uso + novedad de la semana</li>
+<li><strong>Contenido exclusivo:</strong> Guias descargables, acceso anticipado a nuevas mezclas</li>
+<li><strong>Secuencias automatizadas:</strong> Bienvenida, educación, primera compra</li>
+</ul>
+<p class="content-p"><strong>Frecuencia:</strong> 1 email semanal (domingos por la noche, reflexión pre-semana)</p>
+<p class="content-p">Metricas clave:</p>
+<ul class="content-ul">
+<li>Tasa de apertura (meta: <span class="hl-blue">35%</span>+, benchmark wellness)</li>
+<li>Tasa de clicks (meta: <span class="hl-blue">5%</span>+)</li>
+<li>Tasa de conversión directa</li>
+<li>Crecimiento de lista/mes</li>
+</ul>
+<p class="content-p">Ejemplo de newsletter ideal:</p>
+<p class="content-p"><strong>ASUNTO:</strong> <em class="qt">&quot;El silencio que necesitas esta semana&quot;</em></p>
+<p class="content-p"><strong>CONTENIDO:</strong> Reflexion personal de 3 parrafos sobre la importancia de crear momentos de pausa + tip pratico de uso del rapé para la semana + link al Reel de <span class="hl-tag">#MomentosDeClaridad</span> + oferta de producto con descuento para suscriptores</p>
+<h4 class="sub-header">Canal 4: blog/sitio web (canal SEO)</h4>
+<hr class="section-divider">
+<p class="content-p"><strong>Objetivo:</strong> Capturar trafico orgánico de busqueda, educar a audiencia fria, y servir como hub central de contenido.</p>
+<p class="content-p">Tipos de contenido:</p>
+<ul class="content-ul">
+<li>Articulos SEO (1,500-2,500 palabras): Guias educativas, que es el rapé, como se usa</li>
+<li><strong>Paginas de producto enriquecidas:</strong> Con historia, uso recomendado, testimonios</li>
+<li>Landing pages para lead magnets</li>
+</ul>
+<p class="content-p"><strong>Frecuencia:</strong> 2 artículos al mes</p>
+<p class="content-p">Keywords objetivo:</p>
+<ul class="content-ul">
+<li><em class="qt">&quot;rapé artesanal&quot;</em> / <em class="qt">&quot;que es el rapé&quot;</em> / <em class="qt">&quot;rapé meditación&quot;</em></li>
+<li><em class="qt">&quot;herramientas de introspección&quot;</em> / <em class="qt">&quot;meditación con plantas&quot;</em></li>
+<li><em class="qt">&quot;medicina ancestral para meditación&quot;</em> / <em class="qt">&quot;uso consciente del rapé&quot;</em></li>
+</ul>
+<p class="content-p">Metricas clave:</p>
+<ul class="content-ul">
+<li>Trafico orgánico mensual</li>
+<li>Tiempo en página</li>
+<li>Conversión de visita a suscriptor de newsletter</li>
+<li>Ranking de keywords principales</li>
+</ul>
+<h4 class="sub-header">Canal 5: WHATSAPP business (canal de conversión)</h4>
+<hr class="section-divider">
+<p class="content-p"><strong>Objetivo:</strong> Comunicacion directa, atención al cliente, y cierre de ventas. Canal mas personal y de mayor conversión.</p>
+<p class="content-p">Tipos de contenido:</p>
+<ul class="content-ul">
+<li>Catalogo actualizado de productos</li>
+<li>Respuestas automatizadas para preguntas frecuentes</li>
+<li>Listas de difusión con contenido exclusivo para clientes</li>
+<li>Seguimiento post-compra personalizado</li>
+</ul>
+<p class="content-p"><strong>Frecuencia:</strong> Difusion 1x/semana, respuesta a consultas en menos de 2 horas</p>
+<p class="content-p">Metricas clave:</p>
+<ul class="content-ul">
+<li>Tiempo de respuesta promedio</li>
+<li>Tasa de conversión de consulta a venta</li>
+<li>Satisfaccion del cliente post-compra</li>
+</ul>
+                </div>
+            </div>
+        </div>
+        
+        <div class="accordion" id="channels-1">
+            <button class="accordion-trigger" onclick="toggleAccordion('channels-1')">
+                <span class="dot" style="background: #D15152;"></span>
+                <span class="acc-title">Calendario editorial mensual</span>
+                <svg class="accordion-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 9l-7 7-7-7"/></svg>
+            </button>
+            <div class="accordion-content">
+                <div class="accordion-body">
+                    <h4 class="sub-header">Lunes</h4>
+<ul class="content-ul">
+<li><strong>Instagram Reel:</strong> <span class="hl-tag">#MomentosDeClaridad</span> Ep. 1 <em class="qt">&quot;El silencio que necesitamos&quot;</em> (Pilar 1)</li>
+<li><strong>Newsletter:</strong> Carta semanal de THESYBALAM</li>
+</ul>
+<h4 class="sub-header">Martes</h4>
+<ul class="content-ul">
+<li><strong>Instagram Carrusel:</strong> <em class="qt">&quot;Que es el rapé artesanal: 5 cosas que necesitas saber&quot;</em> (Pilar 2) **ALTA PRIORIDAD**</li>
+<li><strong>Instagram Stories:</strong> Encuesta <em class="qt">&quot;¿Conoces el rapé?&quot;</em></li>
+</ul>
+<h4 class="sub-header">Miércoles</h4>
+<ul class="content-ul">
+<li><strong>Instagram Reel:</strong> <em class="qt">&quot;Mi rutina matutina de 5 minutos&quot;</em> (Pilar 1)</li>
+</ul>
+<h4 class="sub-header">Jueves</h4>
+<ul class="content-ul">
+<li><strong>Instagram Carrusel:</strong> <em class="qt">&quot;3 señales de que necesitas un momento de pausa&quot;</em> (Pilar 3)</li>
+<li><strong>Blog:</strong> Publicar artículo SEO <em class="qt">&quot;Que es el rapé artesanal y como puede complementar tu meditación&quot;</em></li>
+</ul>
+<h4 class="sub-header">Viernes</h4>
+<ul class="content-ul">
+<li><strong>Instagram Post:</strong> Frase reflexiva sobre introspección (Pilar 1)</li>
+<li><strong>Instagram Stories:</strong> Behind-the-scenes del empaque de pedidos</li>
+</ul>
+<h4 class="sub-header">Sábado</h4>
+<ul class="content-ul">
+<li><strong>Instagram Reel:</strong> Proceso de elaboración del rapé (Pilar 2)</li>
+</ul>
+<h4 class="sub-header">Domingo</h4>
+<ul class="content-ul">
+<li>Descanso de publicaciones / Preparar contenido de la semana</li>
+</ul>
+<h4 class="sub-header">Semana 2: "profundidad"</h4>
+<h4 class="sub-header">Lunes</h4>
+<ul class="content-ul">
+<li><strong>Instagram Reel:</strong> <span class="hl-tag">#MomentosDeClaridad</span> Ep. 2 <em class="qt">&quot;No necesitas retiros de 10 dias&quot;</em> (Pilar 1) **SERIE SIGNATURE**</li>
+<li>Newsletter</li>
+</ul>
+<h4 class="sub-header">Martes</h4>
+<ul class="content-ul">
+<li><strong>Instagram Carrusel:</strong> <em class="qt">&quot;Como usar tu kuripe: guia visual paso a paso&quot;</em> (Pilar 1) **ALTA PRIORIDAD**</li>
+</ul>
+<h4 class="sub-header">Miércoles</h4>
+<ul class="content-ul">
+<li><strong>Instagram Reel:</strong> <em class="qt">&quot;La diferencia entre consumo y práctica consciente&quot;</em> (Pilar 1)</li>
+<li><strong>Instagram Stories:</strong> Q&amp;A sobre uso del rapé</li>
+</ul>
+<h4 class="sub-header">Jueves</h4>
+<ul class="content-ul">
+<li><strong>Instagram Post:</strong> Testimonio de cliente (Pilar 4)</li>
+<li><strong>YouTube:</strong> Publicar video largo del mes (Pilar 1/2)</li>
+</ul>
+<h4 class="sub-header">Viernes</h4>
+<ul class="content-ul">
+<li><strong>Instagram Carrusel:</strong> <em class="qt">&quot;4 herramientas de introspección que no requieren tecnologia&quot;</em> (Pilar 3)</li>
+<li><strong>Instagram Stories:</strong> Detras de camaras grabando YouTube</li>
+</ul>
+<h4 class="sub-header">Sábado</h4>
+<ul class="content-ul">
+<li><strong>Instagram Reel:</strong> Mostrando las mezclas de THESYBALAM y sus caracteristicas (Pilar 2)</li>
+</ul>
+<h4 class="sub-header">Semana 3: "comunidad"</h4>
+<h4 class="sub-header">Lunes</h4>
+<ul class="content-ul">
+<li><strong>Instagram Reel:</strong> <span class="hl-tag">#MomentosDeClaridad</span> Ep. 3 <em class="qt">&quot;Lo que aprendi de la medicina&quot;</em> (Pilar 1) **SERIE SIGNATURE**</li>
+<li>Newsletter</li>
+</ul>
+<h4 class="sub-header">Martes</h4>
+<ul class="content-ul">
+<li><strong>Instagram Carrusel:</strong> <em class="qt">&quot;5 pasos para tu primera sesión de introspección&quot;</em> (Pilar 1) **ALTA PRIORIDAD**</li>
+</ul>
+<h4 class="sub-header">Miércoles</h4>
+<ul class="content-ul">
+<li><strong>Instagram Reel:</strong> Testimonio en video de un cliente (Pilar 4)</li>
+</ul>
+<h4 class="sub-header">Jueves</h4>
+<ul class="content-ul">
+<li><strong>Instagram Post:</strong> <em class="qt">&quot;Preguntas que me hacen siempre sobre THESYBALAM&quot;</em> (Pilar 4)</li>
+<li><strong>Blog:</strong> Publicar artículo SEO <span class="hl-tag">#2</span> del mes</li>
+</ul>
+<h4 class="sub-header">Viernes</h4>
+<ul class="content-ul">
+<li><strong>Instagram Carrusel:</strong> <em class="qt">&quot;Respeto cultural: por que importa saber de dónde viene lo que usas&quot;</em> (Pilar 2)</li>
+<li><strong>Instagram Stories:</strong> Encuesta sobre temas de contenido</li>
+</ul>
+<h4 class="sub-header">Sábado</h4>
+<ul class="content-ul">
+<li><strong>Instagram Reel:</strong> <em class="qt">&quot;Un día en la vida de un practicante de rapé consciente&quot;</em> (Pilar 4)</li>
+</ul>
+<h4 class="sub-header">Semana 4: "conversión"</h4>
+<h4 class="sub-header">Lunes</h4>
+<ul class="content-ul">
+<li><strong>Instagram Reel:</strong> <span class="hl-tag">#MomentosDeClaridad</span> Ep. 4 <em class="qt">&quot;Tu cuerpo sabe antes que tu mente&quot;</em> (Pilar 1) **SERIE SIGNATURE**</li>
+<li>Newsletter con oferta especial</li>
+</ul>
+<h4 class="sub-header">Martes</h4>
+<ul class="content-ul">
+<li><strong>Instagram Carrusel:</strong> <em class="qt">&quot;Kit de inicio THESYBALAM: que incluye y por que&quot;</em> (Pilar 1) **ALTA PRIORIDAD - CONVERSION**</li>
+</ul>
+<h4 class="sub-header">Miércoles</h4>
+<ul class="content-ul">
+<li><strong>Instagram Reel:</strong> <em class="qt">&quot;Unboxing THESYBALAM&quot;</em> con música y estética cuidada (Pilar 4)</li>
+<li><strong>Instagram Stories:</strong> Oferta flash 24 hrs</li>
+</ul>
+<h4 class="sub-header">Jueves</h4>
+<ul class="content-ul">
+<li><strong>Instagram Post:</strong> <em class="qt">&quot;Resumen del mes: lo mejor de <span class="hl-tag">#MomentosDeClaridad</span>&quot;</em> (Comunidad)</li>
+</ul>
+<h4 class="sub-header">Viernes</h4>
+<ul class="content-ul">
+<li><strong>Instagram Carrusel:</strong> <em class="qt">&quot;Por que THESYBALAM es diferente&quot;</em> - diferenciadores clave (Pilar 2)</li>
+<li><strong>WhatsApp:</strong> Difusion de oferta de cierre de mes a lista de clientes</li>
+</ul>
+<h4 class="sub-header">Sábado</h4>
+<ul class="content-ul">
+<li><strong>Instagram Reel:</strong> Preview del contenido del próximo mes</li>
+</ul>
+                </div>
+            </div>
+        </div>
+        
+        <div class="accordion" id="channels-2">
+            <button class="accordion-trigger" onclick="toggleAccordion('channels-2')">
+                <span class="dot" style="background: #D15152;"></span>
+                <span class="acc-title">Sistema de distribución y amplificación</span>
+                <svg class="accordion-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 9l-7 7-7-7"/></svg>
+            </button>
+            <div class="accordion-content">
+                <div class="accordion-body">
+                    <p class="content-p">Ejemplo con video largo de YouTube:</p>
+<ol class="content-ol">
+<li>Video YouTube (pieza madre): <em class="qt">&quot;Guia completa del rapé artesanal&quot;</em> - 15 min</li>
+<li>Reel 1: Extracto de 60 seg con el momento mas impactante</li>
+<li>Reel 2: Segundo extracto con tip práctico</li>
+<li><strong>Carrusel:</strong> Resume los puntos clave en 5 slides</li>
+<li><strong>Post:</strong> Cita reflexiva del video</li>
+<li><strong>Stories:</strong> 3-5 Stories con fragmentos y link al video completo</li>
+<li><strong>Newsletter:</strong> Resumen del video + link + reflexión adicional exclusiva</li>
+</ol>
+<h4 class="sub-header">Estrategia de crossposting</h4>
+<ul class="content-ul">
+<li>Instagram Reels se publican también como TikTok y YouTube Shorts</li>
+<li>Carruseles de Instagram se adaptan como posts de Facebook</li>
+<li>Contenido de blog se fragmenta para newsletters</li>
+<li>Testimonios de WhatsApp se editan como contenido de Instagram (con permiso)</li>
+</ul>
+<h4 class="sub-header">Estrategia de hashtags</h4>
+<p class="content-p">Hashtags principales (usar en cada post):</p>
+<p class="content-p"><span class="hl-tag">#THESYBALAM</span> <span class="hl-tag">#RapeArtesanal</span> <span class="hl-tag">#MomentosDeClaridad</span></p>
+<p class="content-p">Hashtags por pilar:</p>
+<ul class="content-ul">
+<li>Pilar 1: <span class="hl-tag">#UsoConsciente</span> <span class="hl-tag">#TrabajInterior</span> <span class="hl-tag">#IntrospeccionConsciente</span> <span class="hl-tag">#ClaridadMental</span> <span class="hl-tag">#MeditacionConsciente</span></li>
+<li>Pilar 2: <span class="hl-tag">#MedicinaAncestral</span> <span class="hl-tag">#SabiduriaAncestral</span> <span class="hl-tag">#TradicionViva</span> <span class="hl-tag">#RespetoCultural</span> <span class="hl-tag">#RapeTradicional</span></li>
+<li>Pilar 3: <span class="hl-tag">#BienestarMental</span> <span class="hl-tag">#PausaConsciente</span> <span class="hl-tag">#Meditación</span> <span class="hl-tag">#Mindfulness</span> <span class="hl-tag">#DesarrolloPersonal</span></li>
+<li>Pilar 4: <span class="hl-tag">#ComunidadConsciente</span> <span class="hl-tag">#ExperienciaReal</span> <span class="hl-tag">#TestimonioReal</span></li>
+</ul>
+<h4 class="sub-header">Colaboraciones sugeridas</h4>
+<ul class="content-ul">
+<li>Cuentas de meditación en español (10K-50K seguidores)</li>
+<li>Instructores de yoga con interés en medicinas ancestrales</li>
+<li>Podcasts de desarrollo personal y bienestar en LATAM</li>
+<li>Terapeutas y coaches que integren herramientas ancestrales</li>
+</ul>
+                </div>
+            </div>
+        </div>
+        
+        <div class="accordion" id="channels-3">
+            <button class="accordion-trigger" onclick="toggleAccordion('channels-3')">
+                <span class="dot" style="background: #D15152;"></span>
+                <span class="acc-title">Workflow de producción semanal</span>
+                <svg class="accordion-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 9l-7 7-7-7"/></svg>
+            </button>
+            <div class="accordion-content">
+                <div class="accordion-body">
+                    <p class="content-p">BLOQUE 1 - DOMINGO (1.5 horas): PLANIFICACION Y BATCH</p>
+<ul class="content-ul">
+<li>30 min: Revisar calendario de la semana, preparar temas</li>
+<li>30 min: Grabar 2-3 Reels de la semana (batch recording)</li>
+<li>30 min: Escribir captions y preparar carruseles en Canva</li>
+</ul>
+<p class="content-p">BLOQUE 2 - MIERCOLES (1 hora): CREACION</p>
+<ul class="content-ul">
+<li>30 min: Editar Reels grabados el domingo (CapCut o InShot)</li>
+<li>30 min: Crear Stories de la semana, responder DMs importantes</li>
+</ul>
+<p class="content-p">BLOQUE 3 - VIERNES (1 hora): ENGAGEMENT Y PROGRAMACION</p>
+<ul class="content-ul">
+<li>30 min: Programar contenido de la próxima semana (Meta Business Suite)</li>
+<li>15 min: Responder comentarios y DMs pendientes</li>
+<li>15 min: Investigar contenido de competidores y tendencias</li>
+</ul>
+<p class="content-p">BLOQUE 4 - NEWSLETTER (30 min semanales):</p>
+<ul class="content-ul">
+<li>30 min el domingo por la noche: Escribir la carta semanal</li>
+</ul>
+<h4 class="sub-header">Herramientas recomendadas:</h4>
+<ul class="content-ul">
+<li><strong>Canva Pro:</strong> Diseño de carruseles y posts (ya lo tiene)</li>
+<li><strong>Meta Business Suite:</strong> Programacion de Instagram y Facebook (gratuito)</li>
+<li><strong>CapCut:</strong> Edicion de Reels (gratuito)</li>
+<li><strong>Mailchimp o MailerLite:</strong> Newsletters (plan gratuito hasta 1,000 suscriptores)</li>
+<li><strong>Google Sheets:</strong> Calendario editorial (gratuito)</li>
+<li><strong>WhatsApp Business:</strong> Catalogo y difusiones (gratuito)</li>
+</ul>
+<h4 class="sub-header">Checklist de publicación:</h4>
+<p class="content-p">Antes de publicar cada pieza:</p>
+<ul class="content-ul">
+<li>Subtitulos en todos los videos</li>
+<li>Hashtags del pilar correspondiente + marca</li>
+<li>CTA claro en el caption (pregunta, link, o acción)</li>
+<li>Link en bio actualizado</li>
+<li>Preview en Stories del nuevo post</li>
+</ul>
+                </div>
+            </div>
+        </div>
+        </section>
+        
+    <section class="strategy-section" id="conversion">
+        <div class="section-header">
+            <div class="section-number" style="background: #C5A14922; color: #C5A149;">D</div>
+            <h2 class="section-title">Sistema de conversión</h2>
+        </div>
+    
+        <div class="accordion" id="conversion-0">
+            <button class="accordion-trigger" onclick="toggleAccordion('conversion-0')">
+                <span class="dot" style="background: #C5A149;"></span>
+                <span class="acc-title">Lead magnets y captura de emails</span>
+                <svg class="accordion-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 9l-7 7-7-7"/></svg>
+            </button>
+            <div class="accordion-content">
+                <div class="accordion-body">
+                    <hr class="section-divider">
+<p class="content-p"><strong>Formato:</strong> PDF descargable (8-10 páginas, disenado en Canva)</p>
+<p class="content-p">Contenido propuesto:</p>
+<ul class="content-ul">
+<li>Pagina 1: Portada con branding THESYBALAM</li>
+<li>Pagina 2: Que es el rapé y por que es una herramienta de introspección</li>
+<li>Pagina 3: Que necesitas para tu primera sesión (materiales)</li>
+<li>Pagina 4: Preparacion del espacio y la intención</li>
+<li>Pagina 5-6: Paso a paso de la sesión (con ilustraciones)</li>
+<li>Pagina 7: Que esperar después de tu primera experiencia</li>
+<li>Pagina 8: Preguntas frecuentes</li>
+<li>Pagina 9: Invitacion a explorar las mezclas de THESYBALAM con link directo</li>
+<li>Pagina 10: Redes sociales y contacto</li>
+</ul>
+<p class="content-p">Canal de distribución:</p>
+<ul class="content-ul">
+<li>Link en bio de Instagram → landing page simple → descarga con email</li>
+<li>Pop-up en sitio web para visitantes nuevos</li>
+<li><strong>CTA en Reels educativos:</strong> <em class="qt">&quot;Descarga la guia gratuita, link en bio&quot;</em></li>
+<li>Mencion en newsletter de bienvenida</li>
+</ul>
+<p class="content-p">Llamada a la acción:</p>
+<p class="content-p"><em class="qt">&quot;Descarga tu guia gratuita y empieza tu práctica de introspección consciente esta semana&quot;</em></p>
+<p class="content-p">Conexión con oferta principal:</p>
+<p class="content-p">La guia presenta el rapé como herramienta central → al final recomienda las mezclas de THESYBALAM como la opcion ideal para comenzar → link directo a tienda con código de descuento exclusivo para nuevos suscriptores (<span class="hl-blue">10%</span> off primer compra)</p>
+<h4 class="sub-header">Lead magnet 2: "5 rituales de claridad para tu semana"</h4>
+<hr class="section-divider">
+<p class="content-p"><strong>Formato:</strong> Email course de 5 dias (1 email diario, automatizado)</p>
+<p class="content-p">Contenido propuesto:</p>
+<ul class="content-ul">
+<li>Dia 1: <em class="qt">&quot;Ritual de la mañana: 3 minutos de silencio con intención&quot;</em> - ejercicio de respiracion + como integrar rapé si lo deseas</li>
+<li>Dia 2: <em class="qt">&quot;Ritual del mediodia: La pausa de 2 minutos&quot;</em> - técnica de body scan rápido para resetear</li>
+<li>Dia 3: <em class="qt">&quot;Ritual nocturno: Soltar el día con gratitud&quot;</em> - práctica de reflexión con diario + rapé opcional</li>
+<li>Dia 4: <em class="qt">&quot;Ritual semanal: El espacio sagrado en tu hogar&quot;</em> - como crear un rincon de práctica</li>
+<li>Dia 5: <em class="qt">&quot;Tu plan personalizado de claridad&quot;</em> - resumen + invitacion a elegir tu primera mezcla THESYBALAM</li>
+</ul>
+<p class="content-p">Canal de distribución:</p>
+<ul class="content-ul">
+<li>CTA en posts de Pilar 3 (Bienestar): <em class="qt">&quot;Recibe 5 rituales gratuitos directo en tu email&quot;</em></li>
+<li>Stories de Instagram con swipe-up/link</li>
+<li><strong>Colaboraciones con cuentas de meditación:</strong> <em class="qt">&quot;regalo para tu audiencia&quot;</em></li>
+</ul>
+<p class="content-p">Llamada a la acción:</p>
+<p class="content-p"><em class="qt">&quot;Empieza hoy: recibe un ritual de claridad por día durante 5 dias, completamente gratis&quot;</em></p>
+<p class="content-p">Conexión con oferta principal:</p>
+<p class="content-p">Los rituales integran el rapé de manera natural → Dia 5 invita a elegir la primera mezcla → secuencia de nurturing continua después del día 5</p>
+<h4 class="sub-header">Lead magnet 3: "mapa de mezclas THESYBALAM: encuentra tu medicina"</h4>
+<hr class="section-divider">
+<p class="content-p"><strong>Formato:</strong> Pagina interactiva en el sitio web (quiz corto de 5 preguntas)</p>
+<p class="content-p">Contenido propuesto:</p>
+<ul class="content-ul">
+<li>Pregunta 1: Que buscas en este momento (claridad, calma, enfoque, conexión)</li>
+<li>Pregunta 2: Con que frecuencia prácticas meditación o introspección</li>
+<li>Pregunta 3: Tienes experiencia previa con medicinas ancestrales</li>
+<li>Pregunta 4: Prefieres experiencias suaves o profundas</li>
+<li>Pregunta 5: Que momento del día prefieres para tu práctica</li>
+<li><strong>Resultado:</strong> Recomendacion personalizada de mezcla + descripción + link de compra directa</li>
+</ul>
+<p class="content-p">Canal de distribución:</p>
+<ul class="content-ul">
+<li>Link en bio de Instagram con copy <em class="qt">&quot;Descubre cuál mezcla es para ti&quot;</em></li>
+<li><strong>CTA en Reels sobre mezclas:</strong> <em class="qt">&quot;Haz el quiz, link en bio&quot;</em></li>
+<li><strong>WhatsApp:</strong> Compartir link del quiz a leads que preguntan <em class="qt">&quot;cuál me recomiendas&quot;</em></li>
+</ul>
+<p class="content-p">Llamada a la acción:</p>
+<p class="content-p"><em class="qt">&quot;Descubre cuál mezcla de rapé es ideal para ti en menos de 2 minutos&quot;</em></p>
+<p class="content-p">Conexión con oferta principal:</p>
+<p class="content-p">Resultado directo → recomendación de producto específico → link compra directa → email de seguimiento con <span class="hl-blue">10%</span> off si no compro en 24 hrs</p>
+<hr class="section-divider">
+<p class="content-p">LANDING PAGE <em class="qt">&quot;Guia de Inicio&quot;</em>:</p>
+<ul class="content-ul">
+<li><strong>Headline:</strong> <em class="qt">&quot;Tu primera sesión de introspección con rapé: guia paso a paso&quot;</em></li>
+<li><strong>Subheadline:</strong> <em class="qt">&quot;Descarga la guia gratuita y descubre como crear momentos de claridad en tu vida diaria&quot;</em></li>
+<li><strong>Imagen:</strong> Mockup de la guia con estética premium</li>
+<li><strong>Formulario:</strong> Solo nombre + email</li>
+<li><strong>Social proof:</strong> <em class="qt">&quot;Mas de [X] personas ya descargaron la guia&quot;</em></li>
+</ul>
+<h4 class="sub-header">Secuencia de 5 emails post-descarga:</h4>
+<p class="content-p">Email 1 - Inmediato (bienvenida)</p>
+<ul class="content-ul">
+<li><strong>Asunto:</strong> <em class="qt">&quot;Tu guia esta aquí. Tu primer paso hacia la claridad.&quot;</em></li>
+<li><strong>Objetivo:</strong> Entregar la guia + establecer relación</li>
+<li><strong>Contenido:</strong> Link de descarga, breve presentación de Jorge y THESYBALAM, que esperar en los proximos emails</li>
+<li><strong>CTA:</strong> <em class="qt">&quot;Descarga tu guia y cuentame como te fue&quot;</em></li>
+</ul>
+<p class="content-p">Email 2 - Dia 2 (educación)</p>
+<ul class="content-ul">
+<li><strong>Asunto:</strong> <em class="qt">&quot;Lo que nadie te dice sobre el rapé (y por que importa)&quot;</em></li>
+<li><strong>Objetivo:</strong> Educar sobre uso consciente vs. superficial</li>
+<li><strong>Contenido:</strong> Desmitificar ideas comunes, explicar la diferencia de THESYBALAM, breve historia del fundador</li>
+<li><strong>CTA:</strong> <em class="qt">&quot;Siguenos en Instagram para mas contenido sobre uso consciente&quot;</em></li>
+</ul>
+<p class="content-p">Email 3 - Dia 4 (profundizacion)</p>
+<ul class="content-ul">
+<li><strong>Asunto:</strong> <em class="qt">&quot;3 formas de integrar la introspección a tu rutina diaria&quot;</em></li>
+<li><strong>Objetivo:</strong> Mostrar aplicación práctica</li>
+<li><strong>Contenido:</strong> Tips concretas que NO requieren compra, pero que se potencian con rapé, link a video de YouTube tutorial</li>
+<li><strong>CTA:</strong> <em class="qt">&quot;Mira el tutorial completo en YouTube&quot;</em></li>
+</ul>
+<p class="content-p">Email 4 - Dia 7 (social proof)</p>
+<ul class="content-ul">
+<li><strong>Asunto:</strong> <em class="qt">&quot;Esto es lo que dicen quienes ya practican con THESYBALAM&quot;</em></li>
+<li><strong>Objetivo:</strong> Construir confianza con testimonios</li>
+<li><strong>Contenido:</strong> 3 testimonios de clientes reales (con permiso), fotos de productos, experiencias compartidas</li>
+<li><strong>CTA:</strong> <em class="qt">&quot;Descubre nuestras mezclas&quot;</em></li>
+</ul>
+<p class="content-p">Email 5 - Dia 10 (conversión)</p>
+<ul class="content-ul">
+<li><strong>Asunto:</strong> <em class="qt">&quot;Tu primera mezcla te espera (con un regalo especial)&quot;</em></li>
+<li><strong>Objetivo:</strong> Conversión a primera compra</li>
+<li><strong>Contenido:</strong> Recomendacion de mezcla para principiantes, descripción del kit de inicio, código de descuento exclusivo (<span class="hl-blue">10%</span> off), garantia de satisfaccion</li>
+<li><strong>CTA:</strong> <em class="qt">&quot;Comienza tu práctica con <span class="hl-blue">10%</span> de descuento - Codigo: CLARIDAD10&quot;</em></li>
+</ul>
+                </div>
+            </div>
+        </div>
+        
+        <div class="accordion" id="conversion-1">
+            <button class="accordion-trigger" onclick="toggleAccordion('conversion-1')">
+                <span class="dot" style="background: #C5A149;"></span>
+                <span class="acc-title">Lead scoring y calificación</span>
+                <svg class="accordion-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 9l-7 7-7-7"/></svg>
+            </button>
+            <div class="accordion-content">
+                <div class="accordion-body">
+                    <p class="content-p">Lead Frio (solo awareness):</p>
+<ul class="content-ul">
+<li>Sigue la cuenta pero no interactua</li>
+<li>Descargo la guia pero no abrio emails</li>
+<li><strong>Accion:</strong> Mantener en lista de newsletter, no contactar directamente</li>
+</ul>
+<p class="content-p">Lead Tibio (interés activo):</p>
+<ul class="content-ul">
+<li>Interactua con contenido regularmente (likes, guardados, comentarios)</li>
+<li>Abrio 3+ emails de la secuencia</li>
+<li>Envio un DM con pregunta general</li>
+<li>Hizo el quiz de mezclas</li>
+<li><strong>Accion:</strong> Responder DMs en menos de 2 horas, enviar oferta personalizada</li>
+</ul>
+<p class="content-p">Lead Caliente (intención de compra):</p>
+<ul class="content-ul">
+<li>Pregunto precio, disponibilidad o envio por DM o WhatsApp</li>
+<li>Visito la tienda en línea 2+ veces</li>
+<li>Uso el código de descuento pero no completo la compra</li>
+<li>Comento en posts de producto <em class="qt">&quot;como lo puedo comprar&quot;</em> o similar</li>
+<li><strong>Accion:</strong> Contactar via WhatsApp con mensaje personalizado en menos de 1 hora</li>
+</ul>
+<h4 class="sub-header">Senales de intención de compra:</h4>
+<ul class="content-ul">
+<li>Pregunta sobre envios y formas de pago</li>
+<li>Pregunta <em class="qt">&quot;cuál me recomiendas&quot;</em></li>
+<li>Guarda posts de producto</li>
+<li>Responde Stories de producto</li>
+<li>Menciona a un amigo en comentarios de posts de producto</li>
+</ul>
+<h4 class="sub-header">Proceso de seguimiento para leads calificados:</h4>
+<ol class="content-ol">
+<li>Responder la pregunta en menos de 2 horas</li>
+<li>Enviar link al quiz <em class="qt">&quot;Encuentra tu mezcla&quot;</em> si no lo ha hecho</li>
+<li>Ofrecer resolucion de dudas por audio de WhatsApp (toque personal)</li>
+<li>Si no compra en 48 hrs: enviar testimonio relevante por WhatsApp</li>
+<li>Si no compra en 1 semana: enviar código de descuento personalizado</li>
+</ol>
+<h4 class="sub-header">Scripts de conversación para whatsapp/dm:</h4>
+<p class="content-p">Script 1 - Primer contacto (cuando alguien pregunta <em class="qt">&quot;que es esto&quot;</em>):</p>
+<p class="content-p"><em class="qt">&quot;Hola [nombre]! Gracias por tu interés. El rapé es una medicina ancestral que uso como herramienta de introspección y claridad mental. En THESYBALAM trabajamos mezclas artesanales con mucho respeto por su origen. ¿Te gustaria saber mas sobre como funciona? Puedo enviarte nuestra guia gratuita para que conozcas todo.&quot;</em></p>
+<p class="content-p">Script 2 - Recomendacion (cuando alguien dice <em class="qt">&quot;cuál me recomiendas&quot;</em>):</p>
+<p class="content-p"><em class="qt">&quot;Depende de lo que estes buscando! Tenemos un quiz rápido que te ayuda a encontrar la mezcla ideal para ti: [link]. Si prefieres, cuentame que es lo que mas te atrae (claridad, calma, enfoque) y te recomiendo personalmente.&quot;</em></p>
+<p class="content-p">Script 3 - Cierre suave (cuando hay interés pero no compra):</p>
+<p class="content-p"><em class="qt">&quot;Hola [nombre]! Vi que estabas interesado en nuestra mezcla [X]. Si tienes alguna duda sobre el producto o el envio, con mucho gusto te ayudo. Tambien queria regalarte un <span class="hl-blue">10%</span> de descuento en tu primera compra con el código CLARIDAD10. Sin presion, cuando tu sientas que es el momento.&quot;</em></p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="accordion" id="conversion-2">
+            <button class="accordion-trigger" onclick="toggleAccordion('conversion-2')">
+                <span class="dot" style="background: #C5A149;"></span>
+                <span class="acc-title">Estrategia de ventas vía contenido</span>
+                <svg class="accordion-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 9l-7 7-7-7"/></svg>
+            </button>
+            <div class="accordion-content">
+                <div class="accordion-body">
+                    <ol class="content-ol">
+<li>Publicar Reel educativo → Responder comentarios con preguntas abiertas → Continuar conversación en DM → Ofrecer guia gratuita → Seguimiento</li>
+</ol>
+<ol class="content-ol">
+<li>Publicar carrusel de producto → Responder <em class="qt">&quot;quiero saber mas&quot;</em> con audio de WhatsApp personalizado → Enviar quiz de mezclas → Seguimiento con recomendación personalizada</li>
+</ol>
+<ol class="content-ol">
+<li>Stories con encuesta (<em class="qt">&quot;cuál es tu mayor reto: estrés, falta de enfoque, saturación&quot;</em>) → DM a quienes respondieron con recurso relevante → Conversacion natural sobre como el rapé puede ayudar</li>
+</ol>
+<h4 class="sub-header">Templates de mensajes:</h4>
+<p class="content-p">Para quien interactua por primera vez:</p>
+<p class="content-p"><em class="qt">&quot;Hola [nombre]! Vi que te gusto nuestro contenido sobre [tema]. ¿Es algo que te interesa explorar? Tenemos una guia gratuita que puede ser un buen primer paso.&quot;</em></p>
+<p class="content-p">Para quien ya descargo la guia:</p>
+<p class="content-p"><em class="qt">&quot;Hola [nombre]! ¿Pudiste revisar la guia? Si tienes alguna pregunta sobre como empezar tu práctica, aquí estoy para ayudarte.&quot;</em></p>
+<p class="content-p">Para reactivar leads frios:</p>
+<p class="content-p"><em class="qt">&quot;Hola [nombre]! Hace tiempo mostraste interés en THESYBALAM. Tenemos nuevas mezclas que podrian ser perfectas para lo que buscas. Te comparto un poco mas: [link]&quot;</em></p>
+<h4 class="sub-header">Metricas de social selling:</h4>
+<ul class="content-ul">
+<li>DMs enviados por semana</li>
+<li>Tasa de respuesta a DMs (meta: <span class="hl-blue">60%</span>+)</li>
+<li>Conversión de DM a primera compra (meta: 15-<span class="hl-blue">20%</span>)</li>
+<li>Tiempo promedio de ciclo de venta (DM a compra)</li>
+</ul>
+                </div>
+            </div>
+        </div>
+        
+        <div class="accordion" id="conversion-3">
+            <button class="accordion-trigger" onclick="toggleAccordion('conversion-3')">
+                <span class="dot" style="background: #C5A149;"></span>
+                <span class="acc-title">Ofertas y promociones</span>
+                <svg class="accordion-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 9l-7 7-7-7"/></svg>
+            </button>
+            <div class="accordion-content">
+                <div class="accordion-body">
+                    <p class="content-p"><strong>Oferta principal:</strong> <em class="qt">&quot;Kit de Inicio THESYBALAM&quot;</em></p>
+<ul class="content-ul">
+<li><strong>Contenido:</strong> 1 frasco de rapé (mezcla para principiantes) + 1 kuripe artesanal + guia impresa de uso + tarjeta de intención</li>
+<li><strong>Precio regular:</strong> <span class="hl-gold">$1,100 MXN</span> (comprando por separado: <span class="hl-gold">$400</span> + <span class="hl-gold">$600</span> + extras = <span class="hl-gold">$1,200</span>+)</li>
+<li><strong>Precio kit:</strong> <span class="hl-gold">$999 MXN</span></li>
+<li><strong>Gancho:</strong> <em class="qt">&quot;Todo lo que necesitas para empezar tu práctica de introspección consciente&quot;</em></li>
+</ul>
+<h4 class="sub-header">3 promociones estacionales:</h4>
+<ol class="content-ol">
+<li><em class="qt">&quot;Año Nuevo, Claridad Nueva&quot;</em> (Enero)</li>
+</ol>
+<ul class="content-ul">
+<li><span class="hl-blue">15%</span> de descuento en Kit de Inicio</li>
+<li>Incluye acceso a grupo privado de WhatsApp <em class="qt">&quot;30 dias de claridad&quot;</em></li>
+<li><strong>Objetivo:</strong> Capitalizar la intención de <em class="qt">&quot;empezar bien el año&quot;</em></li>
+</ul>
+<ol class="content-ol">
+<li><em class="qt">&quot;Mes de la Meditación&quot;</em> (Mayo - Mes de la Salud Mental)</li>
+</ol>
+<ul class="content-ul">
+<li>Buy 1 Get 1 al <span class="hl-blue">50%</span> en frascos de rapé</li>
+<li>Contenido especial sobre meditación y bienestar mental</li>
+<li><strong>Objetivo:</strong> Atraer audiencia de bienestar que celebra el mes de salud mental</li>
+</ul>
+<ol class="content-ol">
+<li><em class="qt">&quot;Black Friday Consciente&quot;</em> (Noviembre)</li>
+</ol>
+<ul class="content-ul">
+<li>Kit de Inicio + segunda mezcla gratis</li>
+<li>Edicion limitada de mezcla especial de temporada</li>
+<li><strong>Objetivo:</strong> Aprovechar temporada de compras con enfoque de <em class="qt">&quot;regalos con propósito&quot;</em></li>
+</ul>
+<h4 class="sub-header">Estrategia de upsell/cross-sell:</h4>
+<ul class="content-ul">
+<li>Post-compra de rapé: Sugerir kuripe o accesorio complementario (<em class="qt">&quot;completa tu kit&quot;</em>)</li>
+<li>Post-compra de kit: Sugerir segunda mezcla (<em class="qt">&quot;explora otra faceta de la práctica&quot;</em>)</li>
+<li><strong>Clientes recurrentes:</strong> Acceso anticipado a nuevas mezclas + descuento de lealtad (<span class="hl-blue">15%</span>)</li>
+</ul>
+<h4 class="sub-header">Programa de referidos (estructura básica):</h4>
+<p class="content-p"><em class="qt">&quot;Comparte la Claridad&quot;</em></p>
+<ul class="content-ul">
+<li><strong>Mecanica:</strong> Cada cliente recibe un código único después de su primera compra</li>
+<li><strong>Beneficio para quien refiere:</strong> <span class="hl-blue">15%</span> de descuento en su próxima compra</li>
+<li><strong>Beneficio para el referido:</strong> <span class="hl-blue">10%</span> de descuento en primera compra</li>
+<li><strong>Canal:</strong> Tarjeta física dentro del paquete + email post-compra automatico con el código</li>
+<li><strong>Meta:</strong> Que cada cliente refiera al menos 1 persona dentro de los primeros 60 dias</li>
+</ul>
+                </div>
+            </div>
+        </div>
+        </section>
+        
+    <section class="strategy-section" id="roadmap">
+        <div class="section-header">
+            <div class="section-number" style="background: #58AFCD22; color: #58AFCD;">E</div>
+            <h2 class="section-title">Medición & hoja de ruta</h2>
+        </div>
+    
+        <div class="accordion" id="roadmap-0">
+            <button class="accordion-trigger" onclick="toggleAccordion('roadmap-0')">
+                <span class="dot" style="background: #58AFCD;"></span>
+                <span class="acc-title">Dashboard de KPIs (13 métricas)</span>
+                <svg class="accordion-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 9l-7 7-7-7"/></svg>
+            </button>
+            <div class="accordion-content">
+                <div class="accordion-body">
+                    <hr class="section-divider">
+<ol class="content-ol">
+<li>Alcance mensual (Instagram)</li>
+</ol>
+<ul class="content-ul">
+<li class="sub-item"><strong>Valor actual estimado:</strong> 2,000-5,000 cuentas/mes</li>
+<li class="sub-item">Meta a 30 dias: 8,000 cuentas</li>
+<li class="sub-item">Meta a 60 dias: 15,000 cuentas</li>
+<li class="sub-item">Meta a 90 dias: 25,000 cuentas</li>
+<li class="sub-item"><strong>Herramienta:</strong> Instagram Insights (nativo, gratuito)</li>
+</ul>
+<ol class="content-ol">
+<li>Impresiones mensuales (Instagram)</li>
+</ol>
+<ul class="content-ul">
+<li class="sub-item"><strong>Valor actual estimado:</strong> 5,000-10,000 impresiones/mes</li>
+<li class="sub-item">Meta a 30 dias: 20,000 impresiones</li>
+<li class="sub-item">Meta a 60 dias: 40,000 impresiones</li>
+<li class="sub-item">Meta a 90 dias: 70,000 impresiones</li>
+<li class="sub-item"><strong>Herramienta:</strong> Instagram Insights</li>
+</ul>
+<ol class="content-ol">
+<li>Seguidores (Instagram)</li>
+</ol>
+<ul class="content-ul">
+<li class="sub-item"><strong>Valor actual estimado:</strong> 500-1,500 seguidores</li>
+<li class="sub-item">Meta a 30 dias: +200 seguidores nuevos</li>
+<li class="sub-item">Meta a 60 dias: +500 seguidores totales nuevos</li>
+<li class="sub-item">Meta a 90 dias: +1,000 seguidores totales nuevos</li>
+<li class="sub-item"><strong>Herramienta:</strong> Instagram Insights</li>
+</ul>
+<ol class="content-ol">
+<li>Trafico web mensual</li>
+</ol>
+<ul class="content-ul">
+<li class="sub-item"><strong>Valor actual estimado:</strong> 200-500 visitas/mes</li>
+<li class="sub-item">Meta a 30 dias: 600 visitas</li>
+<li class="sub-item">Meta a 60 dias: 1,000 visitas</li>
+<li class="sub-item">Meta a 90 dias: 1,500 visitas</li>
+<li class="sub-item"><strong>Herramienta:</strong> Google Analytics (gratuito)</li>
+</ul>
+<h4 class="sub-header">Metricas de engagement</h4>
+<hr class="section-divider">
+<ol class="content-ol">
+<li>Engagement rate (Instagram)</li>
+</ol>
+<ul class="content-ul">
+<li class="sub-item"><strong>Valor actual estimado:</strong> 2.0-<span class="hl-blue">3.0%</span></li>
+<li class="sub-item">Meta a 30 dias: <span class="hl-blue">3.5%</span></li>
+<li class="sub-item">Meta a 60 dias: <span class="hl-blue">4.0%</span></li>
+<li class="sub-item">Meta a 90 dias: <span class="hl-blue">4.5%</span> (por encima del benchmark wellness de <span class="hl-blue">4.0%</span>)</li>
+<li class="sub-item"><strong>Herramienta:</strong> Instagram Insights / Metricool (plan gratuito)</li>
+</ul>
+<ol class="content-ol">
+<li>Guardados por post</li>
+</ol>
+<ul class="content-ul">
+<li class="sub-item"><strong>Valor actual estimado:</strong> 3-8 guardados/post</li>
+<li class="sub-item">Meta a 30 dias: 10+ guardados/post promedio</li>
+<li class="sub-item">Meta a 60 dias: 20+ guardados/post</li>
+<li class="sub-item">Meta a 90 dias: 30+ guardados/post</li>
+<li class="sub-item"><strong>Herramienta:</strong> Instagram Insights</li>
+</ul>
+<ol class="content-ol">
+<li>Comentarios por post</li>
+</ol>
+<ul class="content-ul">
+<li class="sub-item"><strong>Valor actual estimado:</strong> 2-5 comentarios/post</li>
+<li class="sub-item">Meta a 30 dias: 5+ comentarios/post</li>
+<li class="sub-item">Meta a 60 dias: 10+ comentarios/post</li>
+<li class="sub-item">Meta a 90 dias: 15+ comentarios/post</li>
+<li class="sub-item"><strong>Herramienta:</strong> Instagram Insights</li>
+</ul>
+<ol class="content-ol">
+<li>Suscriptores de newsletter</li>
+</ol>
+<ul class="content-ul">
+<li class="sub-item"><strong>Valor actual estimado:</strong> 0-50 suscriptores</li>
+<li class="sub-item">Meta a 30 dias: 100 suscriptores</li>
+<li class="sub-item">Meta a 60 dias: 250 suscriptores</li>
+<li class="sub-item">Meta a 90 dias: 500 suscriptores</li>
+<li class="sub-item"><strong>Herramienta:</strong> Mailchimp / MailerLite</li>
+</ul>
+<h4 class="sub-header">Metricas de conversión</h4>
+<hr class="section-divider">
+<ol class="content-ol">
+<li>Leads generados por mes (emails capturados)</li>
+</ol>
+<ul class="content-ul">
+<li class="sub-item"><strong>Valor actual estimado:</strong> 5-10 leads/mes</li>
+<li class="sub-item">Meta a 30 dias: 30 leads</li>
+<li class="sub-item">Meta a 60 dias: 60 leads</li>
+<li class="sub-item">Meta a 90 dias: 100 leads</li>
+<li class="sub-item"><strong>Herramienta:</strong> Plataforma de email marketing</li>
+</ul>
+<ol class="content-ol">
+<li>Tasa de conversión lead a cliente</li>
+</ol>
+<ul class="content-ul">
+<li class="sub-item"><strong>Valor actual estimado:</strong> Desconocida (ventas principalmente por recomendación)</li>
+<li class="sub-item">Meta a 30 dias: Establecer baseline (medir por primera vez)</li>
+<li class="sub-item">Meta a 60 dias: 8-<span class="hl-blue">10%</span></li>
+<li class="sub-item">Meta a 90 dias: 12-<span class="hl-blue">15%</span></li>
+<li class="sub-item"><strong>Herramienta:</strong> Seguimiento manual en Google Sheets</li>
+</ul>
+<ol class="content-ol">
+<li>Ventas mensuales online</li>
+</ol>
+<ul class="content-ul">
+<li class="sub-item"><strong>Valor actual estimado:</strong> <span class="hl-gold">$16,000</span>-<span class="hl-gold">$24,000 MXN</span>/mes</li>
+<li class="sub-item">Meta a 30 dias: <span class="hl-gold">$28,000 MXN</span></li>
+<li class="sub-item">Meta a 60 dias: <span class="hl-gold">$36,000 MXN</span></li>
+<li class="sub-item">Meta a 90 dias: <span class="hl-gold">$45,000 MXN</span></li>
+<li class="sub-item"><strong>Herramienta:</strong> Plataforma de ecommerce / registro manual</li>
+</ul>
+<h4 class="sub-header">Metricas de retención</h4>
+<hr class="section-divider">
+<ol class="content-ol">
+<li>Clientes recurrentes (recompra)</li>
+</ol>
+<ul class="content-ul">
+<li class="sub-item"><strong>Valor actual estimado:</strong> 20-<span class="hl-blue">30%</span> recompra</li>
+<li class="sub-item">Meta a 30 dias: Establecer baseline exacto</li>
+<li class="sub-item">Meta a 60 dias: <span class="hl-blue">35%</span> recompra</li>
+<li class="sub-item">Meta a 90 dias: <span class="hl-blue">40%</span> recompra</li>
+<li class="sub-item"><strong>Herramienta:</strong> Base de datos de clientes en Google Sheets</li>
+</ul>
+<ol class="content-ol">
+<li>Tasa de apertura de newsletter</li>
+</ol>
+<ul class="content-ul">
+<li class="sub-item"><strong>Valor actual estimado:</strong> N/A (newsletter no activa)</li>
+<li class="sub-item">Meta a 30 dias: <span class="hl-blue">40%</span>+ (normal para listas pequenas)</li>
+<li class="sub-item">Meta a 60 dias: 35-<span class="hl-blue">40%</span></li>
+<li class="sub-item">Meta a 90 dias: <span class="hl-blue">35%</span></li>
+<li class="sub-item"><strong>Herramienta:</strong> Mailchimp / MailerLite</li>
+</ul>
+                </div>
+            </div>
+        </div>
+        
+        <div class="accordion" id="roadmap-1">
+            <button class="accordion-trigger" onclick="toggleAccordion('roadmap-1')">
+                <span class="dot" style="background: #58AFCD;"></span>
+                <span class="acc-title">Hoja de ruta de implementación (90 días)</span>
+                <svg class="accordion-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 9l-7 7-7-7"/></svg>
+            </button>
+            <div class="accordion-content">
+                <div class="accordion-body">
+                    <hr class="section-divider">
+<p class="content-p"><strong>Objetivo:</strong> Establecer la infraestructura base para ejecutar la estrategia consistentemente.</p>
+<h4 class="sub-header">Semana 1:</h4>
+<p class="content-p">Lunes:</p>
+<ul class="content-ul">
+<li>Configurar Meta Business Suite para programacion de Instagram</li>
+<li>Crear cuenta de MailerLite o Mailchimp para newsletter</li>
+<li>Instalar Google Analytics en el sitio web</li>
+</ul>
+<p class="content-p">Martes:</p>
+<ul class="content-ul">
+<li>Crear el calendario editorial en Google Sheets (template de 4 semanas)</li>
+<li>Definir los 4 pilares de contenido como <em class="qt">&quot;categorías&quot;</em> en el calendario</li>
+<li>Preparar templates de carrusel en Canva (3 templates base por pilar)</li>
+</ul>
+<p class="content-p">Miércoles:</p>
+<ul class="content-ul">
+<li>Grabar primer batch de 4 Reels (incluir el Ep. 1 de <em class="qt">&quot;Momentos de Claridad&quot;</em>)</li>
+<li>Preparar captions para la primera semana</li>
+</ul>
+<p class="content-p">Jueves:</p>
+<ul class="content-ul">
+<li>Disenar la landing page del Lead Magnet 1 (Guia PDF)</li>
+<li>Empezar a crear el contenido de la Guia PDF en Canva</li>
+</ul>
+<p class="content-p">Viernes:</p>
+<ul class="content-ul">
+<li>Configurar formulario de captura de email en landing page</li>
+<li>Programar contenido de la Semana 1 del calendario editorial</li>
+<li>Publicar primer post del nueva era THESYBALAM</li>
+</ul>
+<h4 class="sub-header">Semana 2:</h4>
+<p class="content-p">Lunes:</p>
+<ul class="content-ul">
+<li>Publicar primer <span class="hl-tag">#MomentosDeClaridad</span> (Ep. 1) - serie signature</li>
+<li>Enviar primera newsletter de prueba</li>
+</ul>
+<p class="content-p">Martes:</p>
+<ul class="content-ul">
+<li>Completar y publicar la Guia PDF como lead magnet</li>
+<li>Activar pop-up de captura en sitio web</li>
+</ul>
+<p class="content-p">Miércoles:</p>
+<ul class="content-ul">
+<li>Grabar segundo batch de Reels</li>
+<li>Configurar secuencia automatizada de 5 emails post-descarga de guia</li>
+</ul>
+<p class="content-p">Jueves:</p>
+<ul class="content-ul">
+<li>Publicar primer artículo SEO en blog</li>
+<li>Configurar WhatsApp Business con catálogo actualizado y respuestas automaticas</li>
+</ul>
+<p class="content-p">Viernes:</p>
+<ul class="content-ul">
+<li>Preparar y programar contenido de Semana 3</li>
+<li>Revisar métricas de primera semana y ajustar</li>
+</ul>
+<p class="content-p">Entregables al final de Fase 1:</p>
+<ul class="content-ul">
+<li>Instagram publicando 5x/semana consistentemente</li>
+<li>Newsletter activa con primera edicion enviada</li>
+<li>Lead Magnet 1 activo y capturando emails</li>
+<li>Blog con primer artículo SEO publicado</li>
+<li>WhatsApp Business configurado</li>
+<li>Google Analytics instalado</li>
+</ul>
+<p class="content-p">FASE 2: LAUNCH (Semanas 3-4)</p>
+<hr class="section-divider">
+<p class="content-p"><strong>Objetivo:</strong> Establecer ritmo de publicación y activar el primer ciclo de conversión.</p>
+<h4 class="sub-header">Semana 3:</h4>
+<p class="content-p">Lunes:</p>
+<ul class="content-ul">
+<li><span class="hl-tag">#MomentosDeClaridad</span> Ep. 3 + Newsletter semanal</li>
+<li>Revisar datos de primer lead magnet (descargas, emails capturados)</li>
+</ul>
+<p class="content-p">Martes:</p>
+<ul class="content-ul">
+<li>Publicar carrusel de alta prioridad (tutorial visual)</li>
+<li>Responder todos los DMs y comentarios pendientes</li>
+</ul>
+<p class="content-p">Miércoles:</p>
+<ul class="content-ul">
+<li>Primer video-testimonio de cliente (buscar 1 cliente satisfecho para reel)</li>
+<li>Grabar tercer batch de Reels</li>
+</ul>
+<p class="content-p">Jueves:</p>
+<ul class="content-ul">
+<li>Publicar segundo artículo de blog</li>
+<li>Identificar 3 cuentas de meditación/bienestar para colaboración</li>
+</ul>
+<p class="content-p">Viernes:</p>
+<ul class="content-ul">
+<li>Contactar las 3 cuentas para proponer colaboración</li>
+<li>Programar contenido de Semana 4</li>
+</ul>
+<h4 class="sub-header">Semana 4:</h4>
+<p class="content-p">Lunes:</p>
+<ul class="content-ul">
+<li><span class="hl-tag">#MomentosDeClaridad</span> Ep. 4 + Newsletter con oferta especial</li>
+<li>Activar Lead Magnet 2 (email course <em class="qt">&quot;5 Rituales&quot;</em>)</li>
+</ul>
+<p class="content-p">Martes:</p>
+<ul class="content-ul">
+<li>Publicar carrusel de conversión (Kit de Inicio)</li>
+<li>Enviar primera difusión de WhatsApp a lista de clientes existentes</li>
+</ul>
+<p class="content-p">Miércoles:</p>
+<ul class="content-ul">
+<li>Publicar Reel de unboxing</li>
+<li>Stories con oferta flash de 24 hrs</li>
+</ul>
+<p class="content-p">Jueves:</p>
+<ul class="content-ul">
+<li>Revisar todas las métricas del primer mes</li>
+<li>Documentar aprendizajes y mejores posts</li>
+</ul>
+<p class="content-p">Viernes:</p>
+<ul class="content-ul">
+<li>Planificar el calendario del Mes 2 basado en datos</li>
+<li>Celebrar el primer mes de consistencia</li>
+</ul>
+<p class="content-p">Entregables al final de Fase 2:</p>
+<ul class="content-ul">
+<li>4 semanas de publicación consistente completadas</li>
+<li>2 lead magnets activos</li>
+<li>Primer ciclo de conversión cerrado (leads → clientes)</li>
+<li>Datos de baseline para todas las métricas</li>
+<li>Primer contacto con cuentas para colaboración</li>
+</ul>
+<p class="content-p">FASE 3: OPTIMIZE (Mes 2)</p>
+<hr class="section-divider">
+<p class="content-p"><strong>Objetivo:</strong> Analizar datos, duplicar lo que funciona, eliminar lo que no, escalar engagement.</p>
+<p class="content-p">Semana 5-6:</p>
+<ul class="content-ul">
+<li>Análisis profundo del Mes 1: mejores posts, peores posts, horarios optimos</li>
+<li>Ajustar calendario editorial basado en datos reales</li>
+<li>Publicar primer video largo en YouTube (tutorial flagship)</li>
+<li>Empezar a publicar YouTube Shorts (repurposing de Reels)</li>
+<li>Activar Lead Magnet 3 (Quiz de mezclas) si el sitio web lo permite</li>
+</ul>
+<p class="content-p">Semana 7-8:</p>
+<ul class="content-ul">
+<li>Primera colaboración ejecutada con cuenta de meditación</li>
+<li>Lanzar programa de referidos <em class="qt">&quot;Comparte la Claridad&quot;</em></li>
+<li><strong>Crear contenido UGC:</strong> invitar a 5 clientes satisfechos a compartir su experiencia</li>
+<li>Evaluar si activar Instagram Ads con presupuesto pequeño (<span class="hl-gold">$50</span>-<span class="hl-gold">$100 USD</span>/mes) para promover lead magnets</li>
+<li>Segunda ronda de YouTube Shorts + video largo <span class="hl-tag">#2</span></li>
+</ul>
+<p class="content-p">Entregables al final de Fase 3:</p>
+<ul class="content-ul">
+<li>YouTube activo con 2 videos largos + Shorts</li>
+<li>Quiz de mezclas activo</li>
+<li>Programa de referidos lanzado</li>
+<li>Primera colaboración completada</li>
+<li>Data-driven: decisiones basadas en métricas reales</li>
+</ul>
+<p class="content-p">FASE 4: SCALE (Mes 3)</p>
+<hr class="section-divider">
+<p class="content-p"><strong>Objetivo:</strong> Escalar lo que funciona, diversificar formatos, construir comunidad activa.</p>
+<p class="content-p">Semana 9-10:</p>
+<ul class="content-ul">
+<li>Incrementar frecuencia si los datos lo soportan</li>
+<li>Lanzar grupo privado de WhatsApp <em class="qt">&quot;Comunidad THESYBALAM&quot;</em> para clientes</li>
+<li>Tercer video largo de YouTube</li>
+<li>Evaluar TikTok como canal activo (repurposing directo de Reels)</li>
+<li>Preparar primera promoción estacional</li>
+</ul>
+<p class="content-p">Semana 11-12:</p>
+<ul class="content-ul">
+<li>Ejecutar primera promoción estacional</li>
+<li>Evaluar resultados del programa de referidos</li>
+<li>Planificar el Trimestre 2 con base en datos del Trimestre 1</li>
+<li>Considerar podcast o Lives regulares de Instagram como nuevo formato</li>
+<li>Explorar primera colaboración con podcast de desarrollo personal</li>
+</ul>
+<p class="content-p">Entregables al final de Fase 4:</p>
+<ul class="content-ul">
+<li>3 meses de consistencia completados</li>
+<li>Comunidad de WhatsApp activa</li>
+<li>3+ colaboraciones realizadas</li>
+<li>Primera promoción estacional ejecutada</li>
+<li>Plan de Trimestre 2 definido con base en datos</li>
+</ul>
+                </div>
+            </div>
+        </div>
+        
+        <div class="accordion" id="roadmap-2">
+            <button class="accordion-trigger" onclick="toggleAccordion('roadmap-2')">
+                <span class="dot" style="background: #58AFCD;"></span>
+                <span class="acc-title">Presupuesto y recursos</span>
+                <svg class="accordion-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 9l-7 7-7-7"/></svg>
+            </button>
+            <div class="accordion-content">
+                <div class="accordion-body">
+                    <p class="content-p">Herramientas gratuitas:</p>
+<ul class="content-ul">
+<li>Meta Business Suite (programacion Instagram/FB): <span class="hl-gold">$0</span></li>
+<li><strong>Google Analytics:</strong> <span class="hl-gold">$0</span></li>
+<li>Google Sheets (calendario): <span class="hl-gold">$0</span></li>
+<li><strong>WhatsApp Business:</strong> <span class="hl-gold">$0</span></li>
+<li>CapCut (edicion video básica): <span class="hl-gold">$0</span></li>
+<li><strong>YouTube Studio:</strong> <span class="hl-gold">$0</span></li>
+</ul>
+<p class="content-p">Herramientas de pago (ya tiene):</p>
+<ul class="content-ul">
+<li><strong>Canva Pro:</strong> ~<span class="hl-gold">$130 MXN</span>/mes (ya lo tiene)</li>
+</ul>
+<p class="content-p">Herramientas recomendadas (opcionales):</p>
+<ul class="content-ul">
+<li>MailerLite (email marketing, plan free hasta 1,000 suscriptores): <span class="hl-gold">$0</span></li>
+<li class="sub-item">Si supera 1,000: ~<span class="hl-gold">$200 MXN</span>/mes</li>
+<li>Metricool (analytics y programacion): Plan free disponible</li>
+<li class="sub-item"><strong>Plan Pro:</strong> ~<span class="hl-gold">$200 MXN</span>/mes</li>
+</ul>
+<p class="content-p"><strong>TOTAL HERRAMIENTAS:</strong> <span class="hl-gold">$130</span>-<span class="hl-gold">$530 MXN</span>/mes</p>
+<h4 class="sub-header">Inversion en publicidad (opcional, a partir del mes 2)</h4>
+<ul class="content-ul">
+<li><strong>Presupuesto sugerido de inicio:</strong> <span class="hl-gold">$1,000</span>-<span class="hl-gold">$2,000 MXN</span>/mes</li>
+<li><strong>Destino:</strong> Promoción de lead magnets y Reels educativos de alto rendimiento</li>
+<li><strong>Nota:</strong> Las restricciones de plataformas sobre tabaco limitan la publicidad directa de producto. Los anuncios deben enfocarse en contenido educativo y lead magnets.</li>
+</ul>
+<h4 class="sub-header">Tiempo requerido por semana (desglosado)</h4>
+<ul class="content-ul">
+<li>Creacion de contenido (grabar, editar): 1.5 hrs</li>
+<li>Diseño y copywriting (captions, carruseles): 1 hr</li>
+<li><strong>Engagement y community management:</strong> 0.5 hrs</li>
+<li><strong>Newsletter:</strong> 0.5 hrs</li>
+<li><strong>Revision de métricas:</strong> 0.5 hrs</li>
+<li><strong>TOTAL:</strong> 4 horas/semana (dentro del limite establecido)</li>
+</ul>
+<h4 class="sub-header">Cuando considerar contratar ayuda:</h4>
+<ul class="content-ul">
+<li>Cuando la cuenta supere 5,000 seguidores y el engagement sea consistente</li>
+<li>Cuando las ventas superen <span class="hl-gold">$50,000 MXN</span>/mes</li>
+<li>Cuando Jorge no pueda mantener la calidad con 4 hrs/semana</li>
+<li><strong>Primer hire recomendado:</strong> Community manager part-time (<span class="hl-gold">$3,000</span>-<span class="hl-gold">$5,000 MXN</span>/mes)</li>
+<li><strong>Segundo hire:</strong> Editor de video para Reels (<span class="hl-gold">$4,000</span>-<span class="hl-gold">$6,000 MXN</span>/mes)</li>
+</ul>
+                </div>
+            </div>
+        </div>
+        
+        <div class="accordion" id="roadmap-3">
+            <button class="accordion-trigger" onclick="toggleAccordion('roadmap-3')">
+                <span class="dot" style="background: #58AFCD;"></span>
+                <span class="acc-title">Contingencias y ajustes</span>
+                <svg class="accordion-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 9l-7 7-7-7"/></svg>
+            </button>
+            <div class="accordion-content">
+                <div class="accordion-body">
+                    <ol class="content-ol">
+<li>Revisar si los horarios de publicación coinciden con la audiencia activa</li>
+<li>Aumentar el contenido en video (Reels) vs. posts estaticos</li>
+<li>Incluir mas preguntas abiertas en captions para provocar comentarios</li>
+<li>Probar formatos de <em class="qt">&quot;controversia educativa&quot;</em> (desmitificar creencias sobre el rapé)</li>
+<li>Hacer 3-5 Lives cortos de Q&amp;A para reactivar el algoritmo</li>
+</ol>
+<h4 class="sub-header">Como ajustar si un canal no funciona:</h4>
+<ul class="content-ul">
+<li>Si YouTube no genera traccion en los primeros 2 videos: reducir a 1 video cada 6 semanas, enfocarse en Shorts</li>
+<li>Si la newsletter tiene tasa de apertura menor a <span class="hl-blue">25%</span>: cambiar día/hora de envio, mejorar subject lines, reducir frecuencia a quincenal</li>
+<li>Si el blog no genera trafico SEO en 90 dias: revisar keywords, agregar mas contenido de alta intención de busqueda</li>
+</ul>
+<h4 class="sub-header">Senales de que necesitas cambiar la estrategia:</h4>
+<ul class="content-ul">
+<li>Menos de <span class="hl-blue">2%</span> de engagement rate después de 60 dias de consistencia</li>
+<li>Menos de 50 suscriptores de newsletter después de 60 dias</li>
+<li>Menos de 10 leads al mes después de activar lead magnets</li>
+<li>Cero ventas atribuibles a contenido después de 90 dias</li>
+</ul>
+<h4 class="sub-header">Plan b para recursos limitados (si no puedes dedicar 4 hrs):</h4>
+<ul class="content-ul">
+<li>Reducir a 3 publicaciones/semana (2 Reels + 1 Carrusel)</li>
+<li>Eliminar blog temporalmente</li>
+<li>Mantener newsletter quincenal en lugar de semanal</li>
+<li>Enfocarse solo en Instagram + WhatsApp (eliminar YouTube temporalmente)</li>
+<li>Usar IA (como Antigravity) para generar borradores de captions y newsletters</li>
+</ul>
+                </div>
+            </div>
+        </div>
+        
+        <div class="accordion" id="roadmap-4">
+            <button class="accordion-trigger" onclick="toggleAccordion('roadmap-4')">
+                <span class="dot" style="background: #58AFCD;"></span>
+                <span class="acc-title">Resumen ejecutivo y próximos pasos</span>
+                <svg class="accordion-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 9l-7 7-7-7"/></svg>
+            </button>
+            <div class="accordion-content">
+                <div class="accordion-body">
+                    <ol class="content-ol">
+<li>THESYBALAM necesita multiplicar sus ventas 2.5x para alcanzar su meta de ingresos, lo que significa captar 44-65 clientes nuevos al mes ademas de construir una base de clientes recurrentes.</li>
+</ol>
+<ol class="content-ol">
+<li>El diferenciador clave es el enfoque en USO CONSCIENTE del rapé como herramienta de trabajo interior diario, no solo ceremonial. Ningún competidor profundiza en este ángulo, especialmente en español.</li>
+</ol>
+<ol class="content-ol">
+<li>La estrategia se construye sobre 4 pilares de contenido: Uso Consciente, Tradicion Ancestral, Bienestar y Claridad Mental, y Comunidad/Testimonios.</li>
+</ol>
+<ol class="content-ol">
+<li>Instagram es el canal principal (5-6 posts/semana), complementado con YouTube (1 video/mes), Newsletter semanal, Blog SEO (2 artículos/mes), y WhatsApp Business como canal de conversión directa.</li>
+</ol>
+<ol class="content-ol">
+<li>La serie signature <em class="qt">&quot;Momentos de Claridad&quot;</em> (Reels semanales los lunes) posiciona a Jorge como guia y experto, no solo vendedor.</li>
+</ol>
+<ol class="content-ol">
+<li><strong>Tres lead magnets escalonados:</strong> Guia PDF para principiantes, Email Course de 5 rituales, y Quiz interactivo de mezclas. Cada uno alimenta la secuencia de conversión.</li>
+</ol>
+<ol class="content-ol">
+<li>El sistema de conversión incluye secuencias de email automatizadas, scripts de WhatsApp para cierre, y un programa de referidos para amplificar el word-of-mouth que ya es el motor principal del negocio.</li>
+</ol>
+<ol class="content-ol">
+<li>Todo el sistema esta disenado para funcionar con 4 horas semanales de dedicacion, usando batching de contenido y herramientas gratuitas o de bajo costo.</li>
+</ol>
+<ol class="content-ol">
+<li>Las restricciones regulatorias (no afirmaciones médicas, respeto cultural, restricciones de plataformas sobre tabaco) estan integradas en toda la estrategia de contenido.</li>
+</ol>
+<ol class="content-ol">
+<li>La hoja de ruta de 90 dias va de Foundations (setup) a Launch (consistencia) a Optimize (data-driven) a Scale (crecimiento acelerado).</li>
+</ol>
+<h4 class="sub-header">Top 5 acciones inmediatas (esta semana):</h4>
+<ol class="content-ol">
+<li>Configurar Meta Business Suite y programar los primeros 5 posts de la semana</li>
+<li>Grabar el primer Reel de <em class="qt">&quot;Momentos de Claridad&quot;</em> (Ep. 1)</li>
+<li>Crear cuenta de MailerLite y configurar formulario de captura</li>
+<li>Crear el calendario editorial del Mes 1 en Google Sheets</li>
+<li>Empezar a diseñar la Guia PDF (Lead Magnet 1) en Canva</li>
+</ol>
+<h4 class="sub-header">Top 5 acciones para el primer mes:</h4>
+<ol class="content-ol">
+<li>Publicar consistentemente 5x/semana durante 4 semanas sin falta</li>
+<li>Lanzar los 2 primeros lead magnets y capturar al menos 100 emails</li>
+<li>Publicar primer artículo SEO en el blog</li>
+<li>Activar y optimizar WhatsApp Business con catálogo y respuestas automaticas</li>
+<li>Contactar 3 cuentas de meditación/bienestar para colaboraciones</li>
+</ol>
+<h4 class="sub-header">Definicion de la primera reunion de seguimiento:</h4>
+<p class="content-p"><strong>Fecha sugerida:</strong> 30 dias después del inicio de implementación</p>
+<p class="content-p">Agenda:</p>
+<ul class="content-ul">
+<li>Revision de métricas del primer mes vs. metas establecidas</li>
+<li>Análisis de los 5 mejores y 5 peores contenidos (engagement, saves, shares)</li>
+<li>Evaluacion de lead magnets (descargas, conversión)</li>
+<li>Ajustes al calendario editorial del Mes 2</li>
+<li>Evaluacion de recursos y tiempo dedicado real vs. planeado</li>
+<li>Definicion de experimentos para el Mes 2</li>
+</ul>
+                </div>
+            </div>
+        </div>
+        </section>
+
+        <footer class="footer">
+            <p class="footer-line">LifeStrategics · Understand. Decide. Take Action.</p>
+            <p style="font-size:0.45rem;color:var(--text-muted);margin-top:4px;">© 2026 LifeStrategics. Todos los derechos reservados.</p>
+        </footer>
+    </div>
+
+    <script>
+        function toggleAccordion(id) {
+            const el = document.getElementById(id);
+            const content = el.querySelector('.accordion-content');
+            if (el.classList.contains('open')) {
+                content.style.maxHeight = '0px';
+                el.classList.remove('open');
+            } else {
+                content.style.maxHeight = content.scrollHeight + 'px';
+                el.classList.add('open');
+            }
+        }
+
+        let allExpanded = false;
+        function toggleAll() {
+            allExpanded = !allExpanded;
+            const btn = document.getElementById('toggle-all-btn');
+            document.querySelectorAll('.accordion').forEach(acc => {
+                const content = acc.querySelector('.accordion-content');
+                if (allExpanded) {
+                    acc.classList.add('open');
+                    content.style.maxHeight = content.scrollHeight + 'px';
+                } else {
+                    acc.classList.remove('open');
+                    content.style.maxHeight = '0px';
+                }
+            });
+            btn.textContent = allExpanded ? '▾ Colapsar todo' : '▸ Expandir todo';
+        }
+
+        function navClick(e, id) {
+            e.preventDefault();
+            const el = document.getElementById(id);
+            if (el) {
+                const navH = document.querySelector('.nav-bar').offsetHeight;
+                const top = el.getBoundingClientRect().top + window.pageYOffset - navH - 12;
+                window.scrollTo({ top, behavior:'smooth' });
+                document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+                e.target.classList.add('active');
+            }
+        }
+
+        // Intersection observer
+        const sections = document.querySelectorAll('.strategy-section');
+        const sectionIds = ['foundation','architecture','channels','conversion','roadmap'];
+        const navBtns = document.querySelectorAll('.nav-btn:not(.expand-all)');
+
+        const navObserver = new IntersectionObserver(entries => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const idx = sectionIds.indexOf(entry.target.id);
+                    if (idx !== -1) {
+                        navBtns.forEach(b => b.classList.remove('active'));
+                        navBtns[idx].classList.add('active');
+                    }
+                }
+            });
+        }, { threshold:0.15 });
+
+        const visObserver = new IntersectionObserver(entries => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) entry.target.classList.add('visible');
+            });
+        }, { threshold:0.05 });
+
+        sections.forEach(s => { navObserver.observe(s); visObserver.observe(s); });
+
+        // Particle canvas
+        const canvas = document.getElementById('particle-canvas');
+        if (canvas) {
+            const ctx = canvas.getContext('2d');
+            let particles = [];
+            function init() {
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+                particles = [];
+                const count = window.innerWidth < 600 ? 20 : 35;
+                for (let i = 0; i < count; i++) {
+                    particles.push({
+                        x: Math.random()*canvas.width,
+                        y: Math.random()*canvas.height,
+                        vx: (Math.random()-0.5)*0.25,
+                        vy: (Math.random()-0.5)*0.25,
+                        size: Math.random()*1.4+0.3
+                    });
+                }
+            }
+            function animate() {
+                requestAnimationFrame(animate);
+                ctx.clearRect(0,0,canvas.width,canvas.height);
+                particles.forEach((p,i) => {
+                    p.x += p.vx; p.y += p.vy;
+                    if (p.x<0||p.x>canvas.width) p.vx*=-1;
+                    if (p.y<0||p.y>canvas.height) p.vy*=-1;
+                    ctx.beginPath();
+                    ctx.arc(p.x,p.y,p.size,0,Math.PI*2);
+                    ctx.fillStyle='rgba(255,255,255,0.25)';
+                    ctx.fill();
+                    for (let j=i+1;j<particles.length;j++) {
+                        const p2=particles[j];
+                        const dx=p.x-p2.x,dy=p.y-p2.y;
+                        const dist=Math.sqrt(dx*dx+dy*dy);
+                        if (dist<130) {
+                            ctx.beginPath();
+                            ctx.strokeStyle=`rgba(255,255,255,${0.05-dist/2600})`;
+                            ctx.lineWidth=0.4;
+                            ctx.moveTo(p.x,p.y);
+                            ctx.lineTo(p2.x,p2.y);
+                            ctx.stroke();
+                        }
+                    }
+                });
+            }
+            init();
+            animate();
+            window.addEventListener('resize', init);
+        }
+    </script>
+</body>
+</html>
