@@ -1,0 +1,871 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Las 5 capas para un producto digital vendible | LifeStrategics</title>
+    <meta name="description"
+        content="Descubrí las 5 capas que necesitás para ir del diseño con IA a un producto digital vendible. Sin tecnicismos, sin marcas.">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Wix+Madefor+Display:wght@300;400;500;600;700;800&family=Dancing+Script:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
+
+    <style>
+        /* === LifeStrategics V2 2026 Design System === */
+        :root {
+            --bg-base: #242426;
+            --bg-surface: rgba(36, 36, 38, 0.70);
+            --bg-glass: rgba(255, 255, 255, 0.05);
+            --text-primary: #FFFFFF;
+            --text-secondary: rgba(255, 255, 255, 0.95);
+            --text-muted: #9CA3AF;
+            --accent-yellow: #FACC15;
+            --accent-blue: #38BDF8;
+            --accent-red-light: #F87171;
+            --accent-red-dark: #D15152;
+            --border-subtle: rgba(255, 255, 255, 0.10);
+            --border-card: rgba(255, 255, 255, 0.05);
+            --ease-reveal: cubic-bezier(0.16, 1, 0.3, 1);
+            --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Wix Madefor Display', sans-serif;
+            background-color: var(--bg-base);
+            color: var(--text-primary);
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* === PARTICLE CANVAS === */
+        #particle-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            pointer-events: none;
+            z-index: 0;
+            opacity: 0.7;
+        }
+
+        /* === CONTAINER === */
+        .page-container {
+            position: relative;
+            z-index: 1;
+            max-width: 960px;
+            margin: 0 auto;
+            padding: 48px 20px 40px;
+        }
+
+        /* === HEADER === */
+        .header {
+            text-align: center;
+            margin-bottom: 32px;
+            opacity: 0;
+            animation: fadeUp 1s var(--ease-reveal) 0.1s forwards;
+        }
+
+        .header .eyebrow {
+            display: inline-block;
+            font-size: 0.7rem;
+            font-weight: 300;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--accent-yellow);
+            border: 1px solid rgba(250, 204, 21, 0.2);
+            background: rgba(250, 204, 21, 0.06);
+            padding: 6px 16px;
+            border-radius: 9999px;
+            margin-bottom: 20px;
+        }
+
+        .header h1 {
+            font-size: clamp(1.8rem, 5vw, 2.6rem);
+            font-weight: 700;
+            line-height: 1.1;
+            letter-spacing: -0.03em;
+            margin-bottom: 16px;
+            color: var(--text-primary);
+        }
+
+        .header h1 .accent-word {
+            color: var(--accent-blue);
+        }
+
+        .header .subtitle {
+            font-size: clamp(0.9rem, 2vw, 1.05rem);
+            font-weight: 300;
+            color: var(--text-muted);
+            max-width: 600px;
+            margin: 0 auto 8px;
+            line-height: 1.65;
+        }
+
+        .header .subtitle strong {
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+
+        .header .hook {
+            font-size: 0.82rem;
+            color: rgba(255, 255, 255, 0.35);
+            font-weight: 300;
+            font-style: italic;
+        }
+
+        /* === CALLOUT BANNER === */
+        .callout-banner {
+            background: var(--bg-glass);
+            border: 1px solid var(--border-subtle);
+            border-radius: 20px;
+            padding: 18px 24px;
+            margin-bottom: 36px;
+            text-align: center;
+            opacity: 0;
+            animation: fadeUp 0.8s var(--ease-reveal) 0.3s forwards;
+        }
+
+        .callout-banner p {
+            font-size: 0.88rem;
+            color: var(--text-muted);
+            line-height: 1.6;
+            font-weight: 300;
+        }
+
+        .callout-banner strong {
+            color: var(--text-primary);
+            font-weight: 500;
+        }
+
+        .callout-banner .highlight {
+            color: var(--accent-red-dark);
+            font-weight: 700;
+        }
+
+        /* === LAYERS GRID === */
+        .layers-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 14px;
+            margin-bottom: 40px;
+        }
+
+        /* === LAYER CARD (Glassmorphism) === */
+        .layer-card {
+            background: var(--bg-glass);
+            border: 1px solid var(--border-card);
+            border-radius: 24px;
+            padding: 24px 22px 22px;
+            transition: all 0.5s var(--ease-reveal);
+            position: relative;
+            overflow: hidden;
+            opacity: 0;
+            animation: fadeUp 0.8s var(--ease-reveal) forwards;
+        }
+
+        .layer-card:nth-child(1) { animation-delay: 0.35s; }
+        .layer-card:nth-child(2) { animation-delay: 0.45s; }
+        .layer-card:nth-child(3) { animation-delay: 0.55s; }
+        .layer-card:nth-child(4) { animation-delay: 0.65s; }
+        .layer-card:nth-child(5) { animation-delay: 0.75s; }
+
+        .layer-card:hover {
+            transform: translateY(-6px);
+            border-color: rgba(255, 255, 255, 0.18);
+            background: rgba(255, 255, 255, 0.08);
+            box-shadow: 0 16px 40px rgba(0, 0, 0, 0.35);
+        }
+
+        .layer-card .card-top {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+
+        .layer-number {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: var(--bg-base);
+            flex-shrink: 0;
+        }
+
+        .layer-card[data-layer="1"] .layer-number { background: var(--accent-yellow); }
+        .layer-card[data-layer="2"] .layer-number { background: var(--accent-blue); }
+        .layer-card[data-layer="3"] .layer-number { background: var(--accent-red-dark); }
+        .layer-card[data-layer="4"] .layer-number { background: var(--accent-red-light); }
+        .layer-card[data-layer="5"] .layer-number { background: var(--accent-yellow); }
+
+        .card-titles {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .layer-title {
+            font-size: 1.05rem;
+            font-weight: 700;
+            line-height: 1.2;
+        }
+
+        .layer-card[data-layer="1"] .layer-title { color: var(--accent-yellow); }
+        .layer-card[data-layer="2"] .layer-title { color: var(--accent-blue); }
+        .layer-card[data-layer="3"] .layer-title { color: var(--accent-red-dark); }
+        .layer-card[data-layer="4"] .layer-title { color: var(--accent-red-light); }
+        .layer-card[data-layer="5"] .layer-title { color: var(--accent-yellow); }
+
+        .layer-subtitle {
+            font-size: 0.7rem;
+            color: rgba(255, 255, 255, 0.3);
+            font-weight: 300;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+        }
+
+        .layer-items {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .layer-items li {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            font-size: 0.82rem;
+            color: var(--text-muted);
+            line-height: 1.5;
+            font-weight: 300;
+        }
+
+        .layer-items li .dot {
+            flex-shrink: 0;
+            width: 5px;
+            height: 5px;
+            border-radius: 50%;
+            margin-top: 6px;
+        }
+
+        .layer-card[data-layer="1"] .dot { background: var(--accent-yellow); }
+        .layer-card[data-layer="2"] .dot { background: var(--accent-blue); }
+        .layer-card[data-layer="3"] .dot { background: var(--accent-red-dark); }
+        .layer-card[data-layer="4"] .dot { background: var(--accent-red-light); }
+        .layer-card[data-layer="5"] .dot { background: var(--accent-yellow); }
+
+        /* === FLOW ARROW (between cards on desktop) === */
+        .flow-connector {
+            display: none;
+        }
+
+        /* === AI COVERAGE SECTION === */
+        .ai-coverage {
+            margin-bottom: 40px;
+            opacity: 0;
+            animation: fadeUp 0.8s var(--ease-reveal) 0.85s forwards;
+        }
+
+        .ai-coverage h2 {
+            font-size: 1rem;
+            font-weight: 300;
+            text-align: center;
+            margin-bottom: 14px;
+            color: var(--text-muted);
+            letter-spacing: -0.01em;
+        }
+
+        .coverage-track {
+            height: 52px;
+            background: var(--bg-glass);
+            border: 1px solid var(--border-subtle);
+            border-radius: 16px;
+            overflow: hidden;
+            display: flex;
+        }
+
+        .coverage-segment {
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.65rem;
+            font-weight: 500;
+            letter-spacing: 0.02em;
+            position: relative;
+            text-align: center;
+            line-height: 1.35;
+            padding: 0 8px;
+        }
+
+        .seg-ai-full {
+            flex: 2;
+            background: linear-gradient(135deg, rgba(250, 204, 21, 0.2), rgba(56, 189, 248, 0.2));
+            color: var(--accent-blue);
+        }
+
+        .seg-ai-partial {
+            flex: 1.5;
+            background: rgba(209, 81, 82, 0.12);
+            color: var(--accent-red-dark);
+            border-left: 1px dashed rgba(255, 255, 255, 0.1);
+        }
+
+        .seg-human {
+            flex: 1.5;
+            background: rgba(248, 113, 113, 0.08);
+            color: var(--accent-red-light);
+            border-left: 1px dashed rgba(255, 255, 255, 0.1);
+        }
+
+        .coverage-labels {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 8px;
+            padding: 0 4px;
+        }
+
+        .coverage-labels span {
+            font-size: 0.65rem;
+            color: rgba(255, 255, 255, 0.25);
+            font-weight: 300;
+        }
+
+        /* === ANALOGY CARDS === */
+        .analogy-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 14px;
+            margin-bottom: 32px;
+            opacity: 0;
+            animation: fadeUp 0.8s var(--ease-reveal) 0.95s forwards;
+        }
+
+        .analogy-card {
+            background: var(--bg-glass);
+            border: 1px solid var(--border-card);
+            border-radius: 24px;
+            padding: 28px 22px;
+            text-align: center;
+            transition: all 0.4s var(--ease-reveal);
+        }
+
+        .analogy-card:hover {
+            border-color: rgba(255, 255, 255, 0.15);
+            transform: translateY(-3px);
+        }
+
+        .analogy-card .emoji-big {
+            font-size: 2.2rem;
+            margin-bottom: 12px;
+        }
+
+        .analogy-card h3 {
+            font-size: 0.95rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+            color: var(--text-primary);
+        }
+
+        .analogy-card p {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            line-height: 1.6;
+            font-weight: 300;
+        }
+
+        .analogy-card p strong {
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+
+        /* === INSIGHT (Glowing Wrapper) === */
+        .insight-wrapper {
+            position: relative;
+            border-radius: 2rem;
+            background-color: transparent;
+            isolation: isolate;
+            overflow: hidden;
+            box-shadow: inset 0 0 16px rgba(0, 0, 0, 0.7), 0 16px 40px rgba(0, 0, 0, 0.35);
+            margin-bottom: 32px;
+            opacity: 0;
+            animation: fadeUp 1s var(--ease-reveal) 1.05s forwards;
+        }
+
+        .insight-wrapper::before {
+            content: "";
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: conic-gradient(from 0deg, transparent 10%, var(--accent-yellow) 15%, var(--accent-yellow) 28%, transparent 35%, transparent 45%, var(--accent-blue) 50%, var(--accent-blue) 63%, transparent 70%, transparent 80%, var(--accent-red-dark) 85%, var(--accent-red-dark) 100%);
+            animation: border-spin 6s linear infinite;
+            z-index: -2;
+            opacity: 0.7;
+        }
+
+        .insight-wrapper::after {
+            content: "";
+            position: absolute;
+            inset: 2px;
+            background: rgba(30, 30, 32, 0.95);
+            backdrop-filter: blur(20px);
+            border-radius: calc(2rem - 2px);
+            z-index: -1;
+        }
+
+        @keyframes border-spin {
+            100% { transform: rotate(360deg); }
+        }
+
+        .insight-content {
+            position: relative;
+            z-index: 1;
+            text-align: center;
+            padding: 36px 28px;
+        }
+
+        .insight-content .emoji {
+            font-size: 2rem;
+            margin-bottom: 12px;
+        }
+
+        .insight-content h2 {
+            font-size: 1.15rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .insight-content p {
+            font-size: 0.88rem;
+            color: var(--text-muted);
+            line-height: 1.7;
+            max-width: 550px;
+            margin: 0 auto;
+            font-weight: 300;
+        }
+
+        .insight-content p strong {
+            color: var(--text-primary);
+            font-weight: 500;
+        }
+
+        /* === FOOTER === */
+        .footer {
+            text-align: center;
+            padding-top: 16px;
+            opacity: 0;
+            animation: fadeUp 0.6s var(--ease-reveal) 1.2s forwards;
+        }
+
+        .footer-line {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            opacity: 0.4;
+            margin-bottom: 4px;
+        }
+
+        .footer-line span {
+            font-size: 0.55rem;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            font-weight: 700;
+        }
+
+        .footer-line .dot {
+            color: rgba(255, 255, 255, 0.2);
+            font-size: 0.55rem;
+        }
+
+        .footer-line .tagline {
+            font-weight: 300;
+            letter-spacing: 0;
+            text-transform: none;
+            color: rgba(255, 255, 255, 0.3);
+        }
+
+        .footer .copyright {
+            font-size: 0.55rem;
+            color: rgba(255, 255, 255, 0.2);
+            font-weight: 300;
+        }
+
+        /* === ANIMATIONS === */
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(24px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* === RESPONSIVE === */
+
+        /* Large screens: 3+2 grid for cards */
+        @media (min-width: 820px) {
+            .layers-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+
+            /* Center the last two cards */
+            .layer-card:nth-child(4) {
+                grid-column: 1 / 2;
+            }
+
+            .layer-card:nth-child(5) {
+                grid-column: 2 / 3;
+            }
+
+            /* Offset to center row 2 */
+            .layers-grid {
+                justify-items: center;
+            }
+
+            .layers-grid::after {
+                content: '';
+                grid-column: 3;
+            }
+        }
+
+        /* Tablet */
+        @media (max-width: 819px) and (min-width: 520px) {
+            .layers-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .layer-card:nth-child(5) {
+                grid-column: 1 / -1;
+                max-width: 340px;
+                justify-self: center;
+            }
+        }
+
+        /* Mobile */
+        @media (max-width: 519px) {
+            .page-container {
+                padding: 32px 16px 32px;
+            }
+
+            .layers-grid {
+                grid-template-columns: 1fr;
+                gap: 12px;
+            }
+
+            .layer-card {
+                padding: 20px 18px 18px;
+                border-radius: 20px;
+            }
+
+            .analogy-grid {
+                grid-template-columns: 1fr;
+                gap: 12px;
+            }
+
+            .analogy-card {
+                padding: 22px 18px;
+            }
+
+            .callout-banner {
+                padding: 16px 18px;
+                border-radius: 16px;
+            }
+
+            .insight-content {
+                padding: 28px 20px;
+            }
+
+            .coverage-segment {
+                font-size: 0.58rem;
+                padding: 0 4px;
+            }
+        }
+
+        /* Very small screens */
+        @media (max-width: 360px) {
+            .header h1 {
+                font-size: 1.5rem;
+            }
+
+            .coverage-track {
+                height: 60px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Particle Canvas (LifeStrategics V2) -->
+    <canvas id="particle-canvas"></canvas>
+
+    <div class="page-container">
+
+        <!-- Header -->
+        <header class="header">
+            <div class="eyebrow">De diseño IA → producto vendible</div>
+            <h1>Las 5 capas que necesitás para <span class="accent-word">vender</span> un producto digital</h1>
+            <p class="subtitle">Las herramientas de IA generan el <strong>diseño y el código frontend</strong>. Pero un
+                producto que puedas vender necesita mucho más que eso.</p>
+            <p class="hook">Sin tecnicismos, sin nombres de apps.</p>
+        </header>
+
+        <!-- Callout -->
+        <div class="callout-banner">
+            <p>Cuando alguien te dice <strong>"esta herramienta genera HTML listo para vender"</strong>, preguntá:
+                <span class="highlight">¿y las otras 3 capas?</span>
+            </p>
+        </div>
+
+        <!-- 5 Layers Grid -->
+        <div class="layers-grid">
+
+            <!-- Layer 1 -->
+            <div class="layer-card" data-layer="1">
+                <div class="card-top">
+                    <div class="layer-number">1</div>
+                    <div class="card-titles">
+                        <div class="layer-title">Diseño</div>
+                        <div class="layer-subtitle">Lo que se ve</div>
+                    </div>
+                </div>
+                <ul class="layer-items">
+                    <li><span class="dot"></span> Crear múltiples variaciones del diseño</li>
+                    <li><span class="dot"></span> Dar el máximo de detalles posibles a la IA</li>
+                    <li><span class="dot"></span> Diseñar flujos completos, no solo el "camino feliz"</li>
+                    <li><span class="dot"></span> Incluir estados de error, cargas y vacíos</li>
+                </ul>
+            </div>
+
+            <!-- Layer 2 -->
+            <div class="layer-card" data-layer="2">
+                <div class="card-top">
+                    <div class="layer-number">2</div>
+                    <div class="card-titles">
+                        <div class="layer-title">Frontend</div>
+                        <div class="layer-subtitle">Lo que interactúa el usuario</div>
+                    </div>
+                </div>
+                <ul class="layer-items">
+                    <li><span class="dot"></span> Usar todas las imágenes y assets del diseño</li>
+                    <li><span class="dot"></span> Generar descripciones detalladas para la IA</li>
+                    <li><span class="dot"></span> Usar componentes de código abierto</li>
+                    <li><span class="dot"></span> Usar modelos de IA de alto razonamiento</li>
+                </ul>
+            </div>
+
+            <!-- Layer 3 -->
+            <div class="layer-card" data-layer="3">
+                <div class="card-top">
+                    <div class="layer-number">3</div>
+                    <div class="card-titles">
+                        <div class="layer-title">Planificación del servidor</div>
+                        <div class="layer-subtitle">Lo que no se ve</div>
+                    </div>
+                </div>
+                <ul class="layer-items">
+                    <li><span class="dot"></span> Reunir todos los assets (frontend + servidor)</li>
+                    <li><span class="dot"></span> Diseñar la estructura de la base de datos</li>
+                    <li><span class="dot"></span> Planear la cobertura de pruebas</li>
+                    <li><span class="dot"></span> Dividir todo en tareas pequeñas y manejables</li>
+                </ul>
+            </div>
+
+            <!-- Layer 4 -->
+            <div class="layer-card" data-layer="4">
+                <div class="card-top">
+                    <div class="layer-number">4</div>
+                    <div class="card-titles">
+                        <div class="layer-title">Construcción del servidor</div>
+                        <div class="layer-subtitle">Lo que da vida</div>
+                    </div>
+                </div>
+                <ul class="layer-items">
+                    <li><span class="dot"></span> Conectar frontend con servidor</li>
+                    <li><span class="dot"></span> Ejecutar una tarea a la vez</li>
+                    <li><span class="dot"></span> Correr pruebas después de cada cambio</li>
+                    <li><span class="dot"></span> Validar integraciones paso a paso</li>
+                </ul>
+            </div>
+
+            <!-- Layer 5 -->
+            <div class="layer-card" data-layer="5">
+                <div class="card-top">
+                    <div class="layer-number">5</div>
+                    <div class="card-titles">
+                        <div class="layer-title">Publicación</div>
+                        <div class="layer-subtitle">Lo que sale al mundo</div>
+                    </div>
+                </div>
+                <ul class="layer-items">
+                    <li><span class="dot"></span> Apps → enviar a tiendas de aplicaciones</li>
+                    <li><span class="dot"></span> Web → publicar en un servidor de hosting</li>
+                    <li><span class="dot"></span> Servidor → desplegar la lógica en la nube</li>
+                    <li><span class="dot"></span> Base de datos → almacenamiento seguro</li>
+                </ul>
+            </div>
+
+        </div>
+
+        <!-- AI Coverage -->
+        <div class="ai-coverage">
+            <h2>¿Qué puede hacer la IA hoy, y qué no?</h2>
+            <div class="coverage-track">
+                <div class="coverage-segment seg-ai-full">
+                    <span>✅ La IA lo hace<br>bien sola</span>
+                </div>
+                <div class="coverage-segment seg-ai-partial">
+                    <span>⚡ La IA ayuda,<br>humano guía</span>
+                </div>
+                <div class="coverage-segment seg-human">
+                    <span>🧑‍💻 Requiere<br>conocimiento técnico</span>
+                </div>
+            </div>
+            <div class="coverage-labels">
+                <span>Capas 1–2: Diseño + Frontend</span>
+                <span>Capa 3: Planificación</span>
+                <span>Capas 4–5: Servidor + Publicación</span>
+            </div>
+        </div>
+
+        <!-- Analogies -->
+        <div class="analogy-grid">
+            <div class="analogy-card">
+                <div class="emoji-big">🏠</div>
+                <h3>Es como construir una casa</h3>
+                <p>La IA te da la <strong>maqueta y la fachada</strong>. Pero sin plomería, electricidad, cimientos y
+                    permisos municipales… no podés vivir ahí.</p>
+            </div>
+            <div class="analogy-card">
+                <div class="emoji-big">🧊</div>
+                <h3>El iceberg digital</h3>
+                <p>Lo que ves (la interfaz) es <strong>solo la punta</strong>. Debajo hay base de datos, servidor,
+                    seguridad, pruebas y despliegue.</p>
+            </div>
+        </div>
+
+        <!-- Insight (Glowing Card) -->
+        <div class="insight-wrapper">
+            <div class="insight-content">
+                <div class="emoji">💡</div>
+                <h2>La conclusión clave</h2>
+                <p>Las herramientas de IA son <strong>increíblemente poderosas</strong> para las capas 1 y 2. Pero
+                    <strong>un producto vendible necesita las 5 capas</strong>. La buena noticia: la IA también puede
+                    ayudar en las capas 3–5, pero necesitás a alguien que sepa <strong>qué pedirle y cómo
+                        armarlo</strong>.</p>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">
+            <div class="footer-line">
+                <span>LifeStrategics</span>
+                <span class="dot">•</span>
+                <span class="tagline">Understand. Decide. Take Action.</span>
+            </div>
+            <p class="copyright">&copy; 2026 LifeStrategics. Todos los derechos reservados.</p>
+        </div>
+
+    </div>
+
+    <script>
+        // --- Particle Canvas Engine (LifeStrategics V2 Clone) ---
+        const canvas = document.getElementById('particle-canvas');
+        if (canvas) {
+            const ctx = canvas.getContext('2d');
+            let particles = [];
+            let mouse = { x: null, y: null };
+
+            function init() {
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+                particles = [];
+                const count = window.innerWidth < 600 ? 25 : 45;
+                for (let i = 0; i < count; i++) {
+                    particles.push({
+                        x: Math.random() * canvas.width,
+                        y: Math.random() * canvas.height,
+                        vx: (Math.random() - 0.5) * 0.35,
+                        vy: (Math.random() - 0.5) * 0.35,
+                        size: Math.random() * 1.8 + 0.4
+                    });
+                }
+            }
+
+            function animate() {
+                requestAnimationFrame(animate);
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                particles.forEach((p, i) => {
+                    p.x += p.vx;
+                    p.y += p.vy;
+                    if (p.x < 0 || p.x > canvas.width) p.vx *= -1;
+                    if (p.y < 0 || p.y > canvas.height) p.vy *= -1;
+                    ctx.beginPath();
+                    ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+                    ctx.fillStyle = 'rgba(255,255,255,0.35)';
+                    ctx.fill();
+
+                    for (let j = i + 1; j < particles.length; j++) {
+                        const p2 = particles[j];
+                        const dx = p.x - p2.x;
+                        const dy = p.y - p2.y;
+                        const dist = Math.sqrt(dx * dx + dy * dy);
+                        if (dist < 140) {
+                            ctx.beginPath();
+                            ctx.strokeStyle = `rgba(255, 255, 255, ${0.08 - dist / 1750})`;
+                            ctx.lineWidth = 0.4;
+                            ctx.moveTo(p.x, p.y);
+                            ctx.lineTo(p2.x, p2.y);
+                            ctx.stroke();
+                        }
+                    }
+
+                    if (mouse.x !== null && mouse.y !== null) {
+                        const mdx = p.x - mouse.x;
+                        const mdy = p.y - mouse.y;
+                        const mDist = Math.sqrt(mdx * mdx + mdy * mdy);
+                        if (mDist < 160) {
+                            ctx.beginPath();
+                            ctx.strokeStyle = `rgba(255, 255, 255, ${0.3 - mDist / 530})`;
+                            ctx.lineWidth = 0.7;
+                            ctx.moveTo(p.x, p.y);
+                            ctx.lineTo(mouse.x, mouse.y);
+                            ctx.stroke();
+                        }
+                    }
+                });
+            }
+
+            window.addEventListener('resize', init);
+            window.addEventListener('mousemove', (e) => { mouse.x = e.x; mouse.y = e.y; });
+            window.addEventListener('touchmove', (e) => {
+                if (e.touches.length > 0) { mouse.x = e.touches[0].clientX; mouse.y = e.touches[0].clientY; }
+            });
+            window.addEventListener('touchend', () => { mouse.x = null; mouse.y = null; });
+            init();
+            animate();
+        }
+    </script>
+
+</body>
+
+</html>
