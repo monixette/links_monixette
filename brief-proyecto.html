@@ -50,11 +50,11 @@ body{
   border:1px solid rgba(255,255,255,.10);border-radius:9999px;box-shadow:0 8px 32px rgba(0,0,0,.5);
 }
 .ls-nav img{height:30px;width:auto;object-fit:contain;opacity:.9;}
-.ls-nav-tags{display:flex;gap:6px;}
-.ls-tag{font-family:'Wix Madefor Display',sans-serif;font-size:8px;letter-spacing:.16em;text-transform:uppercase;border-radius:9999px;padding:4px 11px;}
-.ls-tag-b{color:var(--blue);background:rgba(88,175,205,.08);border:1px solid rgba(88,175,205,.2);}
-.ls-tag-g{color:var(--gold);background:rgba(197,161,73,.08);border:1px solid rgba(197,161,73,.2);}
-.ls-tag-r{color:var(--red-ls);background:rgba(209,81,82,.08);border:1px solid rgba(209,81,82,.2);}
+.ls-nav-motto{font-family:'Wix Madefor Display',sans-serif;font-size:9px;font-weight:600;letter-spacing:.08em;text-transform:lowercase;white-space:nowrap;}
+.ls-nav-motto .w-b{color:var(--blue);}
+.ls-nav-motto .w-g{color:var(--gold);}
+.ls-nav-motto .w-r{color:var(--red-ls);}
+.ls-nav-motto .dot{color:rgba(255,255,255,.25);margin:0 5px;}
 
 /* ── SHELL ── */
 .shell{position:relative;z-index:1;min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:80px 16px 60px;}
@@ -265,10 +265,8 @@ textarea::placeholder{color:var(--muted);}
 
 <nav class="ls-nav">
   <img src="lifestrategics_logo_plain.png" alt="LifeStrategics">
-  <div class="ls-nav-tags">
-    <span class="ls-tag ls-tag-b">Understand</span>
-    <span class="ls-tag ls-tag-g">Decide</span>
-    <span class="ls-tag ls-tag-r">Act</span>
+  <div class="ls-nav-motto">
+    <span class="w-b">understand</span><span class="dot">·</span><span class="w-g">decide</span><span class="dot">·</span><span class="w-r">take action</span>
   </div>
 </nav>
 
