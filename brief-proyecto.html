@@ -45,15 +45,11 @@ body{
 /* ── NAV ── */
 .ls-nav{
   position:fixed;top:14px;left:0;right:0;width:92%;max-width:680px;margin:0 auto;z-index:60;
-  display:flex;justify-content:center;align-items:center;padding:10px 22px;
+  display:flex;flex-direction:column;align-items:center;gap:4px;padding:10px 18px;
   background:rgba(26,26,28,.82);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);
-  border:1px solid rgba(255,255,255,.10);border-radius:9999px;box-shadow:0 8px 32px rgba(0,0,0,.5);
+  border:1px solid rgba(255,255,255,.10);border-radius:20px;box-shadow:0 8px 32px rgba(0,0,0,.5);
 }
-.ls-nav img{position:absolute;left:22px;height:30px;width:auto;object-fit:contain;opacity:.9;}
-@media(max-width:480px){
-  .ls-nav{flex-direction:column;gap:4px;padding:10px 18px;border-radius:20px;}
-  .ls-nav img{position:static;}
-}
+.ls-nav img{height:30px;width:auto;object-fit:contain;opacity:.9;}
 .ls-nav-motto{font-family:'Wix Madefor Display',sans-serif;font-size:9px;font-weight:600;letter-spacing:.08em;text-transform:lowercase;white-space:nowrap;}
 .ls-nav-motto .w-b{color:var(--blue);}
 .ls-nav-motto .w-g{color:var(--gold);}
