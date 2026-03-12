@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Brief de proyecto — 8 pasos para clarificar tu idea</title>
+<meta name="description" content="Herramienta interactiva para construir el brief de tu proyecto en 8 pasos. Microemprendimientos, MicroSaaS, proyectos personales y soluciones con IA.">
+<link href="https://fonts.googleapis.com/css2?family=Wix+Madefor+Display:wght@300;400;500;600;700;800&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+/* ═══════════════════════════════════════════════
+   LIFESTRATEGICS V2026 — CPS BRIEF TOOL
+   Dark Mode · Glassmorphism · Mobile-first
+   ═══════════════════════════════════════════════ */
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+
+:root{
+  --bg:#242426;
+  --card:rgba(255,255,255,0.03);
+  --border:rgba(255,255,255,0.08);
+  --border2:rgba(255,255,255,0.14);
+  --blue:#58AFCD;
+  --gold:#C5A149;
+  --red-ls:#D15152;
+  --text:#fff;
+  --text-sec:rgba(255,255,255,0.85);
+  --text-dim:rgba(255,255,255,0.42);
+  --muted:rgba(255,255,255,0.25);
+  --ease-out:cubic-bezier(0.16,1,0.3,1);
+  --phase1:#58AFCD;
+  --phase2:#C5A149;
+  --phase3:#D15152;
+}
+
+body{
+  background:var(--bg);color:var(--text);
+  font-family:'DM Mono',monospace;font-size:14px;
+  line-height:1.5;-webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+}
+
+/* ── PARTICLE CANVAS ── */
+#particle-canvas{position:fixed;top:0;left:0;width:100vw;height:100vh;pointer-events:none;z-index:0;opacity:.55;}
+
+/* ── NAV ── */
+.ls-nav{
+  position:fixed;top:14px;left:0;right:0;width:92%;max-width:680px;margin:0 auto;z-index:60;
+  display:flex;justify-content:space-between;align-items:center;padding:10px 22px;
+  background:rgba(26,26,28,.82);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);
+  border:1px solid rgba(255,255,255,.10);border-radius:9999px;box-shadow:0 8px 32px rgba(0,0,0,.5);
+}
+.ls-nav img{height:30px;width:auto;object-fit:contain;opacity:.9;}
+.ls-nav-tags{display:flex;gap:6px;}
+.ls-tag{font-family:'Wix Madefor Display',sans-serif;font-size:8px;letter-spacing:.16em;text-transform:uppercase;border-radius:9999px;padding:4px 11px;}
+.ls-tag-b{color:var(--blue);background:rgba(88,175,205,.08);border:1px solid rgba(88,175,205,.2);}
+.ls-tag-g{color:var(--gold);background:rgba(197,161,73,.08);border:1px solid rgba(197,161,73,.2);}
+.ls-tag-r{color:var(--red-ls);background:rgba(209,81,82,.08);border:1px solid rgba(209,81,82,.2);}
+
+/* ── SHELL ── */
+.shell{position:relative;z-index:1;min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:80px 16px 60px;}
+.content{width:100%;max-width:680px;}
+
+/* ── INTRO ── */
+.intro-card{
+  background:var(--card);border:1px solid var(--border);border-radius:20px;
+  padding:40px 28px 36px;backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
+}
+.eyebrow{font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:var(--blue);margin-bottom:12px;display:flex;align-items:center;gap:8px;}
+.eyebrow::before{content:'';display:inline-block;width:20px;height:1px;background:var(--blue);opacity:.5;}
+.intro-title{font-family:'Wix Madefor Display',sans-serif;font-size:clamp(26px,7vw,42px);font-weight:700;line-height:1.08;letter-spacing:-.02em;margin-bottom:8px;}
+.intro-title em{color:var(--blue);font-style:normal;}
+.intro-sub{font-size:12px;color:var(--text-dim);line-height:1.85;max-width:520px;margin-bottom:28px;border-left:2px solid rgba(88,175,205,.3);padding-left:14px;}
+
+.phase-pills{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:28px;justify-content:center;}
+@media(max-width:600px){.phase-pills{flex-direction:column;align-items:center;gap:8px;}}
+.ph-pill{font-family:'Wix Madefor Display',sans-serif;font-size:9px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;padding:5px 14px;border-radius:9999px;}
+.ph-pill.p1{color:var(--phase1);background:rgba(88,175,205,.1);border:1px solid rgba(88,175,205,.25);}
+.ph-pill.p2{color:var(--phase2);background:rgba(197,161,73,.1);border:1px solid rgba(197,161,73,.25);}
+.ph-pill.p3{color:var(--phase3);background:rgba(209,81,82,.1);border:1px solid rgba(209,81,82,.25);}
+
+.steps-preview{display:flex;flex-direction:column;gap:6px;margin-bottom:32px;}
+.sp-phase-label{font-family:'Wix Madefor Display',sans-serif;font-size:9px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;padding:10px 0 4px;}
+.sp-phase-label.p1{color:var(--phase1);}
+.sp-phase-label.p2{color:var(--phase2);}
+.sp-phase-label.p3{color:var(--phase3);}
+.sp-item{display:flex;align-items:center;gap:10px;padding:8px 14px;background:rgba(255,255,255,.02);border:1px solid var(--border);border-radius:10px;}
+.sp-num{font-family:'Wix Madefor Display',sans-serif;font-size:18px;font-weight:800;min-width:22px;flex-shrink:0;}
+.sp-num.p1{color:var(--phase1);}
+.sp-num.p2{color:var(--phase2);}
+.sp-num.p3{color:var(--phase3);}
+.sp-name{font-family:'Wix Madefor Display',sans-serif;font-size:13px;font-weight:500;color:var(--text-sec);}
+
+.start-btn{
+  display:flex;align-items:center;justify-content:center;gap:8px;width:100%;
+  padding:16px 28px;border:none;border-radius:14px;cursor:pointer;
+  font-family:'Wix Madefor Display',sans-serif;font-size:15px;font-weight:700;letter-spacing:.06em;
+  color:#fff;background:linear-gradient(135deg,var(--blue),#3d8fa8);
+  box-shadow:0 8px 28px rgba(88,175,205,.3);transition:transform .25s var(--ease-out),box-shadow .25s;
+}
+.start-btn:hover{transform:translateY(-2px);box-shadow:0 12px 36px rgba(88,175,205,.4);}
+
+/* ── PROGRESS BAR ── */
+.prog-bar{
+  background:rgba(26,26,28,.7);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
+  border:1px solid var(--border);border-radius:16px;padding:14px 16px;margin-bottom:14px;
+}
+.phase-labels-row{display:flex;gap:4px;margin-bottom:10px;}
+.ph-lbl{flex:1;text-align:center;font-family:'Wix Madefor Display',sans-serif;font-size:8px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;padding:4px;border-radius:6px;color:var(--muted);transition:all .25s;}
+.ph-lbl.active.p1{background:rgba(88,175,205,.18);color:var(--phase1);}
+.ph-lbl.active.p2{background:rgba(197,161,73,.18);color:var(--phase2);}
+.ph-lbl.active.p3{background:rgba(209,81,82,.18);color:var(--phase3);}
+
+.dots-row{display:flex;align-items:center;justify-content:center;gap:4px;flex-wrap:wrap;}
+.s-dot{
+  width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;
+  font-family:'Wix Madefor Display',sans-serif;font-size:12px;font-weight:700;cursor:pointer;
+  transition:all .2s;color:var(--muted);background:rgba(255,255,255,.05);border:2px solid transparent;
+}
+.s-dot.done{background:rgba(255,255,255,.15);color:var(--text);}
+.s-dot.done.p1{background:rgba(88,175,205,.2);color:var(--phase1);}
+.s-dot.done.p2{background:rgba(197,161,73,.2);color:var(--phase2);}
+.s-dot.done.p3{background:rgba(209,81,82,.2);color:var(--phase3);}
+.s-dot.cur{transform:scale(1.15);color:var(--bg);}
+.s-dot.cur.p1{background:var(--phase1);box-shadow:0 0 0 3px rgba(88,175,205,.3);}
+.s-dot.cur.p2{background:var(--phase2);box-shadow:0 0 0 3px rgba(197,161,73,.3);}
+.s-dot.cur.p3{background:var(--phase3);box-shadow:0 0 0 3px rgba(209,81,82,.3);}
+.s-sep{width:10px;height:2px;background:rgba(255,255,255,.12);border-radius:1px;}
+
+/* ── STEP CARD ── */
+.step-card{background:var(--card);border:1px solid var(--border);border-radius:20px;overflow:hidden;backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);}
+.card-head{padding:24px 22px 20px;border-bottom:1px solid var(--border);}
+.phase-tag{display:inline-block;font-family:'Wix Madefor Display',sans-serif;font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.14em;padding:4px 12px;border-radius:9999px;color:#fff;margin-bottom:14px;}
+.head-top{display:flex;align-items:flex-start;gap:14px;}
+.step-giant-num{font-family:'Wix Madefor Display',sans-serif;font-size:64px;font-weight:800;line-height:.82;letter-spacing:-2px;flex-shrink:0;}
+.step-title-block{flex:1;padding-top:4px;}
+.step-title{font-family:'Wix Madefor Display',sans-serif;font-size:clamp(20px,4vw,28px);font-weight:700;line-height:1.1;letter-spacing:-.01em;margin-bottom:8px;}
+.step-desc{font-size:12px;color:var(--text-dim);line-height:1.7;}
+
+.card-body{padding:22px 22px 0;}
+
+/* ── TABS ── */
+.tab-nav{display:flex;gap:4px;background:rgba(255,255,255,.04);border-radius:12px;padding:4px;margin-bottom:22px;}
+.tab-btn{
+  flex:1;padding:10px 8px;border:none;border-radius:9px;background:transparent;cursor:pointer;
+  font-family:'Wix Madefor Display',sans-serif;font-size:11px;font-weight:600;color:var(--muted);
+  transition:all .2s;text-align:center;line-height:1.3;
+}
+.tab-btn.active{background:rgba(255,255,255,.08);color:var(--text);box-shadow:0 2px 10px rgba(0,0,0,.3);}
+.tab-sub{font-size:10px;font-weight:700;color:var(--blue);display:block;margin-top:2px;letter-spacing:.08em;}
+
+/* ── QUESTIONS ── */
+.q-block{margin-bottom:18px;}
+.q-label{display:flex;align-items:flex-start;gap:9px;font-family:'Wix Madefor Display',sans-serif;font-size:13px;font-weight:500;color:var(--text-sec);margin-bottom:8px;line-height:1.5;}
+.q-dot{width:22px;height:22px;border-radius:50%;color:#fff;font-size:10px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;}
+.q-hint{font-size:11px;color:var(--text-dim);margin:-4px 0 8px 31px;line-height:1.5;font-style:italic;}
+
+textarea{
+  width:100%;min-height:76px;padding:12px 14px;
+  border:1px solid var(--border2);border-radius:12px;
+  font-family:'DM Mono',monospace;font-size:13px;color:var(--text);
+  background:rgba(255,255,255,.03);resize:vertical;
+  transition:border-color .2s,background .2s,box-shadow .2s;line-height:1.6;
+}
+textarea:focus{outline:none;border-color:var(--blue);background:rgba(88,175,205,.04);box-shadow:0 0 0 3px rgba(88,175,205,.1);}
+textarea::placeholder{color:var(--muted);}
+
+.free-block{border-top:1px solid var(--border);padding:18px 0 0;margin-top:4px;}
+.free-label{font-family:'Wix Madefor Display',sans-serif;font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.16em;color:var(--muted);margin-bottom:8px;display:flex;align-items:center;gap:6px;}
+.free-block textarea{min-height:88px;border-style:dashed;}
+
+/* ── NAV BUTTONS ── */
+.card-nav{display:flex;justify-content:space-between;align-items:center;padding:18px 22px 22px;border-top:1px solid var(--border);margin-top:18px;gap:10px;}
+.nav-info{font-family:'Wix Madefor Display',sans-serif;font-size:11px;color:var(--muted);font-weight:500;}
+.btn-prev{
+  background:rgba(255,255,255,.06);color:var(--text-sec);border:1px solid var(--border2);
+  padding:11px 20px;border-radius:9999px;cursor:pointer;
+  font-family:'Wix Madefor Display',sans-serif;font-size:13px;font-weight:600;
+  transition:background .2s,border-color .2s;white-space:nowrap;
+}
+.btn-prev:hover{background:rgba(255,255,255,.1);border-color:rgba(255,255,255,.25);}
+.btn-next{
+  background:var(--blue);color:#fff;border:none;padding:11px 22px;border-radius:9999px;cursor:pointer;
+  font-family:'Wix Madefor Display',sans-serif;font-size:13px;font-weight:700;
+  box-shadow:0 4px 16px rgba(88,175,205,.3);transition:transform .2s,box-shadow .2s;white-space:nowrap;
+}
+.btn-next:hover{transform:translateY(-1px);box-shadow:0 6px 22px rgba(88,175,205,.4);}
+.btn-finish{background:var(--gold);box-shadow:0 4px 16px rgba(197,161,73,.3);}
+.btn-finish:hover{box-shadow:0 6px 22px rgba(197,161,73,.4);}
+
+/* ── SUMMARY ── */
+.summary-card{background:var(--card);border:1px solid var(--border);border-radius:20px;overflow:hidden;backdrop-filter:blur(16px);}
+.sum-head{padding:28px 22px 20px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;}
+.sum-title{font-family:'Wix Madefor Display',sans-serif;font-size:clamp(28px,6vw,40px);font-weight:800;letter-spacing:-.02em;}
+.sum-actions{display:flex;gap:8px;align-items:center;flex-wrap:wrap;}
+.btn-edit{background:rgba(255,255,255,.06);color:var(--text-sec);border:1px solid var(--border2);padding:10px 18px;border-radius:9999px;cursor:pointer;font-family:'Wix Madefor Display',sans-serif;font-size:12px;font-weight:600;transition:background .2s;white-space:nowrap;}
+.btn-edit:hover{background:rgba(255,255,255,.1);}
+.btn-copy{background:var(--blue);color:#fff;border:none;padding:10px 18px;border-radius:9999px;cursor:pointer;font-family:'Wix Madefor Display',sans-serif;font-size:12px;font-weight:700;display:flex;align-items:center;gap:6px;transition:opacity .2s,transform .2s;box-shadow:0 4px 16px rgba(88,175,205,.3);white-space:nowrap;}
+.btn-copy:hover{opacity:.9;transform:translateY(-1px);}
+.btn-print{background:var(--gold);color:#fff;border:none;padding:10px 18px;border-radius:9999px;cursor:pointer;font-family:'Wix Madefor Display',sans-serif;font-size:12px;font-weight:700;display:flex;align-items:center;gap:6px;transition:opacity .2s;box-shadow:0 4px 16px rgba(197,161,73,.3);white-space:nowrap;}
+.btn-print:hover{opacity:.9;}
+
+.sum-body{padding:22px 22px 36px;}
+.sum-phase{margin-bottom:28px;}
+.sum-phase-title{font-family:'Wix Madefor Display',sans-serif;font-size:9px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;padding:6px 14px;border-radius:8px;display:inline-block;margin-bottom:14px;}
+.sum-phase-title.p1{color:var(--phase1);background:rgba(88,175,205,.12);border:1px solid rgba(88,175,205,.25);}
+.sum-phase-title.p2{color:var(--phase2);background:rgba(197,161,73,.12);border:1px solid rgba(197,161,73,.25);}
+.sum-phase-title.p3{color:var(--phase3);background:rgba(209,81,82,.12);border:1px solid rgba(209,81,82,.25);}
+
+.sum-step{background:rgba(255,255,255,.02);border:1px solid var(--border);border-radius:14px;padding:18px 18px;margin-bottom:12px;border-left:3px solid var(--blue);}
+.sum-step-head{display:flex;align-items:center;gap:10px;margin-bottom:14px;}
+.sum-step-n{font-family:'Wix Madefor Display',sans-serif;font-size:26px;font-weight:800;color:var(--blue);line-height:1;}
+.sum-step-name{font-family:'Wix Madefor Display',sans-serif;font-size:15px;font-weight:600;}
+.sum-qa{margin-bottom:10px;}
+.sum-q{font-family:'Wix Madefor Display',sans-serif;font-size:10px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:3px;}
+.sum-a{font-size:13px;color:var(--text-sec);line-height:1.7;white-space:pre-wrap;}
+.sum-a.empty{color:var(--muted);font-style:italic;}
+.sum-sub{background:rgba(255,255,255,.02);border:1px solid var(--border);border-radius:12px;padding:14px 16px;margin-top:12px;}
+.sum-sub-title{font-family:'Wix Madefor Display',sans-serif;font-size:13px;font-weight:700;margin-bottom:12px;}
+.sum-sub-badge{color:var(--blue);margin-left:5px;font-size:12px;}
+.sum-free{border-top:1px dashed var(--border);padding-top:10px;margin-top:8px;}
+
+/* ── TOAST ── */
+.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(100px);background:var(--blue);color:#fff;padding:12px 24px;border-radius:9999px;font-family:'Wix Madefor Display',sans-serif;font-size:13px;font-weight:600;z-index:100;box-shadow:0 8px 28px rgba(88,175,205,.35);transition:transform .4s var(--ease-out);pointer-events:none;}
+.toast.show{transform:translateX(-50%) translateY(0);}
+
+/* ── FOOTER ── */
+.ls-footer{margin-top:32px;padding-top:20px;border-top:1px solid var(--border);display:flex;align-items:center;justify-content:center;gap:8px;}
+.ls-footer span{font-family:'Wix Madefor Display',sans-serif;font-size:8px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);}
+
+/* ── PRINT ── */
+@media print{
+  #particle-canvas,.ls-nav,.prog-bar,.card-nav,.sum-actions,.toast{display:none!important;}
+  body{background:#fff;color:#111;}
+  .shell{padding:0;}
+  .summary-card,.step-card,.intro-card{background:#fff;border:1px solid #ddd;backdrop-filter:none;}
+  .sum-step{border-left-color:#58AFCD;background:#f8f8f8;break-inside:avoid;}
+  .sum-phase{break-inside:avoid;}
+  .sum-title,.sum-step-name,.sum-step-n,.q-label,.step-title{color:#111;}
+  .sum-q{color:#888;}
+  .sum-a,.step-desc{color:#333;}
+  textarea{color:#111;background:#f9f9f9;border-color:#ddd;}
+  @page{margin:18mm;}
+}
+
+/* ── DISCLAIMER ── */
+.disclaimer{margin-top:20px;padding:14px 16px;border-radius:12px;background:rgba(255,255,255,.02);border:1px dashed rgba(255,255,255,.12);display:flex;align-items:flex-start;gap:10px;}
+.disclaimer-icon{font-size:16px;flex-shrink:0;line-height:1.4;}
+.disclaimer-text{font-family:'Wix Madefor Display',sans-serif;font-size:11px;color:var(--text-dim);line-height:1.65;}
+.disclaimer-text strong{color:var(--text-sec);font-weight:600;}
+
+.export-alert{margin-bottom:20px;padding:18px 20px;border-radius:14px;background:rgba(197,161,73,.06);border:1px solid rgba(197,161,73,.25);display:flex;align-items:flex-start;gap:12px;}
+.export-alert-icon{font-size:22px;flex-shrink:0;line-height:1.2;}
+.export-alert-content{flex:1;}
+.export-alert-title{font-family:'Wix Madefor Display',sans-serif;font-size:14px;font-weight:700;color:var(--gold);margin-bottom:4px;}
+.export-alert-text{font-family:'Wix Madefor Display',sans-serif;font-size:12px;color:var(--text-dim);line-height:1.6;}
+.export-alert-text strong{color:var(--text-sec);font-weight:600;}
+
+/* ── ANIMATION ── */
+@keyframes fadeUp{from{opacity:0;transform:translateY(16px);}to{opacity:1;transform:translateY(0);}}
+.fade-up{animation:fadeUp .6s var(--ease-out) forwards;}
+</style>
+</head>
+<body>
+<canvas id="particle-canvas"></canvas>
+
+<nav class="ls-nav">
+  <img src="lifestrategics_logo_plain.png" alt="LifeStrategics">
+  <div class="ls-nav-tags">
+    <span class="ls-tag ls-tag-b">Understand</span>
+    <span class="ls-tag ls-tag-g">Decide</span>
+    <span class="ls-tag ls-tag-r">Act</span>
+  </div>
+</nav>
+
+<div class="shell">
+  <div class="content" id="app"></div>
+  <div class="ls-footer"><span>LifeStrategics</span><span style="opacity:.4">·</span><span style="opacity:.6;font-size:7px;letter-spacing:.1em;">Understand. Decide. Take Action.</span></div>
+</div>
+
+<div class="toast" id="toast">✓ Copiado al portapapeles</div>
+
+<script>
+const PHASES=[
+  {name:"Entender el reto",cls:"p1",steps:[0,1,2]},
+  {name:"Diseñar la solución",cls:"p2",steps:[3,4]},
+  {name:"Hacer que suceda",cls:"p3",steps:[5,6,7]}
+];
+
+const STEPS=[
+  {id:1,n:"1",title:"Contexto del proyecto",phase:"Entender el reto",phCls:"p1",phIdx:0,phColor:"var(--phase1)",
+   desc:"Describe la situación actual y por qué quieres empezar este proyecto.",
+   qs:[
+     {q:"¿Qué está pasando ahora que te motivó a arrancar este proyecto?",h:"🏪 Negocio: 'Veo que muchos negocios locales no tienen presencia digital…'<br>🧑 Personal: 'Pierdo 2 horas diarias buscando recetas y organizando el menú de la semana…'"},
+     {q:"¿Qué recursos tienes a tu favor? (tiempo, habilidades, herramientas, contactos)",h:"No importa si son pocos. Ej: 'Sé usar Canva, tengo 2 horas libres por las noches, conozco a 3 dueños de negocios'<br>🧑 Personal: 'Tengo ChatGPT, sé usar Google Sheets y tengo datos de mis gastos'"},
+     {q:"¿Qué está pasando afuera? (mercado, tendencias, competencia, oportunidades)",h:"🏪 Negocio: '¿Hay una tendencia o demanda que puedas aprovechar?'<br>🧑 Personal: '¿Hay herramientas o apps nuevas que faciliten lo que quieres hacer?'"},
+     {q:"¿Por qué es importante actuar ahora y no dejarlo para después?",h:"🏪 Negocio: 'Mis competidores ya están vendiendo online'<br>🧑 Personal: 'Mi desorganización me está costando dinero y estrés cada mes'"}
+   ]},
+  {id:2,n:"2",title:"Información clave",phase:"Entender el reto",phCls:"p1",phIdx:0,phColor:"var(--phase1)",
+   desc:"Reúne los datos, opiniones y observaciones que tienes disponibles.",
+   qs:[
+     {q:"¿Qué datos concretos tienes? (números, estadísticas, métricas)",h:"🏪 Negocio: 'El 60% de negocios locales no tiene redes sociales activas…'<br>🧑 Personal: 'Gasto $3,000 al mes en comida que se echa a perder'"},
+     {q:"¿Qué has escuchado de personas reales? (feedback, quejas, sugerencias)",h:"Conversaciones informales, comentarios en redes, entrevistas…<br>🧑 Personal: '¿Qué te dicen tus amigos/familia sobre este problema? ¿Alguien más lo tiene?'"},
+     {q:"¿Qué información te falta todavía y cómo podrías conseguirla?",h:"Ej: 'No sé cuántas personas buscan esto' → Google Trends, encuesta rápida, preguntar en un grupo<br>🧑 Personal: 'No sé cuánto tiempo pierdo' → trackear durante 1 semana"},
+     {q:"¿A quiénes afecta más este problema? (clientes, usuarios, tú mismo)",h:"🏪 Negocio: 'Pequeños comercios que no venden online'<br>🧑 Personal: 'A mí directamente, a mi familia, a mi productividad diaria'"}
+   ]},
+  {id:3,n:"3",title:"Definir el reto",phase:"Entender el reto",phCls:"p1",phIdx:0,phColor:"var(--phase1)",
+   desc:"Resume tu reto en una frase clara que guíe las decisiones de aquí en adelante.",
+   qs:[
+     {q:"Escribe tu reto en una oración: '¿Cómo podría(mos)…?'",h:"🏪 Negocio: '¿Cómo podría ayudar a negocios locales a vender más con contenido simple?'<br>🧑 Personal: '¿Cómo podría organizar mis finanzas personales para ahorrar $5,000 en 6 meses?'"},
+     {q:"¿Qué resultados concretos esperas lograr? (sé específico y medible)",h:"🏪 Negocio: '10 clientes en 3 meses', '500 descargas', '$1,000 USD de ingreso'<br>🧑 Personal: 'Reducir 5 horas semanales de tareas repetitivas', 'Tener un sistema que funcione solo'"},
+     {q:"¿Cuáles son tus limitaciones reales? (tiempo, dinero, alcance)",h:"Ej: 'Solo puedo dedicarle 1 hora al día', 'No tengo presupuesto', 'No sé programar pero puedo usar herramientas no-code'"},
+     {q:"¿Cómo vas a saber que lo lograste? ¿Cuáles son tus señales de éxito?",h:"🏪 Negocio: 'Mis primeros 3 clientes pagando'<br>🧑 Personal: 'Ya no pierdo tiempo buscando información', 'Mi sistema funciona sin que yo intervenga'"}
+   ]},
+  {id:4,n:"4",title:"Lluvia de ideas",phase:"Diseñar la solución",phCls:"p2",phIdx:1,phColor:"var(--phase2)",
+   desc:"Anota todas las ideas que se te ocurran sin filtro ni juicio. Más es mejor.",
+   qs:[
+     {q:"Escribe TODAS las ideas que se te ocurran (sin filtro, sin juzgar)",h:"Vale todo. Locuras incluidas. Mínimo 5, ideal 10+. Ej: 'Hacer un bot de WhatsApp', 'Una app que me avise', 'Un curso en video', 'Automatizar con Zapier', 'Contratar un freelancer'"},
+     {q:"¿Cuáles son las más atrevidas, locas o inesperadas?",h:"Las ideas 'imposibles' muchas veces esconden la mejor solución. Ej: '¿Y si la IA lo hiciera todo por mí?', '¿Y si lo hago gratis al inicio?'"},
+     {q:"¿Se pueden combinar algunas ideas para crear algo mejor?",h:"Ej: 'Bot de WhatsApp + contenido automático = sistema de atención que funciona solo'"},
+     {q:"Si no tuvieras ninguna limitación, ¿cuál sería la solución perfecta?",h:"Piensa en grande: '¿Cómo sería si tuviera tiempo, dinero y un equipo de 10 personas?'"}
+   ]},
+  {id:5,n:"5",title:"Elegir la mejor idea",phase:"Diseñar la solución",phCls:"p2",phIdx:1,phColor:"var(--phase2)",
+   desc:"Filtra tus ideas con criterios claros y elige la que vas a ejecutar.",
+   qs:[
+     {q:"¿Qué criterios estás usando para elegir? (impacto, viabilidad, costo, tiempo)",h:"Ej: 'Que lo pueda hacer solo', 'Que no cueste más de $500', 'Que funcione en 2 semanas', 'Que resuelva el problema #1'"},
+     {q:"¿Cuál es la idea ganadora y por qué le gana a las demás?",h:"🏪 Negocio: 'Un servicio de contenido por suscripción porque es recurrente'<br>🧑 Personal: 'Un dashboard en Notion porque ya lo uso todos los días'"},
+     {q:"¿Qué riesgos o supuestos tiene esta idea? ¿Qué podría salir mal?",h:"Ej: 'Asumo que la gente va a pagar, pero no lo he validado', 'Asumo que puedo mantenerlo yo solo'"},
+     {q:"¿Qué necesitas validar ANTES de invertirle tiempo y dinero?",h:"🏪 Negocio: una encuesta rápida, un mockup, 5 conversaciones con clientes potenciales<br>🧑 Personal: probarlo manualmente durante 1 semana antes de automatizar"}
+   ]},
+  {id:6,n:"6",title:"Planificar",phase:"Hacer que suceda",phCls:"p3",phIdx:2,phColor:"var(--phase3)",
+   desc:"Convierte tu idea en un plan concreto con tres niveles: visión, estrategia y tareas.",
+   multi:true,
+   subs:[
+     {id:"6a",title:"Visión general",sub:"POR QUÉs",
+      qs:[
+        {q:"¿Qué esperas que pase si todo sale bien? ¿Y si sale mal?",h:"Bien: 'Genero ingresos pasivos' / 'Mi casa se organiza sola'. Mal: 'Pierdo 2 meses de trabajo' / 'Vuelvo al caos de antes'"},
+        {q:"¿Qué información adicional necesitas para arrancar?",h:"Ej: 'Necesito saber precios de la competencia', 'Entender cómo funciona la API de WhatsApp', 'Ver tutoriales de Notion'"},
+        {q:"¿Cuáles son tus recursos actuales? (herramientas, contactos, dinero, tiempo)",h:"Ej: 'ChatGPT Pro, Canva, 2 horas/día, un amigo diseñador, $2,000 de presupuesto'"},
+        {q:"¿Cómo podrías conseguir recursos que hoy no tienes?",h:"Ej: 'Buscar un cofundador técnico', 'Usar herramientas gratuitas', 'Pedir ayuda en comunidades', 'Hacer trueque de servicios'"}
+      ]},
+     {id:"6b",title:"Estrategia",sub:"CÓMOs",
+      qs:[
+        {q:"¿Quiénes ya hacen algo parecido? ¿Qué puedes aprender de ellos?",h:"Busca 3-5 referencias.<br>🏪 Negocio: competidores directos. Personal: personas que ya resolvieron ese problema (YouTube, Reddit, blogs)"},
+        {q:"¿Cuáles son tus objetivos a 1 mes, 3 meses y 6 meses?",h:"1 mes: 'Landing lista' / 'Sistema armado'. 3 meses: 'Primeros clientes' / 'Funciona en automático'. 6 meses: 'Ingresos recurrentes' / 'Ya es un hábito'"},
+        {q:"¿Cómo vas a medir si vas por buen camino? (KPIs simples)",h:"🏪 Negocio: visitas, leads, ventas, descargas<br>🧑 Personal: tiempo ahorrado, dinero ahorrado, veces que usé mi sistema, nivel de estrés"},
+        {q:"¿Cómo vas a dar seguimiento a las acciones y responsabilidades?",h:"Ej: 'Revisión semanal los domingos', 'Check-in con mi socio cada viernes', 'Tablero de Notion con fechas'"}
+      ]},
+     {id:"6c",title:"Tareas concretas",sub:"QUÉs",
+      qs:[
+        {q:"¿Cuál es tu plan de acción paso a paso?",h:"Lista 5-10 tareas. Ej: '1. Registrar dominio 2. Armar landing…' / '1. Descargar app 2. Conectar cuentas 3. Configurar alertas…'"},
+        {q:"¿Quién hace qué? (aunque solo seas tú, escríbelo)",h:"Ej: 'Yo: contenido y estrategia. Mi hermana: diseño. ChatGPT: borradores y correcciones'"},
+        {q:"¿Cuáles son las fechas clave? (deadlines, entregas, lanzamiento)",h:"Ej: 'Landing lista 15/abril', 'Primeros contenidos 20/abril', 'Lanzamiento 1/mayo'"},
+        {q:"¿Dónde están los posibles cuellos de botella?",h:"Ej: 'No sé diseñar', 'Dependo de aprobación de alguien', 'Me trabo con la parte técnica'"}
+      ]}
+   ]},
+  {id:7,n:"7",title:"Diseño de implementación",phase:"Hacer que suceda",phCls:"p3",phIdx:2,phColor:"var(--phase3)",
+   desc:"Define cómo vas a organizar el trabajo para que realmente suceda.",
+   qs:[
+     {q:"¿Cómo está organizado tu equipo? (aunque seas solo tú, define tus roles)",h:"Ej: 'Yo hago todo, pero mi hermana me ayuda con diseño los fines de semana'<br>🧑 Personal: 'Solo soy yo, pero uso IA como asistente para escribir y organizar'"},
+     {q:"¿Qué método de trabajo vas a usar? (sprints, tareas semanales, kanban, etc.)",h:"Ej: 'Tareas semanales en Notion', 'Sprints de 2 semanas', 'Lista diaria en papel', 'Tablero kanban en Trello'"},
+     {q:"¿Cuáles son los entregables principales y sus fechas?",h:"🏪 Negocio: 'Landing 15/abril, contenidos 20/abril, lanzamiento 1/mayo'<br>🧑 Personal: 'Dashboard listo viernes, automatización probada el domingo'"},
+     {q:"¿Cómo vas a manejar cambios o imprevistos durante el camino?",h:"Ej: 'Revisión semanal para ajustar prioridades', 'Si algo no funciona en 2 semanas, cambio de enfoque', 'Tengo un plan B anotado'"}
+   ]},
+  {id:8,n:"8",title:"Primer paso y seguimiento",phase:"Hacer que suceda",phCls:"p3",phIdx:2,phColor:"var(--phase3)",
+   desc:"Define la primera acción concreta y cómo vas a mantener el ritmo.",
+   qs:[
+     {q:"¿Cuál es tu PRIMER paso concreto? (hazlo tan pequeño que no puedas decir que no)",h:"🏪 Negocio: 'Registrar el dominio', 'Crear la cuenta de Instagram', 'Escribir el primer post'<br>🧑 Personal: 'Descargar la app', 'Crear la carpeta en Drive', 'Anotar mis gastos de hoy'"},
+     {q:"¿Cómo vas a documentar y comunicar tu progreso?",h:"Ej: 'Notion con checklist semanal', 'Grupo de WhatsApp con mi socio', 'Diario personal en Notes', 'Google Doc compartido'"},
+     {q:"¿Cada cuánto vas a revisar si vas bien y ajustar? (feedback loop)",h:"Ej: 'Cada viernes hago retrospectiva de 15 min', 'Revisión mensual con métricas', 'Check rápido diario antes de dormir'"},
+     {q:"¿Qué lecciones quieres documentar cuando termines esta primera etapa?",h:"Ej: '¿Qué funcionó y qué no?', '¿Qué haría diferente?', '¿Qué aprendí sobre mí y sobre el problema?'"}
+   ]}
+];
+
+let view='intro',si=0,tab=0;
+const ans={};
+STEPS.forEach(s=>{
+  if(s.multi){ans[s.id]={};s.subs.forEach(sub=>{ans[s.id][sub.id]={};sub.qs.forEach((_,i)=>ans[s.id][sub.id]['q'+i]='');ans[s.id][sub.id].ft='';});}
+  else{ans[s.id]={};s.qs.forEach((_,i)=>ans[s.id]['q'+i]='');ans[s.id].ft='';}
+});
+
+function render(){
+  const app=document.getElementById('app');
+  if(view==='intro')app.innerHTML=renderIntro();
+  else if(view==='step')app.innerHTML=renderStep();
+  else if(view==='summary')app.innerHTML=renderSummary();
+}
+
+function renderIntro(){
+  const items=[
+    {ph:'p1',label:'Entender el reto',ids:[1,2,3]},
+    {ph:'p2',label:'Diseñar la solución',ids:[4,5]},
+    {ph:'p3',label:'Hacer que suceda',ids:[6,7,8]}
+  ];
+  return `<div class="intro-card fade-up">
+    <div class="eyebrow">Metodología CPS · Creative Problem Solving</div>
+    <div class="intro-title">Clarifica tu proyecto<br>en <em>8 pasos</em></div>
+    <p class="intro-sub">Ya sea un microemprendimiento, un proyecto personal, un MicroSaaS o una solución con IA — responde cada paso para construir tu brief de trabajo.<br><br>Avanza a tu ritmo. Puedes regresar a editar en cualquier momento.<br><strong style="color:var(--gold)">⚠ Tu información no se guarda.</strong> Vive solo en tu navegador mientras la página esté abierta. Al terminar, exporta o copia tu brief.</p>
+    <div class="phase-pills">
+      <span class="ph-pill p1">Entender el reto</span>
+      <span class="ph-pill p2">Diseñar la solución</span>
+      <span class="ph-pill p3">Hacer que suceda</span>
+    </div>
+    <div class="steps-preview">
+      ${items.map(g=>`
+        <div class="sp-phase-label ${g.ph}">${g.label}</div>
+        ${g.ids.map(id=>`<div class="sp-item"><span class="sp-num ${g.ph}">${id}</span><span class="sp-name">${STEPS[id-1].title}</span></div>`).join('')}
+      `).join('')}
+    </div>
+    <button class="start-btn" onclick="goStart()">Comenzar →</button>
+    <div class="disclaimer">
+      <span class="disclaimer-icon">🔒</span>
+      <div class="disclaimer-text"><strong>Tu privacidad es lo primero.</strong> Esta herramienta no guarda ni envía tu información a ningún servidor. Todo vive solo en tu navegador mientras tengas la página abierta. <strong>Si recargas o cierras la página, tus respuestas se borran.</strong> Al terminar, usa los botones de copiar o PDF para llevarte tu brief.</div>
+    </div>
+  </div>`;
+}
+
+function renderProg(step){
+  let dots='';
+  STEPS.forEach((s,i)=>{
+    if(i===3||i===5)dots+=`<div class="s-sep"></div>`;
+    const cls=i<si?'done':i===si?'cur':'';
+    dots+=`<div class="s-dot ${cls} ${s.phCls}" onclick="jumpTo(${i})" title="${s.title}">${s.n}</div>`;
+  });
+  return `<div class="prog-bar">
+    <div class="phase-labels-row">${PHASES.map((p,i)=>`<div class="ph-lbl ${p.cls} ${step.phIdx===i?'active':''}">${p.name}</div>`).join('')}</div>
+    <div class="dots-row">${dots}</div>
+  </div>`;
+}
+
+function renderStep(){
+  const s=STEPS[si];const isLast=si===STEPS.length-1;
+  let formBody='';
+  if(s.multi){
+    const tabs=s.subs.map((sub,i)=>`<button class="tab-btn ${tab===i?'active':''}" onclick="switchTab(${i})">${sub.title}<span class="tab-sub">${sub.sub}</span></button>`).join('');
+    const sub=s.subs[tab];
+    const qs=sub.qs.map((qObj,qi)=>`<div class="q-block"><div class="q-label"><span class="q-dot" style="background:${s.phColor}">${qi+1}</span><span>${qObj.q}</span></div>${qObj.h?`<div class="q-hint">${qObj.h}</div>`:''}<textarea placeholder="Escribe aquí…" oninput="save(${s.id},'${sub.id}','q${qi}',this.value)">${ans[s.id][sub.id]['q'+qi]}</textarea></div>`).join('');
+    formBody=`<div class="tab-nav">${tabs}</div>${qs}<div class="free-block"><div class="free-label">📝 Notas adicionales</div><textarea placeholder="Lo que quieras agregar…" oninput="save(${s.id},'${sub.id}','ft',this.value)">${ans[s.id][sub.id].ft}</textarea></div>`;
+  }else{
+    const qs=s.qs.map((qObj,qi)=>`<div class="q-block"><div class="q-label"><span class="q-dot" style="background:${s.phColor}">${qi+1}</span><span>${qObj.q}</span></div>${qObj.h?`<div class="q-hint">${qObj.h}</div>`:''}<textarea placeholder="Escribe aquí…" oninput="save(${s.id},null,'q${qi}',this.value)">${ans[s.id]['q'+qi]}</textarea></div>`).join('');
+    formBody=`${qs}<div class="free-block"><div class="free-label">📝 Notas adicionales</div><textarea placeholder="Lo que quieras agregar…" oninput="save(${s.id},null,'ft',this.value)">${ans[s.id].ft}</textarea></div>`;
+  }
+  return `<div class="fade-up">
+    ${renderProg(s)}
+    <div class="step-card">
+      <div class="card-head">
+        <span class="phase-tag" style="background:${s.phColor}">${s.phase}</span>
+        <div class="head-top">
+          <div class="step-giant-num" style="color:${s.phColor}">${s.n}</div>
+          <div class="step-title-block"><div class="step-title">${s.title}</div><div class="step-desc">${s.desc}</div></div>
+        </div>
+      </div>
+      <div class="card-body">${formBody}</div>
+      <div class="card-nav">
+        <button class="btn-prev" onclick="goPrev()">← Anterior</button>
+        <div class="nav-info">Paso ${s.n} de 8</div>
+        ${isLast?`<button class="btn-next btn-finish" onclick="goSummary()">Ver brief →</button>`:`<button class="btn-next" onclick="goNext()">Siguiente →</button>`}
+      </div>
+    </div>
+  </div>`;
+}
+
+function renderSummary(){
+  const groups=[
+    {title:"Entender el reto",cls:"p1",slice:[0,3]},
+    {title:"Diseñar la solución",cls:"p2",slice:[3,5]},
+    {title:"Hacer que suceda",cls:"p3",slice:[5,8]}
+  ];
+  const qa=(q,a)=>{const empty=!a||!a.trim();return `<div class="sum-qa"><div class="sum-q">${q}</div><div class="sum-a${empty?' empty':''}">${empty?'Sin respuesta':esc(a)}</div></div>`;};
+  const stepHTML=s=>{
+    let inner='';
+    if(s.multi){inner=s.subs.map(sub=>{const qas=sub.qs.map((qObj,qi)=>qa(qObj.q,ans[s.id][sub.id]['q'+qi])).join('');const ft=ans[s.id][sub.id].ft;const ftH=ft?`<div class="sum-free">${qa('Notas adicionales',ft)}</div>`:'';return `<div class="sum-sub"><div class="sum-sub-title">${sub.title}<span class="sum-sub-badge">${sub.sub}</span></div>${qas}${ftH}</div>`;}).join('');}
+    else{const qas=s.qs.map((qObj,qi)=>qa(qObj.q,ans[s.id]['q'+qi])).join('');const ft=ans[s.id].ft;const ftH=ft?`<div class="sum-free">${qa('Notas adicionales',ft)}</div>`:'';inner=qas+ftH;}
+    return `<div class="sum-step"><div class="sum-step-head"><span class="sum-step-n">${s.n}</span><span class="sum-step-name">${s.title}</span></div>${inner}</div>`;
+  };
+  const phases=groups.map(g=>{const stepsHtml=STEPS.slice(...g.slice).map(stepHTML).join('');return `<div class="sum-phase"><div class="sum-phase-title ${g.cls}">${g.title}</div>${stepsHtml}</div>`;}).join('');
+  return `<div class="fade-up">
+    <div class="export-alert">
+      <span class="export-alert-icon">⚠️</span>
+      <div class="export-alert-content">
+        <div class="export-alert-title">No olvides exportar tu brief</div>
+        <div class="export-alert-text">Esta herramienta <strong>no guarda tu información</strong>. Si cierras o recargas la página, <strong>tus respuestas se perderán</strong>. Usa los botones de abajo para <strong>copiar el texto</strong> o <strong>guardarlo como PDF</strong> antes de salir.</div>
+      </div>
+    </div>
+    <div class="summary-card">
+      <div class="sum-head">
+        <div class="sum-title">Tu brief</div>
+        <div class="sum-actions">
+          <button class="btn-edit" onclick="goBack()">← Editar</button>
+          <button class="btn-copy" onclick="copyBrief()">📋 Copiar texto</button>
+          <button class="btn-print" onclick="window.print()">🖨️ PDF</button>
+        </div>
+      </div>
+      <div class="sum-body">${phases}</div>
+    </div>
+  </div>`;
+}
+
+function goStart(){view='step';si=0;tab=0;render();scrollTo(0,0);}
+function goNext(){si++;tab=0;render();scrollTo(0,0);}
+function goPrev(){si>0?si--:(view='intro');tab=0;render();scrollTo(0,0);}
+function goSummary(){view='summary';render();scrollTo(0,0);}
+function goBack(){view='step';render();scrollTo(0,0);}
+function jumpTo(i){si=i;tab=0;view='step';render();scrollTo(0,0);}
+function switchTab(i){tab=i;render();}
+function save(id,subId,key,val){if(subId)ans[id][subId][key]=val;else ans[id][key]=val;}
+function esc(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+
+function copyBrief(){
+  let txt='BRIEF DE PROYECTO — 8 PASOS\n'+('═'.repeat(40))+'\n\n';
+  const groups=[{title:"ENTENDER EL RETO",slice:[0,3]},{title:"DISEÑAR LA SOLUCIÓN",slice:[3,5]},{title:"HACER QUE SUCEDA",slice:[5,8]}];
+  groups.forEach(g=>{
+    txt+='▸ '+g.title+'\n'+('─'.repeat(30))+'\n\n';
+    STEPS.slice(...g.slice).forEach(s=>{
+      txt+=s.n+'. '+s.title.toUpperCase()+'\n';
+      if(s.multi){s.subs.forEach(sub=>{txt+='\n  '+sub.title+' ('+sub.sub+')\n';sub.qs.forEach((qObj,qi)=>{const a=ans[s.id][sub.id]['q'+qi];txt+='  • '+qObj.q+'\n    '+(a&&a.trim()?a.trim():'—')+'\n';});const ft=ans[s.id][sub.id].ft;if(ft)txt+='  📝 '+ft+'\n';});}
+      else{s.qs.forEach((qObj,qi)=>{const a=ans[s.id]['q'+qi];txt+='  • '+qObj.q+'\n    '+(a&&a.trim()?a.trim():'—')+'\n';});const ft=ans[s.id].ft;if(ft)txt+='  📝 '+ft+'\n';}
+      txt+='\n';
+    });
+  });
+  txt+='═'.repeat(40)+'\nGenerado con LifeStrategics · Brief CPS\n';
+  navigator.clipboard.writeText(txt).then(()=>{const t=document.getElementById('toast');t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2200);});
+}
+
+render();
+
+// ── PARTICLE CANVAS ──
+const canvas=document.getElementById('particle-canvas');
+if(canvas){
+  const ctx=canvas.getContext('2d');let particles=[];let mouse={x:null,y:null};
+  function init(){canvas.width=window.innerWidth;canvas.height=window.innerHeight;particles=[];const count=window.innerWidth<600?25:40;for(let i=0;i<count;i++)particles.push({x:Math.random()*canvas.width,y:Math.random()*canvas.height,vx:(Math.random()-.5)*.3,vy:(Math.random()-.5)*.3,size:Math.random()*1.6+.4});}
+  function animate(){requestAnimationFrame(animate);ctx.clearRect(0,0,canvas.width,canvas.height);particles.forEach((p,i)=>{p.x+=p.vx;p.y+=p.vy;if(p.x<0||p.x>canvas.width)p.vx*=-1;if(p.y<0||p.y>canvas.height)p.vy*=-1;ctx.beginPath();ctx.arc(p.x,p.y,p.size,0,Math.PI*2);ctx.fillStyle='rgba(255,255,255,0.3)';ctx.fill();for(let j=i+1;j<particles.length;j++){const p2=particles[j];const dx=p.x-p2.x;const dy=p.y-p2.y;const dist=Math.sqrt(dx*dx+dy*dy);if(dist<130){ctx.beginPath();ctx.strokeStyle=`rgba(255,255,255,${.07-dist/1850})`;ctx.lineWidth=.4;ctx.moveTo(p.x,p.y);ctx.lineTo(p2.x,p2.y);ctx.stroke();}}if(mouse.x!==null&&mouse.y!==null){const mdx=p.x-mouse.x;const mdy=p.y-mouse.y;const mDist=Math.sqrt(mdx*mdx+mdy*mdy);if(mDist<150){ctx.beginPath();ctx.strokeStyle=`rgba(255,255,255,${.25-mDist/600})`;ctx.lineWidth=.6;ctx.moveTo(p.x,p.y);ctx.lineTo(mouse.x,mouse.y);ctx.stroke();}}});}
+  window.addEventListener('resize',init);
+  window.addEventListener('mousemove',e=>{mouse.x=e.x;mouse.y=e.y;});
+  window.addEventListener('touchmove',e=>{if(e.touches.length>0){mouse.x=e.touches[0].clientX;mouse.y=e.touches[0].clientY;}});
+  window.addEventListener('touchend',()=>{mouse.x=null;mouse.y=null;});
+  init();animate();
+}
+</script>
+</body>
+</html>
