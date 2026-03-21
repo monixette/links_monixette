@@ -122,15 +122,15 @@ input[type="range"]::-webkit-slider-thumb { -webkit-appearance:none; width:22px;
 <body class="font-body">
 
 <!-- Particle Canvas Background (Subtle) -->
-<canvas id="bg-particles" class="fixed inset-0 pointer-events-none opacity-30 z-0"></canvas>
+<canvas id="particle-canvas" class="fixed inset-0 pointer-events-none opacity-70 z-0"></canvas>
 
 <div class="mobile-shell pt-6 pb-24 z-10">
 
   <!-- Header -->
   <header class="sticky top-0 z-50 bg-[#242426]/90 backdrop-blur-md pb-4 pt-2 mb-6 border-b border-white/10">
-    <div class="text-center">
-      <h1 class="font-display font-bold text-ls-blue text-lg tracking-tight">Strategic Wizard</h1>
-      <p class="font-accent text-ls-gold text-lg mt-[-4px]">by LifeStrategics</p>
+    <div class="flex flex-col items-center text-center px-4">
+      <img src="lifestrategics_logo_plain.png" alt="LifeStrategics" class="w-[140px] h-auto object-contain mb-1 opacity-90 drop-shadow-[0_0_8px_rgba(255,255,255,0.1)]">
+      <h1 class="font-display font-normal text-white text-md tracking-wide">Strategic Wizard <span class="text-ls-gold text-[0.65rem] align-top bg-ls-gold/10 px-1.5 rounded ml-1 border border-ls-gold/20 font-bold uppercase tracking-widest">V4</span></h1>
     </div>
     
     <!-- Progress Dots -->
@@ -421,28 +421,82 @@ input[type="range"]::-webkit-slider-thumb { -webkit-appearance:none; width:22px;
 // ---------- UI LOGIC ----------
 let currentPhase = 1; const totalPhases = 5;
 
-// Background Particles
-const c = document.getElementById('bg-particles');
-const ctx = c.getContext('2d');
-let cw, ch; let pts = [];
-function resize(){ cw = c.width = window.innerWidth; ch = c.height = window.innerHeight; }
-window.addEventListener('resize', resize); resize();
-for(let i=0; i<40; i++){ pts.push({x:Math.random()*cw, y:Math.random()*ch, vx:(Math.random()-.5)*0.5, vy:(Math.random()-.5)*0.5}); }
-function drawP(){
-  ctx.clearRect(0,0,cw,ch); ctx.fillStyle = 'rgba(255,255,255,0.4)'; ctx.strokeStyle = 'rgba(255,255,255,0.05)';
-  pts.forEach(p => {
-    p.x+=p.vx; p.y+=p.vy; if(p.x<0||p.x>cw) p.vx*=-1; if(p.y<0||p.y>ch) p.vy*=-1;
-    ctx.beginPath(); ctx.arc(p.x, p.y, 1, 0, Math.PI*2); ctx.fill();
-  });
-  for(let i=0;i<pts.length;i++){
-    for(let j=i+1;j<pts.length;j++){
-      let d = Math.hypot(pts[i].x-pts[j].x, pts[i].y-pts[j].y);
-      if(d<100) { ctx.beginPath(); ctx.moveTo(pts[i].x,pts[i].y); ctx.lineTo(pts[j].x,pts[j].y); ctx.stroke(); }
+// Background Particles Engine (Interactive V1 clone)
+const canvas = document.getElementById('particle-canvas');
+if (canvas) {
+    const ctx = canvas.getContext('2d');
+    let particles = [];
+    let mouse = { x: null, y: null };
+
+    function init() {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+        particles = [];
+        const count = window.innerWidth < 600 ? 30 : 45;
+        for (let i = 0; i < count; i++) {
+            particles.push({
+                x: Math.random() * canvas.width,
+                y: Math.random() * canvas.height,
+                vx: (Math.random() - 0.5) * 0.35,
+                vy: (Math.random() - 0.5) * 0.35,
+                size: Math.random() * 1.8 + 0.4
+            });
+        }
     }
-  }
-  requestAnimationFrame(drawP);
+
+    function animate() {
+        requestAnimationFrame(animate);
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        particles.forEach((p, i) => {
+            p.x += p.vx;
+            p.y += p.vy;
+            if (p.x < 0 || p.x > canvas.width) p.vx *= -1;
+            if (p.y < 0 || p.y > canvas.height) p.vy *= -1;
+            ctx.beginPath();
+            ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+            ctx.fillStyle = 'rgba(255,255,255,0.35)';
+            ctx.fill();
+
+            for (let j = i + 1; j < particles.length; j++) {
+                const p2 = particles[j];
+                const dx = p.x - p2.x;
+                const dy = p.y - p2.y;
+                const dist = Math.sqrt(dx * dx + dy * dy);
+                if (dist < 140) {
+                    ctx.beginPath();
+                    ctx.strokeStyle = `rgba(255, 255, 255, ${0.08 - dist / 1750})`;
+                    ctx.lineWidth = 0.4;
+                    ctx.moveTo(p.x, p.y);
+                    ctx.lineTo(p2.x, p2.y);
+                    ctx.stroke();
+                }
+            }
+
+            if (mouse.x !== null && mouse.y !== null) {
+                const mdx = p.x - mouse.x;
+                const mdy = p.y - mouse.y;
+                const mDist = Math.sqrt(mdx * mdx + mdy * mdy);
+                if (mDist < 160) {
+                    ctx.beginPath();
+                    ctx.strokeStyle = `rgba(255, 255, 255, ${0.3 - mDist / 530})`;
+                    ctx.lineWidth = 0.7;
+                    ctx.moveTo(p.x, p.y);
+                    ctx.lineTo(mouse.x, mouse.y);
+                    ctx.stroke();
+                }
+            }
+        });
+    }
+
+    window.addEventListener('resize', init);
+    window.addEventListener('mousemove', (e) => { mouse.x = e.clientX; mouse.y = e.clientY; });
+    window.addEventListener('touchmove', (e) => {
+        if (e.touches.length > 0) { mouse.x = e.touches[0].clientX; mouse.y = e.touches[0].clientY; }
+    });
+    window.addEventListener('touchend', () => { mouse.x = null; mouse.y = null; });
+    init();
+    animate();
 }
-drawP();
 
 // Rubric
 const rubrys = [
