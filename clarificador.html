@@ -3,460 +3,494 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>LifeStrategics | Clarificador de Proyectos</title>
+<title>LifeStrategics | Asistente Estratégico de IA</title>
 <meta name="theme-color" content="#1A1A1D">
 <link href="https://fonts.googleapis.com/css2?family=Wix+Madefor+Display:wght@300;400;500;600;700;800&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
 /* ═══════════════════════════════════════════════
-   LIFESTRATEGICS V2026 — PROJECT CLARIFIER
-   Dark Mode · Glassmorphism · Mobile-first
+   LIFESTRATEGICS V2026 — STRATEGIC WIZARD
+   Dark Mode · Forms · No Backend
    ═══════════════════════════════════════════════ */
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
 body{
   background:#1A1A1D; color:#fff;
   font-family:'Wix Madefor Display',sans-serif;
   line-height:1.6;-webkit-font-smoothing:antialiased;
-  height:100vh; overflow:hidden;
-  display:flex; flex-direction:column;
+  min-height:100vh;
 }
-
 :root {
-  --blue: #58AFCD;
-  --gold: #C5A149;
-  --red-ls: #D15152;
-  --green: #41EAD4;
-  --card-bg: rgba(255,255,255,0.03);
-  --glass: rgba(20,20,22,0.8);
+  --blue: #58AFCD; --gold: #C5A149; --red-ls: #D15152; --green: #41EAD4;
+  --bg-card: rgba(255,255,255,0.03); --border: rgba(255,255,255,0.1);
+  --glass: rgba(26,26,29,0.85);
 }
 
 /* ── HEADER ── */
 header {
-  padding: 20px;
-  text-align: center;
-  border-bottom: 1px solid rgba(255,255,255,0.05);
-  background: var(--glass);
-  backdrop-filter: blur(10px);
-  z-index: 10;
+  position:sticky; top:0; z-index:100;
+  padding:20px; text-align:center;
+  background: var(--glass); backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
 }
-header h1 {
-  font-family: 'DM Mono', monospace;
-  font-size: 1.2rem;
-  letter-spacing: -0.02em;
-  color: #fff;
-}
+header h1 { font-family: 'DM Mono', monospace; font-size: 1.1rem; color:var(--blue); letter-spacing:-0.5px; }
 .progress-container {
-  max-width: 400px;
-  margin: 10px auto 0;
-  height: 4px;
-  background: rgba(255,255,255,0.1);
-  border-radius: 4px;
-  overflow: hidden;
+  max-width: 600px; margin: 15px auto 0;
+  display:flex; justify-content:space-between; position:relative;
 }
-.progress-bar {
-  height: 100%;
-  width: 0%;
-  background: var(--blue);
-  transition: width 0.3s ease;
+.progress-container::before {
+  content:''; position:absolute; top:50%; left:0; width:100%; height:2px;
+  background:var(--border); transform:translateY(-50%); z-index:1;
 }
+.progress-step {
+  width:24px; height:24px; border-radius:50%; background:#333;
+  border:2px solid var(--border); z-index:2; position:relative;
+  display:flex; justify-content:center; align-items:center;
+  font-family:'DM Mono',monospace; font-size:0.7rem; color:#888;
+  transition:all 0.3s ease;
+}
+.progress-step.active { background:var(--blue); border-color:var(--blue); color:#000; font-weight:bold; box-shadow:0 0 10px rgba(88,175,205,0.5); }
+.progress-step.completed { background:var(--green); border-color:var(--green); color:#000; }
 
-/* ── MAIN PLAY AREA ── */
-main {
-  flex: 1;
-  position: relative;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 20px;
-  overflow: hidden;
-}
+/* ── MAIN CONTAINER ── */
+main { max-width: 700px; margin: 40px auto; padding: 0 20px; padding-bottom:100px; }
 
-/* ── CARDS ── */
-.card-stack {
-  position: relative;
-  width: 100%;
-  max-width: 340px;
-  height: 400px;
-  perspective: 1000px;
-}
-.card {
-  position: absolute;
-  top: 0; left: 0; width: 100%; height: 100%;
-  background: #242426;
-  border: 1px solid rgba(255,255,255,0.1);
-  border-radius: 20px;
-  padding: 30px 20px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-  transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.4s ease;
-  will-change: transform, opacity;
-  z-index: 1;
-}
-.card.active {
-  z-index: 3;
-}
-.card.next {
-  z-index: 2;
-  transform: translateY(15px) scale(0.95);
-  opacity: 0.6;
-}
-.card.hidden {
-  opacity: 0;
-  pointer-events: none;
-  transform: translateY(30px) scale(0.9);
-}
+/* ── WIZARD PHASES ── */
+.phase { display:none; animation: fadeIn 0.4s ease forwards; }
+.phase.active { display:block; }
+@keyframes fadeIn { from{opacity:0; transform:translateY(10px);} to{opacity:1; transform:translateY(0);} }
 
-.card-category {
-  font-family: 'DM Mono', monospace;
-  font-size: 0.75rem;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  color: var(--gold);
-  margin-bottom: 20px;
-}
-.card-text {
-  font-size: 1.6rem;
-  font-weight: 500;
-  line-height: 1.3;
-  color: #fff;
-}
+.phase h2 { font-size:1.8rem; margin-bottom:5px; color:#fff; }
+.phase p.subtitle { color:rgba(255,255,255,0.6); margin-bottom:30px; font-size:0.95rem; }
 
-/* ── CONTROLS ── */
-.controls {
-  padding: 20px;
-  display: flex;
-  justify-content: center;
-  gap: 15px;
-  background: var(--glass);
-  border-top: 1px solid rgba(255,255,255,0.05);
-  z-index: 10;
+/* ── FORM ELEMENTS ── */
+.form-group { margin-bottom: 25px; background:var(--bg-card); padding:20px; border-radius:12px; border:1px solid var(--border); }
+.form-group label { display:block; font-weight:600; margin-bottom:8px; font-size:1.05rem; }
+.form-group .hint { display:block; font-size:0.85rem; color:rgba(255,255,255,0.5); margin-bottom:12px; font-family:'DM Mono',monospace;}
+
+input[type="text"], textarea, select {
+  width:100%; padding:12px 15px; border-radius:8px;
+  background:rgba(0,0,0,0.2); border:1px solid var(--border);
+  color:#fff; font-family:inherit; font-size:1rem;
+  transition:border-color 0.2s;
 }
+input[type="text"]:focus, textarea:focus, select:focus { outline:none; border-color:var(--blue); }
+textarea { resize:vertical; min-height:100px; }
+
+/* Checkboxes */
+.checkbox-grid { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+@media(max-width:500px){ .checkbox-grid { grid-template-columns:1fr; } }
+.check-item {
+  display:flex; align-items:center; padding:10px 15px;
+  background:rgba(0,0,0,0.2); border:1px solid var(--border); border-radius:8px; cursor:pointer;
+  transition:background 0.2s;
+}
+.check-item:hover { background:rgba(255,255,255,0.05); }
+.check-item input { margin-right:10px; width:18px; height:18px; accent-color:var(--blue); }
+
+/* Range Slider */
+.range-wrap { display:flex; align-items:center; gap:15px; }
+input[type="range"] { flex:1; accent-color:var(--gold); }
+.range-val { font-family:'DM Mono',monospace; background:rgba(255,255,255,0.1); padding:4px 8px; border-radius:4px; min-width:35px; text-align:center;}
+
+/* Ideation Matrix Rows */
+.idea-row {
+  background:rgba(0,0,0,0.3); padding:15px; border-radius:8px; margin-bottom:15px;
+  border-left: 4px solid var(--blue);
+}
+.idea-row input[type="text"] { margin-bottom: 10px; }
+.matrix-selects { display:flex; gap:10px; }
+.matrix-selects select { flex:1; font-size:0.9rem; }
+
+/* Radio winner */
+.winner-options { display:flex; flex-direction:column; gap:10px; margin-top:15px;}
+.winner-item { padding:12px; background:rgba(65,234,212,0.05); border:1px solid rgba(65,234,212,0.2); border-radius:8px; }
+.winner-item input { margin-right:10px; accent-color:var(--green);}
+
+/* ── BUTTONS ── */
+.nav-buttons { display:flex; justify-content:space-between; margin-top:40px; }
 .btn {
-  flex: 1;
-  max-width: 120px;
-  padding: 15px 0;
-  border-radius: 12px;
-  border: none;
-  font-family: 'DM Mono', monospace;
-  font-size: 0.8rem;
-  font-weight: 600;
-  color: #fff;
-  cursor: pointer;
-  background: rgba(255,255,255,0.05);
-  transition: transform 0.1s, background 0.2s;
+  padding:14px 28px; border-radius:30px; border:none; font-family:'Wix Madefor Display',sans-serif;
+  font-weight:700; font-size:1rem; cursor:pointer; transition:all 0.2s;
 }
-.btn:active { transform: scale(0.95); }
-.btn-no { border-top: 3px solid var(--red-ls); }
-.btn-maybe { border-top: 3px solid var(--gold); }
-.btn-yes { border-top: 3px solid var(--green); background: rgba(65, 234, 212, 0.05); }
-
-/* Animations for swiping */
-.swipe-left { transform: translateX(-150%) rotate(-15deg) !important; opacity: 0 !important; }
-.swipe-right { transform: translateX(150%) rotate(15deg) !important; opacity: 0 !important; }
-.swipe-up { transform: translateY(-150%) !important; opacity: 0 !important; }
+.btn-back { background:transparent; border:1px solid var(--border); color:#fff; }
+.btn-next { background:var(--blue); color:#000; }
+.btn-submit { background:var(--green); color:#000; box-shadow:0 0 15px rgba(65,234,212,0.3); }
+.btn:hover { transform:translateY(-2px); }
+.btn:active { transform:translateY(1px); }
+.btn:disabled { opacity:0.5; cursor:not-allowed; transform:none; }
 
 /* ── RESULTS SCREEN ── */
-#results-screen {
-  position: absolute;
-  top: 0; left: 0; width: 100%; height: 100%;
-  background: var(--bg);
-  z-index: 20;
-  display: none;
-  flex-direction: column;
-  overflow-y: auto;
-  padding: 20px;
+#results-view { display:none; animation:fadeIn 0.5s ease; }
+.report-paper {
+  background:#fff; color:#111; padding:40px; border-radius:12px;
+  margin-bottom:30px; line-height:1.5; box-shadow:0 20px 50px rgba(0,0,0,0.5);
 }
-.results-header {
-  text-align: center;
-  padding: 30px 0;
-}
-.results-header h2 { font-size: 2rem; margin-bottom: 10px; }
-.brief-container {
-  max-width: 800px;
-  margin: 0 auto;
-  width: 100%;
-}
-.brief-section {
-  background: var(--card-bg);
-  border: 1px solid rgba(255,255,255,0.1);
-  border-radius: 12px;
-  padding: 20px;
-  margin-bottom: 15px;
-}
-.brief-section h3 {
-  font-family: 'DM Mono', monospace;
-  font-size: 0.9rem;
-  color: var(--blue);
-  margin-bottom: 10px;
-  text-transform: uppercase;
-}
-.brief-section ul {
-  list-style: none;
-}
-.brief-section li {
-  margin-bottom: 8px;
-  padding-left: 20px;
-  position: relative;
-}
-.brief-section li::before {
-  content: '→';
-  position: absolute;
-  left: 0;
-  color: var(--gold);
-}
-.empty-msg { color: rgba(255,255,255,0.4); font-style: italic; font-size: 0.9rem; }
+.report-paper h1 { font-size:2rem; margin-bottom:5px; color:#111; letter-spacing:-1px;}
+.report-paper .meta { font-family:'DM Mono',monospace; color:#666; font-size:0.85rem; margin-bottom:30px; border-bottom:2px solid #eee; padding-bottom:15px;}
+.report-paper h3 { color:var(--blue); margin-top:25px; margin-bottom:10px; font-size:1.1rem; text-transform:uppercase; letter-spacing:1px;}
+.report-paper p { margin-bottom:15px; }
+.report-paper ul { margin-bottom:15px; padding-left:20px; }
+.report-paper li { margin-bottom:5px; }
+.highlight-box { background:#f4f4f5; border-left:4px solid var(--green); padding:15px; margin:15px 0; border-radius:0 8px 8px 0;}
+.highlight-box h4 { margin-bottom:5px; color:#111; }
 
-#copyBtn {
-  display: block;
-  margin: 30px auto 50px;
-  background: var(--blue);
-  color: #000;
-  padding: 15px 30px;
-  border-radius: 30px;
-  border: none;
-  font-family: 'Wix Madefor Display', sans-serif;
-  font-weight: 700;
-  font-size: 1.1rem;
-  cursor: pointer;
-}
+.action-buttons { display:flex; gap:15px; justify-content:center; }
+.btn-copy { background:#111; color:#fff; }
+
+/* Loading */
+#loading { display:none; text-align:center; padding:100px 0; }
+.spinner { width:40px; height:40px; border:4px solid rgba(255,255,255,0.1); border-top-color:var(--green); border-radius:50%; animation:spin 1s linear infinite; margin:0 auto 20px;}
+@keyframes spin { 100% { transform:rotate(360deg); } }
 
 </style>
 </head>
 <body>
 
 <header>
-  <h1 id="progress-text">Clarificador - 1 / 42</h1>
-  <div class="progress-container">
-    <div class="progress-bar" id="progress-bar"></div>
+  <h1>ESTRATEGIA IA // CLARIFICADOR</h1>
+  <div class="progress-container" id="progressBars">
+    <div class="progress-step active" id="dot-1">1</div>
+    <div class="progress-step" id="dot-2">2</div>
+    <div class="progress-step" id="dot-3">3</div>
+    <div class="progress-step" id="dot-4">4</div>
+    <div class="progress-step" id="dot-5">5</div>
   </div>
 </header>
 
 <main>
-  <div class="card-stack" id="card-stack">
-    <!-- JS injected cards -->
+  <form id="wizard-form" onsubmit="return false">
+
+    <!-- FASE 1: AS-IS -->
+    <div class="phase active" id="phase-1">
+      <h2>1. Diagnóstico (El As-Is)</h2>
+      <p class="subtitle">¿Dónde estamos parados hoy sin maquillaje corporativo?</p>
+      
+      <div class="form-group">
+        <label>¿Cuál es tu principal dolor operativo, ineficiencia o cuello de botella actual?</label>
+        <span class="hint">Ej: "Perdemos 15 horas a la semana conciliando excells manualmente"</span>
+        <textarea id="q-pain" placeholder="Escribe la cruda realidad aquí..." required></textarea>
+      </div>
+
+      <div class="form-group">
+        <label>¿Quién(es) sufren este problema directamente?</label>
+        <input type="text" id="q-target" placeholder="Ej: El equipo de ventas, RRHH, el cliente final..." required>
+      </div>
+    </div>
+
+    <!-- FASE 2: TO-BE -->
+    <div class="phase" id="phase-2">
+      <h2>2. Visión Ideal (El To-Be)</h2>
+      <p class="subtitle">Olvídate del presupuesto un segundo. ¿A dónde queremos llegar?</p>
+
+      <div class="form-group">
+        <label>Si tuvieras una varita mágica y el problema desapareciera, ¿qué estaría pasando?</label>
+        <span class="hint">Ej: "Los reportes se armarían solos diarios y tomaría decisiones en 5 minutos"</span>
+        <textarea id="q-vision" placeholder="Describe tu escenario ideal..." required></textarea>
+      </div>
+
+      <div class="form-group">
+        <label>Nivel de madurez digital actual de quienes usarán la solución</label>
+        <span class="hint">1 = Le temen a Excel | 10 = Son hackers</span>
+        <div class="range-wrap">
+          <input type="range" id="q-madurez" min="1" max="10" value="5" oninput="document.getElementById('madurez-val').innerText=this.value">
+          <span class="range-val" id="madurez-val">5</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- FASE 3: GAP -->
+    <div class="phase" id="phase-3">
+      <h2>3. Exploración del Gap</h2>
+      <p class="subtitle">Aterrizando: ¿Con qué contamos y qué nos frena?</p>
+
+      <div class="form-group">
+        <label>¿Qué recursos SÍ tenemos a favor hoy? (Selecciona los aplicables)</label>
+        <div class="checkbox-grid">
+          <label class="check-item"><input type="checkbox" name="recursos" value="Datos estructurados/limpios"> Datos limpios</label>
+          <label class="check-item"><input type="checkbox" name="recursos" value="Presupuesto disponible (pago de APIs/Licencias)"> Presupuesto</label>
+          <label class="check-item"><input type="checkbox" name="recursos" value="Patrocinio Directivo (Sponsorship)"> Patrocinio</label>
+          <label class="check-item"><input type="checkbox" name="recursos" value="Talento Técnico In-House"> Talento Técnico</label>
+          <label class="check-item"><input type="checkbox" name="recursos" value="Suscripciones activas a IA (ChatGPT Plus, etc)"> Licencias IA</label>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>¿Cuáles son las mayores LIMITANTES? (Selecciona las aplicables)</label>
+        <div class="checkbox-grid">
+          <label class="check-item"><input type="checkbox" name="limitantes" value="Presupuesto Cero (Fuerza No-Code gratuito)"> Presupuesto Cero</label>
+          <label class="check-item"><input type="checkbox" name="limitantes" value="Políticas estrictas de Seguridad/IT"> Barrera IT/Legal</label>
+          <label class="check-item"><input type="checkbox" name="limitantes" value="Falta de tiempo para implementar"> Falta de Tiempo</label>
+          <label class="check-item"><input type="checkbox" name="limitantes" value="Cero conocimiento de programación"> Sin Código</label>
+        </div>
+      </div>
+    </div>
+
+    <!-- FASE 4: IDEACIÓN -->
+    <div class="phase" id="phase-4">
+      <h2>4. Caminos Estratégicos</h2>
+      <p class="subtitle">Lluvia de ideas IA y filtro de Matriz (Eisenhower simplificada)</p>
+
+      <div class="form-group">
+        <label>Propone 2 o 3 posibles soluciones integrando IA para llegar a la Visión (To-Be)</label>
+        <span class="hint">Ej: "Un bot en WhatsApp", "Una automatización en Make", "Un dashboard con IA predictiva"</span>
+        
+        <div class="idea-row">
+          <input type="text" id="idea-1" placeholder="Camino / Idea 1" required onkeyup="updateWinnerRadio()">
+          <div class="matrix-selects">
+            <select id="idea-1-impact"><option value="Alto Impacto">Alto Impacto</option><option value="Bajo Impacto">Bajo Impacto</option></select>
+            <select id="idea-1-effort"><option value="Bajo Esfuerzo / Fácil">Bajo Esfuerzo (Fácil)</option><option value="Alto Esfuerzo / Difícil">Alto Esfuerzo (Difícil)</option></select>
+          </div>
+        </div>
+        
+        <div class="idea-row">
+          <input type="text" id="idea-2" placeholder="Camino / Idea 2 (Opcional)" onkeyup="updateWinnerRadio()">
+          <div class="matrix-selects">
+            <select id="idea-2-impact"><option value="Alto Impacto">Alto Impacto</option><option value="Bajo Impacto">Bajo Impacto</option></select>
+            <select id="idea-2-effort"><option value="Bajo Esfuerzo / Fácil">Bajo Esfuerzo (Fácil)</option><option value="Alto Esfuerzo / Difícil">Alto Esfuerzo (Difícil)</option></select>
+          </div>
+        </div>
+        
+        <div class="idea-row">
+          <input type="text" id="idea-3" placeholder="Camino / Idea 3 (Opcional)" onkeyup="updateWinnerRadio()">
+          <div class="matrix-selects">
+            <select id="idea-3-impact"><option value="Alto Impacto">Alto Impacto</option><option value="Bajo Impacto">Bajo Impacto</option></select>
+            <select id="idea-3-effort"><option value="Bajo Esfuerzo / Fácil">Bajo Esfuerzo (Fácil)</option><option value="Alto Esfuerzo / Difícil">Alto Esfuerzo (Difícil)</option></select>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>Basado en el filtro costo-beneficio, selecciona tu Idea GANADORA definitiva:</label>
+        <div class="winner-options" id="winner-container">
+          <!-- JS injects radion buttons here -->
+        </div>
+      </div>
+    </div>
+
+    <!-- FASE 5: IMPLEMENTACIÓN -->
+    <div class="phase" id="phase-5">
+      <h2>5. Plan de Implementación</h2>
+      <p class="subtitle">Aterrizando la idea ganadora en realidad ejecutable.</p>
+
+      <div class="form-group">
+        <label>¿Qué define el Mínimo Producto Viable (MVP) para probar esto en 2 semanas?</label>
+        <span class="hint">Ej: "Hacer el flujo manualmente en ChatGPT usando un único PDF antes de automatizarlo todo."</span>
+        <textarea id="q-mvp" placeholder="Describe tu experimento de validación rápida..." required></textarea>
+      </div>
+
+      <div class="form-group">
+        <label>Riesgos o Dependencias Críticas (Blockers)</label>
+        <span class="hint">Ej: "Dependo de que el departamento de pagos me exporte el CSV diario."</span>
+        <textarea id="q-blockers" placeholder="¿Qué podría matar este proyecto y de quién dependes?..." required></textarea>
+      </div>
+    </div>
+
+    <!-- Navigation -->
+    <div class="nav-buttons">
+      <button type="button" class="btn btn-back" id="btn-prev" onclick="goPrev()" style="display:none;">Atrás</button>
+      <div style="flex:1"></div>
+      <button type="button" class="btn btn-next" id="btn-next" onclick="goNext()">Continuar</button>
+      <button type="button" class="btn btn-submit" id="btn-submit" onclick="generatePlan()" style="display:none;">Generar Documento Final</button>
+    </div>
+
+  </form>
+
+  <!-- LOADING -->
+  <div id="loading">
+    <div class="spinner"></div>
+    <p style="color:var(--green); font-family:'DM Mono',monospace;">Sintetizando Documento Estratégico...</p>
   </div>
+
+  <!-- RESULTS -->
+  <div id="results-view">
+    <div class="report-paper" id="paper-content">
+      <!-- Report Content Injected Here -->
+    </div>
+    <div class="action-buttons">
+      <button class="btn btn-copy" id="btn-copy" onclick="copyDox()">Copiar Texto al Portapapeles</button>
+      <button class="btn btn-submit" onclick="window.print()">Imprimir PDF / Guardar</button>
+    </div>
+  </div>
+
 </main>
 
-<div class="controls" id="controls">
-  <button class="btn btn-no" onclick="handleChoice('no')">DESCARTAR</button>
-  <button class="btn btn-maybe" onclick="handleChoice('maybe')">FASE 2</button>
-  <button class="btn btn-yes" onclick="handleChoice('yes')">CRÍTICO</button>
-</div>
-
-<!-- RESULTS SCREEN -->
-<div id="results-screen">
-  <div class="results-header">
-    <h2>Tu Brief Generado</h2>
-    <p style="color: rgba(255,255,255,0.7);">Basado estrictamente en lo que priorizaste como CRÍTICO.</p>
-  </div>
-  <div class="brief-container" id="brief-rendered">
-    <!-- JS injected brief -->
-  </div>
-  <button id="copyBtn" onclick="copyBrief()">Copiar Brief al Portapapeles</button>
-</div>
-
 <script>
-const rawCards = [
-  // 1. Target
-  { category: 'Target', text: 'Equipos remotos / Home office' },
-  { category: 'Target', text: 'Corporativos B2B tradicionales' },
-  { category: 'Target', text: 'PyMEs sin presupuesto técnico' },
-  { category: 'Target', text: 'Líderes de RRHH y Cultura' },
-  { category: 'Target', text: 'Freelancers / Solopreneurs' },
-  { category: 'Target', text: 'Directores de Innovación' },
-  // 2. Problema
-  { category: 'Dolor', text: 'Pérdida de tiempo en flujos manuales' },
-  { category: 'Dolor', text: 'Dificultad para desconectar del trabajo (Burnout)' },
-  { category: 'Dolor', text: 'Poca adopción de herramientas internas' },
-  { category: 'Dolor', text: 'Silos de información desorganizada' },
-  { category: 'Dolor', text: 'Alta rotación de talento' },
-  { category: 'Dolor', text: 'Fricción en el proceso de ventas' },
-  // 3. Propuesta 
-  { category: 'Propuesta', text: 'Fricción cero en el día a día' },
-  { category: 'Propuesta', text: 'Agilizar la toma de decisiones con IA' },
-  { category: 'Propuesta', text: 'Acelerar el Onboarding de nuevos empleados' },
-  { category: 'Propuesta', text: 'Cierre mental de la jornada al 100%' },
-  { category: 'Propuesta', text: 'Unificar 5 herramientas en una sola vista' },
-  { category: 'Propuesta', text: 'Reducción drástica de costos operativos' },
-  // 4. Funcionalidades
-  { category: 'Feature', text: 'Asistente de IA (Chatbot)' },
-  { category: 'Feature', text: 'Dashboard de Datos en tiempo real' },
-  { category: 'Feature', text: 'Automatización de emails (Make/Zapier)' },
-  { category: 'Feature', text: 'Aplicación Móvil Nativa' },
-  { category: 'Feature', text: 'Botón físico / Hardware periférico' },
-  { category: 'Feature', text: 'Integración silenciosa con Slack/Teams' },
-  // 5. ROI
-  { category: 'Métrica', text: 'Ahorro de +10 horas semanales por persona' },
-  { category: 'Métrica', text: 'Aumento del 20% en ticket promedio' },
-  { category: 'Métrica', text: 'Mejora en calidad de sueño reportada por HR' },
-  { category: 'Métrica', text: 'Reducción del Opex corporativo en un 15%' },
-  { category: 'Métrica', text: 'Incremento del Employee Net Promoter Score' },
-  { category: 'Métrica', text: 'Conversión de leads x3 en el primer trimestre' },
-  // 6. Recursos
-  { category: 'Recurso', text: 'Desarrollador Full Stack (1 mes)' },
-  { category: 'Recurso', text: 'Licencias API de OpenAI / Claude' },
-  { category: 'Recurso', text: 'Presupuesto de Ads para validación ($500)' },
-  { category: 'Recurso', text: 'Soporte legal para manejo de datos CISO' },
-  { category: 'Recurso', text: 'Diseñador UX/UI para la App' },
-  { category: 'Recurso', text: 'Proveedor de manufactura de hardware' },
-  // 7. Modelo
-  { category: 'Modelo', text: 'SaaS Suscripción mensual / anual' },
-  { category: 'Modelo', text: 'Freemium (Funciones básicas gratis)' },
-  { category: 'Modelo', text: 'Ahorro Interno (Uso in-house ROI)' },
-  { category: 'Modelo', text: 'Cobro por transacción (Fee)' },
-  { category: 'Modelo', text: 'Venta consultiva Enterprise (Ticket alto)' },
-  { category: 'Modelo', text: 'Venta de Hardware unitario' },
-];
+let currentPhase = 1;
+const totalPhases = 5;
 
-function shuffle(array) {
-  let currentIndex = array.length, randomIndex;
-  while (currentIndex !== 0) {
-    randomIndex = Math.floor(Math.random() * currentIndex);
-    currentIndex--;
-    [array[currentIndex], array[randomIndex]] = [array[randomIndex], array[currentIndex]];
-  }
-  return array;
-}
-
-const cards = shuffle([...rawCards]);
-let currentIndex = 0;
-const results = { critico: [], fase2: [], descartado: [] };
-
-const stackEl = document.getElementById('card-stack');
-const progressText = document.getElementById('progress-text');
-const progressBar = document.getElementById('progress-bar');
-let cardElements = [];
-
-function initCards() {
-  // Render back to front
-  for (let i = cards.length - 1; i >= 0; i--) {
-    const c = cards[i];
-    const el = document.createElement('div');
-    el.className = 'card hidden';
-    el.innerHTML = `
-      <div class="card-category">${c.category}</div>
-      <div class="card-text">${c.text}</div>
-    `;
-    stackEl.appendChild(el);
-    cardElements.unshift(el); // keep array synced
-  }
-  updateView();
-}
-
-function updateView() {
-  progressText.innerText = `Clarificador - ${Math.min(currentIndex + 1, cards.length)} / ${cards.length}`;
-  progressBar.style.width = `${(currentIndex / cards.length) * 100}%`;
-
-  if (currentIndex >= cards.length) {
-    setTimeout(showResults, 400);
-    return;
-  }
-
-  cardElements.forEach((el, i) => {
-    el.className = 'card hidden';
-    if (i === currentIndex) {
-      el.className = 'card active';
-    } else if (i === currentIndex + 1) {
-      el.className = 'card next';
-    }
-  });
-}
-
-function handleChoice(type) {
-  if (currentIndex >= cards.length) return;
-  
-  const currentEl = cardElements[currentIndex];
-  
-  if (type === 'no') {
-    currentEl.classList.add('swipe-left');
-    results.descartado.push(cards[currentIndex]);
-  } else if (type === 'yes') {
-    currentEl.classList.add('swipe-right');
-    results.critico.push(cards[currentIndex]);
-  } else if (type === 'maybe') {
-    currentEl.classList.add('swipe-up');
-    results.fase2.push(cards[currentIndex]);
-  }
-  
-  currentIndex++;
-  setTimeout(updateView, 150); // slight delay for visual pop
-}
-
-const briefStructure = [
-  { id: 'Target', title: '1. Audiencia / Target' },
-  { id: 'Dolor', title: '2. Problema a resolver' },
-  { id: 'Propuesta', title: '3. Propuesta de Valor' },
-  { id: 'Feature', title: '4. Magia (Features)' },
-  { id: 'Métrica', title: '5. ROI Estimado / Métricas' },
-  { id: 'Recurso', title: '6. Recursos Clave' },
-  { id: 'Modelo', title: '7. Modelo de Negocio' },
-];
-
-function showResults() {
-  document.getElementById('controls').style.display = 'none';
-  document.querySelector('header').style.display = 'none';
-  stackEl.style.display = 'none';
-  
-  const resScreen = document.getElementById('results-screen');
-  resScreen.style.display = 'flex';
-  
-  const container = document.getElementById('brief-rendered');
-  let html = '';
-  
-  briefStructure.forEach(section => {
-    const items = results.critico.filter(c => c.category === section.id);
-    html += `<div class="brief-section"><h3>${section.title}</h3>`;
-    if (items.length > 0) {
-      html += `<ul>${items.map(i => `<li>${i.text}</li>`).join('')}</ul>`;
+function goNext() {
+  // Validate basic inputs in current phase
+  const currentDiv = document.getElementById(`phase-${currentPhase}`);
+  const requiredInputs = currentDiv.querySelectorAll('input[required], textarea[required]');
+  let isValid = true;
+  requiredInputs.forEach(i => {
+    if(!i.value.trim()) {
+      i.style.borderColor = 'red';
+      isValid = false;
     } else {
-      // Intenta jalar una de Fase 2 si "Crítico" está vacío
-      const itemsFase2 = results.fase2.filter(c => c.category === section.id);
-      if (itemsFase2.length > 0) {
-         html += `<ul>${itemsFase2.map(i => `<li>${i.text} <span style="color:#C5A149; font-size:0.7rem;">(Selección Fase 2)</span></li>`).join('')}</ul>`;
-      } else {
-         html += `<p class="empty-msg">No priorizaste cartas para este punto. Redáctalo manualmente.</p>`;
-      }
+      i.style.borderColor = 'var(--border)';
     }
-    html += `</div>`;
   });
   
+  // Custom validation for Phase 4 to ensure a winner is selected
+  if(currentPhase === 4) {
+    const winnerRadios = document.querySelectorAll('input[name="winner"]');
+    if(winnerRadios.length > 0) {
+      const selected = Array.from(winnerRadios).find(r => r.checked);
+      if(!selected) {
+        alert("Por favor, selecciona tu Idea Ganadora.");
+        isValid = false;
+      }
+    } else {
+      alert("Por favor, escribe al menos una idea.");
+      isValid = false;
+    }
+  }
+
+  if(!isValid) return;
+
+  if (currentPhase < totalPhases) {
+    document.getElementById(`phase-${currentPhase}`).classList.remove('active');
+    document.getElementById(`dot-${currentPhase}`).classList.add('completed');
+    currentPhase++;
+    document.getElementById(`phase-${currentPhase}`).classList.add('active');
+    document.getElementById(`dot-${currentPhase}`).classList.add('active');
+  }
+  updateButtons();
+}
+
+function goPrev() {
+  if (currentPhase > 1) {
+    document.getElementById(`phase-${currentPhase}`).classList.remove('active');
+    document.getElementById(`dot-${currentPhase}`).classList.remove('active');
+    currentPhase--;
+    document.getElementById(`phase-${currentPhase}`).classList.add('active');
+    document.getElementById(`dot-${currentPhase}`).classList.remove('completed');
+  }
+  updateButtons();
+}
+
+function updateButtons() {
+  document.getElementById('btn-prev').style.display = currentPhase === 1 ? 'none' : 'block';
+  if (currentPhase === totalPhases) {
+    document.getElementById('btn-next').style.display = 'none';
+    document.getElementById('btn-submit').style.display = 'block';
+  } else {
+    document.getElementById('btn-next').style.display = 'block';
+    document.getElementById('btn-submit').style.display = 'none';
+  }
+}
+
+// Logic to auto-fill radio buttons based on inputs in Phase 4
+function updateWinnerRadio() {
+  const container = document.getElementById('winner-container');
+  const i1 = document.getElementById('idea-1').value.trim();
+  const i2 = document.getElementById('idea-2').value.trim();
+  const i3 = document.getElementById('idea-3').value.trim();
+  
+  let html = '';
+  if(i1) html += `<label class="winner-item"><input type="radio" name="winner" value="${i1}" checked> ${i1}</label>`;
+  if(i2) html += `<label class="winner-item"><input type="radio" name="winner" value="${i2}"> ${i2}</label>`;
+  if(i3) html += `<label class="winner-item"><input type="radio" name="winner" value="${i3}"> ${i3}</label>`;
+  
+  if(!html) html = `<span style="color:#888; font-size:0.9rem;">Escribe una idea en las cajas de arriba primero.</span>`;
   container.innerHTML = html;
 }
 
-function copyBrief() {
-  let text = '--- TU BRIEF GENERADO ---\n\n';
-  briefStructure.forEach(section => {
-    const items = results.critico.filter(c => c.category === section.id);
-    text += `${section.title}\n`;
-    if (items.length > 0) {
-      items.forEach(i => text += ` - ${i.text}\n`);
-    } else {
-      const itemsFase2 = results.fase2.filter(c => c.category === section.id);
-      if(itemsFase2.length > 0) {
-        itemsFase2.forEach(i => text += ` - ${i.text} (Fase 2)\n`);
-      } else {
-        text += ` - (Por definir)\n`;
-      }
-    }
-    text += '\n';
-  });
+function getCheckedValues(name) {
+  const checkboxes = document.querySelectorAll(`input[name="${name}"]:checked`);
+  let values = [];
+  checkboxes.forEach(cb => values.push(cb.value));
+  return values;
+}
+
+function generatePlan() {
+  // Validate Phase 5
+  if(!document.getElementById('q-mvp').value.trim() || !document.getElementById('q-blockers').value.trim()) {
+    alert("Completa todos los campos obligatorios."); return;
+  }
+
+  // Hide form, show loading
+  document.getElementById('wizard-form').style.display = 'none';
+  document.getElementById('loading').style.display = 'block';
+  document.getElementById('progressBars').style.display = 'none';
+  document.querySelector('header h1').innerText = "RESULTADOS";
+
+  // Data collection
+  const data = {
+    pain: document.getElementById('q-pain').value,
+    target: document.getElementById('q-target').value,
+    vision: document.getElementById('q-vision').value,
+    madurez: document.getElementById('q-madurez').value,
+    recursos: getCheckedValues('recursos'),
+    limitantes: getCheckedValues('limitantes'),
+    winnerIdea: document.querySelector('input[name="winner"]:checked')?.value || 'No seleccionado',
+    mvp: document.getElementById('q-mvp').value,
+    blockers: document.getElementById('q-blockers').value,
+    date: new Date().toLocaleDateString('es-ES', { year: 'numeric', month: 'long', day: 'numeric' })
+  };
+
+  // Build Report HTML
+  let resHtml = `
+    <h1>Plan Estratégico de IA</h1>
+    <div class="meta">Generado el ${data.date} | LifeStrategics Tool</div>
+    
+    <h3>1. El Contexto Actual (As-Is)</h3>
+    <p><strong>El Dolor Principal:</strong><br>${data.pain}</p>
+    <p><strong>Afectados / Target:</strong> ${data.target}</p>
+
+    <h3>2. La Visión de Éxito (To-Be)</h3>
+    <p><strong>El Escenario Ideal:</strong><br>${data.vision}</p>
+    <p><strong>Madurez Digital del Equipo:</strong> ${data.madurez} / 10</p>
+
+    <h3>3. Análisis de Capacidad (El Gap)</h3>
+    <p><strong>Recursos a favor:</strong></p>
+    <ul>
+      ${data.recursos.length > 0 ? data.recursos.map(r=>`<li>${r}</li>`).join('') : '<li>Ninguno específico mapeado.</li>'}
+    </ul>
+    <p><strong>Restricciones y Fricción:</strong></p>
+    <ul>
+      ${data.limitantes.length > 0 ? data.limitantes.map(l=>`<li>${l}</li>`).join('') : '<li>Ninguna restricción crítica mapeada.</li>'}
+    </ul>
+
+    <div class="highlight-box">
+      <h4>🎯 4. Iniciativa Estratégica Ganadora</h4>
+      <p style="font-size:1.15rem; font-weight:600; color:var(--blue);">${data.winnerIdea}</p>
+      <p style="font-size:0.9rem; color:#666;">Seleccionada por balance de alto impacto y factibilidad operativa.</p>
+    </div>
+
+    <h3>5. Ruta de Ejecución</h3>
+    <p><strong>Primer Hito / MVP (2 semanas):</strong><br>${data.mvp}</p>
+    <p><strong>Riesgos / Blockers a gestionar:</strong><br>${data.blockers}</p>
+  `;
+
+  setTimeout(() => {
+    document.getElementById('loading').style.display = 'none';
+    document.getElementById('paper-content').innerHTML = resHtml;
+    document.getElementById('results-view').style.display = 'block';
+  }, 1500);
+}
+
+function copyDox() {
+  const paper = document.getElementById('paper-content');
+  const textContent = paper.innerText;
   
-  navigator.clipboard.writeText(text).then(() => {
-    const btn = document.getElementById('copyBtn');
-    btn.innerText = '¡Copiado al portapapeles!';
+  navigator.clipboard.writeText(textContent).then(() => {
+    const btn = document.getElementById('btn-copy');
+    btn.innerText = '¡Copiado al Portapapeles!';
     btn.style.background = '#41EAD4';
+    btn.style.color = '#000';
     setTimeout(() => {
-      btn.innerText = 'Copiar Brief al Portapapeles';
-      btn.style.background = 'var(--blue)';
-    }, 2000);
+      btn.innerText = 'Copiar Texto al Portapapeles';
+      btn.style.background = '#111';
+      btn.style.color = '#fff';
+    }, 2500);
   });
 }
 
-// Start
-initCards();
+// Init listeners
+document.getElementById('idea-1').addEventListener('keyup', updateWinnerRadio);
+// Prevent Enter submitting form
+window.addEventListener('keydown',function(e){if(e.keyIdentifier=='U+000A'||e.keyIdentifier=='Enter'||e.keyCode==13){if(e.target.nodeName=='INPUT'&&e.target.type=='text'){e.preventDefault();return false;}}},true);
 </script>
 </body>
 </html>
