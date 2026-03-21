@@ -170,6 +170,17 @@ canvas { background:#111; border-radius:8px; display:block; width:100%; max-widt
 .btn-copy { background:#111; color:#fff; width:100%; border:2px solid #333;}
 .btn-copy:hover { background:#333; }
 
+/* Print Mode */
+@media print {
+  body { background: #fff !important; color: #000 !important; }
+  header, .progress-container, .phase, .nav-buttons, #loading, .action-buttons { display: none !important; }
+  main { padding: 0 !important; margin: 0 !important; max-width: 100% !important; }
+  #results-view { display: block !important; }
+  .report-paper { box-shadow: none !important; border: none !important; margin: 0 !important; padding: 0 !important; color: #111 !important; }
+  .report-paper h1, .report-paper h3 { border-color: #333 !important; color: #111 !important; }
+  .highlight-box { background: #f0f0f0 !important; border-left-color: #333 !important; }
+}
+
 /* Loading */
 #loading { display:none; text-align:center; padding:100px 0; }
 .spinner { width:50px; height:50px; border:4px solid rgba(255,255,255,0.1); border-top-color:var(--green); border-radius:50%; animation:spin 1s linear infinite; margin:0 auto 20px;}
@@ -437,8 +448,9 @@ canvas { background:#111; border-radius:8px; display:block; width:100%; max-widt
     </div>
     
     <div class="action-buttons">
-      <button class="btn btn-copy" id="btn-copy" onclick="copyDox()">COPY PASTE: Copiar todo el Plan Operativo</button>
-      <div style="text-align:center; margin-top:10px;"><a href="#" style="color:#888; text-decoration:none; font-size:0.9rem;" onclick="location.reload()">Empezar Nuevo Proyecto ↺</a></div>
+      <button class="btn btn-copy" id="btn-copy" onclick="copyDox()">Copiar Texto del Plan</button>
+      <button class="btn btn-copy" onclick="window.print()" style="margin-top:0; border-color:var(--blue); color:var(--blue);">Bajar como PDF / Imprimir</button>
+      <div style="text-align:center; margin-top:20px;"><a href="#" style="color:#888; text-decoration:none; font-size:0.9rem;" onclick="location.reload()">Empezar Nuevo Proyecto ↺</a></div>
     </div>
   </div>
 
@@ -690,9 +702,9 @@ function copyDox() {
   const tc = document.getElementById('paper-content').innerText;
   navigator.clipboard.writeText(tc).then(() => {
     const btn = document.getElementById('btn-copy');
-    btn.innerText = '¡DOCUMENTO ESTRATÉGICO COPIADO EXITOSAMENTE AL PORTAPAPELES!';
+    btn.innerText = '¡TEXTO COPIADO EXITOSAMENTE AL PORTAPAPELES!';
     btn.style.background = '#41EAD4'; btn.style.color = '#000';
-    setTimeout(() => { btn.innerText = 'COPY PASTE: Copiar todo el Plan Operativo'; btn.style.background = '#111'; btn.style.color = '#fff';}, 3500);
+    setTimeout(() => { btn.innerText = 'Copiar Texto del Plan'; btn.style.background = '#111'; btn.style.color = '#fff';}, 3500);
   });
 }
 
