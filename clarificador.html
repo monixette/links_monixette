@@ -8,7 +8,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Wix+Madefor+Display:wght@300;400;500;600;700;800&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
 /* ═══════════════════════════════════════════════
-   LIFESTRATEGICS V2026 — STRATEGIC WIZARD V3.1
+   LIFESTRATEGICS V2026 — STRATEGIC WIZARD V3.2
    Dark Mode · Sticky Matrix Canvas · No Backend
    ═══════════════════════════════════════════════ */
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
@@ -75,21 +75,30 @@ input[type="text"], textarea, select {
 input[type="text"]:focus, textarea:focus, select:focus { outline:none; border-color:var(--blue); }
 textarea { resize:vertical; min-height:80px; }
 
+select {
+  appearance: none; -webkit-appearance: none;
+  background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+  background-repeat: no-repeat;
+  background-position: right 1rem center;
+  background-size: 1em;
+  padding-right: 2.5rem;
+}
+select option { background: #1A1A1D; color: #fff; }
+
 /* Checkboxes */
-.checkbox-grid { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
-@media(max-width:500px){ .checkbox-grid { grid-template-columns:1fr; } }
+.checkbox-grid { display:flex; flex-direction:column; gap:10px; }
 .check-item {
-  display:flex; align-items:flex-start; padding:12px 15px;
+  display:flex; align-items:flex-start; padding:15px;
   background:var(--input-bg); border:1px solid var(--border); border-radius:8px; cursor:pointer;
   transition:background 0.2s; font-size:0.95rem; line-height:1.4;
 }
 .check-item:hover { background:rgba(255,255,255,0.05); }
-.check-item input { margin-top:2px; margin-right:12px; width:18px; height:18px; accent-color:var(--blue); flex-shrink:0;}
+.check-item input { margin-top:2px; margin-right:12px; width:20px; height:20px; accent-color:var(--blue); flex-shrink:0;}
 
 /* Dynamic Range Slider (Maturity) */
 .range-wrap { margin-top:10px; }
-input[type="range"] { width:100%; height:6px; border-radius:3px; background:var(--border); outline:none; -webkit-appearance:none; accent-color:var(--gold); }
-input[type="range"]::-webkit-slider-thumb { -webkit-appearance:none; width:20px; height:20px; border-radius:50%; background:var(--gold); cursor:pointer; }
+input[type="range"] { width:100%; height:8px; border-radius:4px; background:var(--border); outline:none; -webkit-appearance:none; accent-color:var(--gold); }
+input[type="range"]::-webkit-slider-thumb { -webkit-appearance:none; width:22px; height:22px; border-radius:50%; background:var(--gold); cursor:pointer; box-shadow: 0 0 10px rgba(197, 161, 73, 0.5);}
 .range-labels { display:flex; justify-content:space-between; margin-top:10px; font-size:0.8rem; color:#888; font-family:'DM Mono',monospace;}
 .rubric-box { margin-top:15px; padding:15px; background:rgba(197,161,73,0.1); border-left:4px solid var(--gold); font-size:0.9rem; border-radius:4px; }
 
@@ -131,7 +140,7 @@ canvas { background:#111; border-radius:8px; display:block; width:100%; max-widt
   font-weight:700; font-size:1rem; cursor:pointer; transition:all 0.2s; display:inline-flex; align-items:center; justify-content:center;
 }
 .btn-back { background:transparent; border:1px solid var(--border); color:#fff; }
-.btn-reset { background:transparent; border:none; color:#888; text-decoration:underline; font-size:0.9rem;}
+.btn-reset { background:transparent; border:none; color:#888; text-decoration:underline; font-size:0.9rem; margin-left:15px; cursor:pointer;}
 .btn-reset:hover { color:#fff; }
 .btn-next { background:var(--blue); color:#000; flex:1; max-width:300px; }
 .btn-submit { background:var(--green); color:#000; box-shadow:0 0 15px rgba(65,234,212,0.3); width:100%; margin-top:20px; font-size:1.1rem; padding:18px;}
@@ -171,7 +180,7 @@ canvas { background:#111; border-radius:8px; display:block; width:100%; max-widt
 <body>
 
 <header>
-  <h1>Estrategia IA // Clarificador V3</h1>
+  <h1>Estrategia IA // Clarificador V3.2</h1>
   <div class="progress-container" id="progressBars">
     <div class="progress-step active" id="dot-1">1</div>
     <div class="progress-step" id="dot-2">2</div>
@@ -197,7 +206,7 @@ canvas { background:#111; border-radius:8px; display:block; width:100%; max-widt
 
       <div class="form-group">
         <label>¿Quién(es) sufren este problema directamente?</label>
-        <span class="hint">Ej: Yo mismo, el equipo de UX, los clientes B2B al esperar respuestas, RRHH (Puedes listar a varios)...</span>
+        <span class="hint">Ej: Yo mismo, el equipo de UX, los clientes B2B al esperar respuestas, RRHH (Puedes listar a varios).</span>
         <input type="text" id="q-target" placeholder="Nombra a los afectados..." required>
       </div>
     </div>
@@ -229,57 +238,58 @@ canvas { background:#111; border-radius:8px; display:block; width:100%; max-widt
     <!-- FASE 3: GAP -->
     <div class="phase" id="phase-3">
       <h2>3. Exploración del gap estratégico</h2>
-      <p class="subtitle">Aterrizando expectativas: Recursos, Carencias y Fricciones Reales.</p>
+      <p class="subtitle">Aterrizando expectativas reales para no diseñar proyectos imposibles.</p>
 
       <div class="form-group">
-        <label>Presupuesto operativo mensual disponible</label>
-        <span class="hint">No es lo mismo dinero para un prompt que para servidores dedicados.</span>
+        <label>Presupuesto disponible al mes (Para tecnología)</label>
+        <span class="hint">No es lo mismo tener dinero para comprar un prompt que para costear una infraestructura de servidores dedicados.</span>
         <select id="q-budget">
-          <option value="$0 — Solo herramientas gratuitas y Open Source">$0 USD/mes — Solo herramientas gratuitas (Ej: ChatGPT Free)</option>
-          <option value="~$20/mes — Suscripción IA básica (Ej: ChatGPT Plus / Claude Pro)">~$20 USD/mes — Suscripción IA básica (ChatGPT Plus / Claude Pro)</option>
-          <option value="$50 a $150/mes — Stack ligero (IA + Automatizaciones como Make)">$50-$150 USD/mes — Stack ligero (IA + Automatizaciones como Make)</option>
-          <option value="+$200/mes — Infraestructura de APIs, Cloud y múltiples herramientas">+$200 USD/mes — Infraestructura (LLMs vía API, Cloud Hosting, DBs)</option>
+          <option value="Tiers 0: Modesto ($0 USD) — Solo alternativas gratuitas">Nivel 0: Modesto ($0 USD) — Solo herramientas gratuitas y Open Source</option>
+          <option value="Tier 1: Explorador (~$20 USD/mes) — Suscripciones básicas IA">Nivel 1: Explorador (Hasta $20 USD/mes) — Ej: Suscripciones LLM básicas (ChatGPT Plus, Claude Pro)</option>
+          <option value="Tier 2: Intermedio (Hasta $150 USD/mes) — IA + Apps accesorias">Nivel 2: Intermedio (Hasta $150 USD/mes) — IA + Otras apps de pago (Ej: Make, Airtable Básico, HeyGen)</option>
+          <option value="Tier 3: Avanzado (Hasta $500 USD/mes) — Pro, APIs e Integraciones">Nivel 3: Avanzado (Hasta $500 USD/mes) — Licencias Pro (ChatGPT Team, Claude Max) + Consumo de APIs fuertes</option>
+          <option value="Tier 4: Enterprise (+$1,000 USD/mes) — Desarrollo custom">Nivel 4: Enterprise (+$1,000 USD/mes) — Infraestructura completa, desarrollo custom, Bases de Datos en la nube</option>
         </select>
       </div>
 
       <div class="form-group">
-        <label>Estado de la información y los datos</label>
+        <label>¿Cómo es el estado de tus datos hoy?</label>
         <select id="q-data">
-          <option value="Base de datos central lista y ordenada (CRM/ERP)">Base de datos central limpia (CRM/ERP listos)</option>
-          <option value="Silos de Excel, PDFs y Docs dispersos">Silos de Excel, PDFs y Docs dispersos</option>
-          <option value="No hay datos registrados aún">No registramos data formalmente aún (Hay que crearla)</option>
+          <option value="Todo está centralizado (Ej. En un CRM o sistema ordenado listo para consultarse)">Todo está centralizado (Ej. En un CRM o sistema ordenado listo para consultarse)</option>
+          <option value="Es un caos: usamos múltiples Excels, PDFs o correos desordenados por todos lados">Es un caos: usamos múltiples Excels, PDFs o correos desordenados por todos lados</option>
+          <option value="No guardamos ni registramos información formalmente aún">No guardamos ni registramos información formalmente aún (Empezamos de cero)</option>
         </select>
       </div>
 
       <div class="form-group">
-        <label>Las 5 capas de Talento in-house (Selecciona si las cubres hoy)</label>
-        <span class="hint">¿Qué sabe operar tu equipo sin contratar externos?</span>
+        <label>Las 5 habilidades in-house requeridas (Check si alguien del equipo sabe hacerlo)</label>
+        <span class="hint">Aterricemos qué NO sabemos hacer. ¿Qué tareas pueden operar ustedes mismos sin contratar a externos?</span>
         <div class="checkbox-grid">
-          <label class="check-item"><input type="checkbox" name="talento" value="1. Front (UX/UI y Diseño Visual)"> 1. Front (UX/UI y Diseño Visual)</label>
-          <label class="check-item"><input type="checkbox" name="talento" value="2. Back (Lógica y flujos del sistema)"> 2. Back (Lógica y flujos del sistema)</label>
-          <label class="check-item"><input type="checkbox" name="talento" value="3. BD (Consultas y estructuración de Datos)"> 3. DB (Consultas y Bases de Datos)</label>
-          <label class="check-item"><input type="checkbox" name="talento" value="4. Modelos IA (Llamar APIs, prompts, RAG)"> 4. Modelos IA (APIs, RAG, Prompts)</label>
-          <label class="check-item"><input type="checkbox" name="talento" value="5. Despliegue (DevOps, Servidores, CMS)"> 5. Deploy (DevOps, Servidores, CMS)</label>
+          <label class="check-item"><input type="checkbox" name="talento" value="Diseño Visual / Front-End (Saben cómo hacerlo bonito y fácil de usar)"> <b>1. Diseño Visual:</b> Saben hacer que la app/bot se vea bonita y que el usuario sepa navegarla fácilmente.</label>
+          <label class="check-item"><input type="checkbox" name="talento" value="Lógica y flujos internos (Saben configurar herramientas tipo Make/Zapier)"> <b>2. Lógica Interna:</b> Saben configurar el "Cerebro" corporativo (cómo viaja la info y qué la desencadena).</label>
+          <label class="check-item"><input type="checkbox" name="talento" value="Bases de Datos (Saben guardar y extraer la información correctamente)"> <b>3. Datos:</b> Saben organizar y conectar Bases de Datos para buscar y guardar archivos sin crear un desastre.</label>
+          <label class="check-item"><input type="checkbox" name="talento" value="Integración de Inteligencia Artificial (Saben qué es una API de IA o RAG)"> <b>4. Conectores IA (RAG/APIs):</b> Saben qué es una clave API, o cómo enviarle instrucciones maestras ocultas a ChatGPT/Claude.</label>
+          <label class="check-item"><input type="checkbox" name="talento" value="Servidores y Nube (Saben subir esto online para que soporte tráfico)"> <b>5. Servidores Online:</b> Saben "subir" el proyecto final a internet en la Nube y asegurarse de que nunca se caiga.</label>
         </div>
       </div>
 
       <div class="form-group">
         <label>Limitantes sistémicas y corporativas</label>
-        <span class="hint">¿Qué frenos existen más allá de lo técnico?</span>
+        <span class="hint">¿Qué elementos tóxicos o frenos organizacionales rodean este proyecto?</span>
         <div class="checkbox-grid">
-          <label class="check-item"><input type="checkbox" name="limitantes" value="Barrera Legal / Aprobación IT / Compliance corporativo"> Barrera Legal / Compliance IT</label>
-          <label class="check-item"><input type="checkbox" name="limitantes" value="Fuerte resistencia al cambio / Miedo del usuario final"> Miedo / Resistencia al cambio</label>
-          <label class="check-item"><input type="checkbox" name="limitantes" value="Tiempo muy crítico (Es un Side-Project de 5 hrs semanales)"> Tiempo crítico (Es Side-Project)</label>
-          <label class="check-item"><input type="checkbox" name="limitantes" value="Alta dependencia a terceros (APIs o equipos lentos)"> Dependencia a terceros / APIs</label>
+          <label class="check-item"><input type="checkbox" name="limitantes" value="Barrera de Autoridades Corporativas (Compliance IT / Legal corporativo es lento o burocrático)"> Barrera Corporativa: Los de Legal o IT no me dejarán avanzar fácil o revisar mis aprobaciones tomará meses.</label>
+          <label class="check-item"><input type="checkbox" name="limitantes" value="Fuerte resistencia al cambio de los participantes / Miedo a romper el proceso actual"> Fuerte resistencia humana: Los empleados (o clientes) odian usar cosas nuevas y prefieren el papel.</label>
+          <label class="check-item"><input type="checkbox" name="limitantes" value="Falta de tiempo dedicado (Es un side project forzado, solo tengo 5-8 horas a la semana)"> Falta de tiempo real: Tristemente es un proyecto alterno ("Side-Project"); solo le puedo dedicar 5 hrs libres a la semana.</label>
+          <label class="check-item"><input type="checkbox" name="limitantes" value="Alta dependencia a sistemas externos, APIs inestables o burocracia de proveedores de pago"> Alta dependencia externa: Esto solo funcionará si un tercero (APIs, plataformas externas cerradas) decide darnos permisos.</label>
         </div>
-        <textarea id="q-limitantes-text" placeholder="¿Otra limitante o freno importante en tu radar?" style="margin-top:15px; min-height:60px;"></textarea>
+        <textarea id="q-limitantes-text" placeholder="¿Otra limitante organizativa o humana clave en tu radar que no mencionamos arriba?" style="margin-top:15px; min-height:60px;"></textarea>
       </div>
     </div>
 
     <!-- FASE 4: IDEACIÓN VISUAL -->
     <div class="phase" id="phase-4">
-      <h2>4. Caminos estratégicos y selección</h2>
-      <p class="subtitle">Escribe soluciones integrales. Evalúa su Impacto y su grado de Factibilidad (Qué tan realizable luce).</p>
+      <h2>4. Caminos estratégicos y selección de idea</h2>
+      <p class="subtitle">Escribe tus posibles soluciones. Evalúa su Impacto y su grado de Factibilidad (Qué tan fácil de lograr luzca para ti).</p>
 
       <div class="matrix-sticky-container">
         <div class="matrix-title">Matriz Visual de Priorización</div>
@@ -289,14 +299,14 @@ canvas { background:#111; border-radius:8px; display:block; width:100%; max-widt
       <!-- Idea 1 -->
       <div class="idea-block">
         <div class="idea-header"><span>Idea 1</span><span class="req">* Obligatoria</span></div>
-        <input type="text" id="i1-text" class="idea-input" placeholder="Escribe tu primera idea o solución de IA..." required onkeyup="updateMatrix()">
+        <input type="text" id="i1-text" class="idea-input" placeholder="Escribe tu primera solución / intervención de IA..." required onkeyup="updateMatrix()">
         <div class="sliders-row">
           <div class="slider-group">
-             <label>Impacto (Valor): <span id="val-i1-imp" class="slider-val">3</span></label>
+             <label>Impacto (Valor de éxito si sale bien): <span id="val-i1-imp" class="slider-val">3</span></label>
              <input type="range" id="i1-imp" min="0" max="5" step="0.5" value="3" oninput="updateVal('i1-imp'); updateMatrix()">
           </div>
           <div class="slider-group">
-             <label>Factibilidad (Qué tan realizable luce): <span id="val-i1-fac" class="slider-val">3</span></label>
+             <label>Factibilidad (Qué tan realista o fácil se ve): <span id="val-i1-fac" class="slider-val">3</span></label>
              <input type="range" id="i1-fac" min="0" max="5" step="0.5" value="3" oninput="updateVal('i1-fac'); updateMatrix()">
           </div>
         </div>
@@ -305,14 +315,14 @@ canvas { background:#111; border-radius:8px; display:block; width:100%; max-widt
       <!-- Idea 2 -->
       <div class="idea-block">
         <div class="idea-header"><span>Idea 2</span><span class="req">* Obligatoria</span></div>
-        <input type="text" id="i2-text" class="idea-input" placeholder="Purga la idea anterior y busca otra perspectiva..." required onkeyup="updateMatrix()">
+        <input type="text" id="i2-text" class="idea-input" placeholder="Purga lo obvio de la idea 1 y busca una alternativa..." required onkeyup="updateMatrix()">
         <div class="sliders-row">
           <div class="slider-group">
-             <label>Impacto (Valor): <span id="val-i2-imp" class="slider-val">3</span></label>
+             <label>Impacto (Valor de éxito si sale bien): <span id="val-i2-imp" class="slider-val">3</span></label>
              <input type="range" id="i2-imp" min="0" max="5" step="0.5" value="3" oninput="updateVal('i2-imp'); updateMatrix()">
           </div>
           <div class="slider-group">
-             <label>Factibilidad (Qué tan realizable luce): <span id="val-i2-fac" class="slider-val">3</span></label>
+             <label>Factibilidad (Qué tan realista o fácil se ve): <span id="val-i2-fac" class="slider-val">3</span></label>
              <input type="range" id="i2-fac" min="0" max="5" step="0.5" value="3" oninput="updateVal('i2-fac'); updateMatrix()">
           </div>
         </div>
@@ -321,14 +331,14 @@ canvas { background:#111; border-radius:8px; display:block; width:100%; max-widt
       <!-- Idea 3 -->
       <div class="idea-block">
         <div class="idea-header"><span>Idea 3</span><span class="req">* Obligatoria</span></div>
-        <input type="text" id="i3-text" class="idea-input" placeholder="Itera de nuevo. Intenta algo totalmente diferente..." required onkeyup="updateMatrix()">
+        <input type="text" id="i3-text" class="idea-input" placeholder="Itera de nuevo. Intenta un formato drásticamente distinto..." required onkeyup="updateMatrix()">
         <div class="sliders-row">
           <div class="slider-group">
-             <label>Impacto (Valor): <span id="val-i3-imp" class="slider-val">3</span></label>
+             <label>Impacto (Valor de éxito si sale bien): <span id="val-i3-imp" class="slider-val">3</span></label>
              <input type="range" id="i3-imp" min="0" max="5" step="0.5" value="3" oninput="updateVal('i3-imp'); updateMatrix()">
           </div>
           <div class="slider-group">
-             <label>Factibilidad (Qué tan realizable luce): <span id="val-i3-fac" class="slider-val">3</span></label>
+             <label>Factibilidad (Qué tan realista o fácil se ve): <span id="val-i3-fac" class="slider-val">3</span></label>
              <input type="range" id="i3-fac" min="0" max="5" step="0.5" value="3" oninput="updateVal('i3-fac'); updateMatrix()">
           </div>
         </div>
@@ -340,11 +350,11 @@ canvas { background:#111; border-radius:8px; display:block; width:100%; max-widt
         <input type="text" id="i4-text" class="idea-input" placeholder="Refinamiento (Opcional)..." onkeyup="updateMatrix()">
         <div class="sliders-row">
           <div class="slider-group">
-             <label>Impacto (Valor): <span id="val-i4-imp" class="slider-val">3</span></label>
+             <label>Impacto (Valor de éxito si sale bien): <span id="val-i4-imp" class="slider-val">3</span></label>
              <input type="range" id="i4-imp" min="0" max="5" step="0.5" value="3" oninput="updateVal('i4-imp'); updateMatrix()">
           </div>
           <div class="slider-group">
-             <label>Factibilidad (Qué tan realizable luce): <span id="val-i4-fac" class="slider-val">3</span></label>
+             <label>Factibilidad (Qué tan realista o fácil se ve): <span id="val-i4-fac" class="slider-val">3</span></label>
              <input type="range" id="i4-fac" min="0" max="5" step="0.5" value="3" oninput="updateVal('i4-fac'); updateMatrix()">
           </div>
         </div>
@@ -356,11 +366,11 @@ canvas { background:#111; border-radius:8px; display:block; width:100%; max-widt
         <input type="text" id="i5-text" class="idea-input" placeholder="Escribe esa locura ambiciosa..." onkeyup="updateMatrix()">
         <div class="sliders-row">
           <div class="slider-group">
-             <label>Impacto (Valor): <span id="val-i5-imp" class="slider-val">3</span></label>
+             <label>Impacto (Valor de éxito si sale bien): <span id="val-i5-imp" class="slider-val">3</span></label>
              <input type="range" id="i5-imp" min="0" max="5" step="0.5" value="3" oninput="updateVal('i5-imp'); updateMatrix()">
           </div>
           <div class="slider-group">
-             <label>Factibilidad (Qué tan realizable luce): <span id="val-i5-fac" class="slider-val">3</span></label>
+             <label>Factibilidad (Qué tan realista o fácil se ve): <span id="val-i5-fac" class="slider-val">3</span></label>
              <input type="range" id="i5-fac" min="0" max="5" step="0.5" value="3" oninput="updateVal('i5-fac'); updateMatrix()">
           </div>
         </div>
@@ -368,7 +378,7 @@ canvas { background:#111; border-radius:8px; display:block; width:100%; max-widt
 
       <div class="form-group" style="margin-top:40px; border-color:var(--blue);">
         <label>Basado en el gráfico superior, selecciona el Camino Ganador definitivo:</label>
-        <span class="hint">Usualmente la idea que aterrice arriba a la derecha.</span>
+        <span class="hint">Usualmente deberías escoger la idea que aterrice en el cuadrante de Victorias Rápidas o Apuestas Estratégicas.</span>
         <div class="winner-options" id="winner-container">
           <!-- JS injects radion buttons here -->
         </div>
@@ -382,20 +392,20 @@ canvas { background:#111; border-radius:8px; display:block; width:100%; max-widt
 
       <div class="form-group">
         <label>El Discovery (Information Gap)</label>
-        <span class="hint">¿Qué pieza clave de información IGNORAS hoy (o requerimientos de acceso no tienes claros) y DEBES investigar antes de programar la primera línea?</span>
-        <textarea id="q-discovery" placeholder="Ej: No sé qué necesito para enlazar mis correos a un Agente IA, debo investigar qué modelo cumple eso primero..." required></textarea>
+        <span class="hint">¿Qué pieza clave de información técnica o de permisos IGNORAS hoy (no tienes claros) y DEBES invertir en investigar antes de programar la primera línea?</span>
+        <textarea id="q-discovery" placeholder="Ej: No sé qué necesito para enlazar mis correos a un Agente IA, debo investigar qué limitantes tiene el motor interno..." required></textarea>
       </div>
 
       <div class="form-group">
         <label>El Mínimo Producto Viable (Hito 1 en 2 Semanas)</label>
-        <span class="hint">¿Cuál será el simulacro más barato posible (Ej. experimento Mago de Oz o usar solo ChatGPT) para validar valor?</span>
+        <span class="hint">¿Cuál será el simulacro más barato posible (Ej. experimento Mago de Oz oculto, o usar solo 1 prompt interno de ChatGPT) para validar que la meta se cumple sin crear software completo?</span>
         <textarea id="q-mvp" placeholder="Describe tu experimento de validación sin código..." required></textarea>
       </div>
 
       <div class="form-group">
         <label>Riesgos Mortales (Blockers Críticos)</label>
-        <span class="hint">Si este proyecto fracasa o se detiene por completo, ¿cuál será el motivo más probable? Sé pesimista.</span>
-        <textarea id="q-blockers" placeholder="Ej: Que no logre hacerlo andar y se caiga la automatización sin darme cuenta..." required></textarea>
+        <span class="hint">Si al final este proyecto fracasa o se detiene por completo al mes 3, ¿cuál será el verdadero bloqueador mortal causante? (No sirve mentirnos, sé brutalmente realista).</span>
+        <textarea id="q-blockers" placeholder="Ej: Que no logre hacerlo andar internamente, y nos abandonen los inversionistas, o un proveedor nos revoque API Keys..." required></textarea>
       </div>
 
       <button type="button" class="btn btn-submit" id="btn-submit" onclick="generatePlan()">SINTETIZAR DOCUMENTO ESTRATÉGICO FINAL</button>
@@ -403,9 +413,9 @@ canvas { background:#111; border-radius:8px; display:block; width:100%; max-widt
 
     <!-- Navigation -->
     <div class="nav-buttons">
-      <div>
+      <div style="display:flex; align-items:center;">
         <button type="button" class="btn btn-back" id="btn-prev" onclick="goPrev()" style="display:none;">Retroceder</button>
-        <button type="button" class="btn btn-reset" onclick="location.reload()">Volver a comenzar</button>
+        <button type="button" class="btn btn-reset" onclick="location.reload()">Volver a comenzar ↺</button>
       </div>
       <div>
         <button type="button" class="btn btn-next" id="btn-next" onclick="goNext()">Continuar</button>
@@ -427,7 +437,7 @@ canvas { background:#111; border-radius:8px; display:block; width:100%; max-widt
     </div>
     
     <div class="action-buttons">
-      <button class="btn btn-copy" id="btn-copy" onclick="copyDox()">COPY PASTE: Copiar todo el Plan</button>
+      <button class="btn btn-copy" id="btn-copy" onclick="copyDox()">COPY PASTE: Copiar todo el Plan Operativo</button>
       <div style="text-align:center; margin-top:10px;"><a href="#" style="color:#888; text-decoration:none; font-size:0.9rem;" onclick="location.reload()">Empezar Nuevo Proyecto ↺</a></div>
     </div>
   </div>
@@ -444,8 +454,8 @@ const rubrics = [
   "Nivel Nulo (0-2): Procesos 100% manuales o en papel. Fuerte miedo o resistencia a usar tecnología nueva.",
   "Nivel Básico (3-4): Software genérico y aislado. Usan email, Excel y WhatsApp, pero no conectan nada ni hay automatizaciones.",
   "Nivel Medio (5-6): Adopción corporativa estándar. Usan software especializado (CRM, SAP, Asana) pero dependen de copiar y pegar entre sistemas.",
-  "Nivel Alto (7-8): Equipo optimizado. Entienden flujos, utilizan herramientas No-Code básicas (Make/Zapier) o bots internamente.",
-  "Nivel Experto (9-10): Nativos Digitales/Inventores. Adoptan y construyen sus propias soluciones de integración, código y scripts nativamente."
+  "Nivel Alto (7-8): Equipo optimizado. Entienden flujos lógicos abstractos, utilizan herramientas No-Code básicas (Make/Zapier) o bots internamente.",
+  "Nivel Experto (9-10): Nativos Digitales/Inventores. Adoptan y construyen sus propias soluciones de integración, código de servidor, APIs y scripts nativamente."
 ];
 function updateRubric() {
   const val = parseInt(document.getElementById('q-madurez').value);
@@ -455,7 +465,7 @@ function updateRubric() {
   else if(val<=6) text = rubrics[2];
   else if(val<=8) text = rubrics[3];
   else text = rubrics[4];
-  document.getElementById('madurez-rubric').innerHTML = `<strong>Nivel ${val}:</strong> ${text}`;
+  document.getElementById('madurez-rubric').innerHTML = `<strong>Nivel Medio Ponderado (${val}):</strong> ${text}`;
 }
 
 // Navigation Logic
@@ -471,7 +481,7 @@ function goNext() {
   if(currentPhase === 4) {
     const winnerRadios = document.querySelectorAll('input[name="winner"]');
     const checked = Array.from(winnerRadios).some(r => r.checked);
-    if(winnerRadios.length===0 || !checked) { alert("¡Debes seleccionar la Idea Ganadora Abajo del gráfico!"); isValid=false; }
+    if(winnerRadios.length===0 || !checked) { alert("¡Debes seleccionar primero Tu Idea Ganadora haciendo clic debajo del gráfico de la matriz!"); isValid=false; }
   }
 
   if(!isValid) return;
@@ -558,12 +568,11 @@ function drawMatrix(ideas) {
   ctx.fillText('Descartar', w/2 - 25, h - 5);
 
   // Plot Points
-  const pad = 16; // Radius is 14, so 16px padding prevents cutoffs
+  const pad = 16; 
   const drawW = w - (pad * 2);
   const drawH = h - (pad * 2);
 
   ideas.forEach(idea => {
-    // Math to ensure circles never touch the absolute border
     const px = pad + (idea.fac / 5) * drawW;
     const py = pad + drawH - ((idea.imp / 5) * drawH);
 
@@ -585,10 +594,10 @@ function renderRadios(ideas) {
   let html = '';
   ideas.forEach(id => {
     const isChecked = currentWinner === id.text ? 'checked' : '';
-    let category = id.fac>=2.5 && id.imp>=2.5 ? " (Rápida)" : (id.fac<2.5 && id.imp>=2.5 ? " (Estratégica)" : " (Baja/Descartar)");
-    html += `<label class="winner-item"><input type="radio" name="winner" value="${id.text}" ${isChecked}> Idea ${id.id}: ${id.text} <b>${category}</b></label>`;
+    let category = id.fac>=2.5 && id.imp>=2.5 ? " (Victoria Rápida / Océano Rojo)" : (id.fac<2.5 && id.imp>=2.5 ? " (Apuesta Estratégica / Océano Azul)" : " (Bajo Impacto / Mejor descartar)");
+    html += `<label class="winner-item"><input type="radio" name="winner" value="${id.text}" ${isChecked}> Idea ${id.id}: ${id.text} <br><b style="font-size:0.85rem; color:#888;">${category}</b></label>`;
   });
-  if(ideas.length === 0) html = `<span style="color:#D15152; font-size:0.9rem;">Escribe ideas arriba primero.</span>`;
+  if(ideas.length === 0) html = `<span style="color:#D15152; font-size:0.9rem;">Escribe ideas en las cajas superiores para que grafiquen aquí.</span>`;
   container.innerHTML = html;
 }
 
@@ -617,7 +626,7 @@ function generatePlan() {
 
   const extraLimit = document.getElementById('q-limitantes-text').value.trim();
   let limitList = getChecks('limitantes');
-  if(extraLimit) limitList.push("Otra limitante: " + extraLimit);
+  if(extraLimit) limitList.push("Otra limitante externa importante: " + extraLimit);
 
   const d = {
     pain: document.getElementById('q-pain').value,
@@ -628,62 +637,62 @@ function generatePlan() {
     budget: document.getElementById('q-budget').value,
     talento: getChecks('talento'),
     limitantes: limitList,
-    winner: document.querySelector('input[name="winner"]:checked')?.value || "Problema: Idea no guardada",
+    winner: document.querySelector('input[name="winner"]:checked')?.value || "Problema técnico: Idea no guardada",
     discovery: document.getElementById('q-discovery').value,
     mvp: document.getElementById('q-mvp').value,
     blockers: document.getElementById('q-blockers').value,
-    date: new Date().toLocaleDateString('es-ES')
+    date: new Date().toLocaleDateString('es-ES', { year: 'numeric', month: 'long', day: 'numeric' })
   };
 
-  const talentList = d.talento.length > 0 ? d.talento.map(t=>`<li>${t}</li>`).join('') : '<li><i>Externalización Crítica: No hay talento interno.</i></li>';
-  const limitsHtmlList = d.limitantes.length > 0 ? d.limitantes.map(l=>`<li>${l}</li>`).join('') : '<li><i>Ninguna alarma organizacional mapeada.</i></li>';
+  const talentList = d.talento.length > 0 ? d.talento.map(t=>`<li>${t}</li>`).join('') : '<li><i>Alarma Crítica: El proyecto carece de talento técnico propio, obligando a subcontratar el 100% operativo.</i></li>';
+  const limitsHtmlList = d.limitantes.length > 0 ? d.limitantes.map(l=>`<li>${l}</li>`).join('') : '<li><i>Afortunadamente, ninguna alarma sistémica organizacional detectada.</i></li>';
 
   const html = `
     <h1>BRIEF EJECUTIVO: ESTRATEGIA DE IA</h1>
-    <div class="meta">Desarrollado el ${d.date} | LifeStrategics Tool</div>
+    <div class="meta">Hoja de Ruta Estratégica desarrollada el ${d.date} | Creado mediante The LifeStrategics Tool</div>
     
     <h3>1. EL CONTEXTO DIAGNÓSTICO (AS-IS)</h3>
-    <p><strong>El Dolor Crítico:</strong><br>${d.pain}</p>
+    <p><strong>El Dolor O Fricción Crítica:</strong><br>${d.pain}</p>
     <p><strong>Afectados / Target:</strong> ${d.target}</p>
 
-    <h3>2. LA VISIÓN ESTÉTICA (TO-BE)</h3>
-    <p><strong>Meta Conceptual:</strong><br>${d.vision}</p>
+    <h3>2. LA VISIÓN ESTRATÉGICA (TO-BE)</h3>
+    <p><strong>Meta Conceptual Operativa:</strong><br>${d.vision}</p>
     <p><strong>Madurez Digital Analizada:</strong><br><span style="font-size:0.95em; color:#555;">${d.rubricText}</span></p>
 
-    <h3>3. MAPEO ESTRATÉGICO DE CAPACIDAD (EL GAP)</h3>
-    <p><strong>Presupuesto Operativo:</strong> ${d.budget}</p>
-    <p><strong>Estado de los Datos:</strong> ${d.data}</p>
-    <p><strong>Talento Técnico In-House Identificado:</strong></p>
+    <h3>3. MAPEO DE CAPACIDAD TÉCNICA Y LIMITANTES (EL GAP)</h3>
+    <p><strong>Estado Actual de los Datos:</strong> ${d.data}</p>
+    <p><strong>Rango de Presupuesto Mensual Asignado:</strong> ${d.budget}</p>
+    <p><strong>Capas Técnicas In-House Identificadas Útiles:</strong></p>
     <ul>${talentList}</ul>
-    <p><strong>Restricciones Corporativas (Limitantes):</strong></p>
+    <p><strong>Limitaciones Corporativas y Limitantes Finales Críticas:</strong></p>
     <ul>${limitsHtmlList}</ul>
 
     <div class="highlight-box">
-      <h4>🎯 4. INICIATIVA GANADORA (EL FOCO)</h4>
+      <h4>🎯 4. INICIATIVA CENTRAL GANADORA Y SCOPE TECNOLÓGICO</h4>
       <div class="win-idea">"${d.winner}"</div>
-      <div class="win-meta">Priorizada post-filtrado iterativo vía Matriz Relacional (Impacto & Factibilidad).</div>
+      <div class="win-meta">Priorizada y escaneada exhaustivamente vía Matriz Relacional (Validando alto nivel de Impacto en Negocio correlacionado con Factibilidad Operativa Acertada).</div>
     </div>
 
-    <h3>5. RUTA DE ATERRIZAJE Y EJECUCIÓN</h3>
-    <p><strong>Discovery (Información Obligatoria a investigar):</strong><br>${d.discovery}</p>
-    <p><strong>MVP (Criterio de Validación en 2 Semanas):</strong><br>${d.mvp}</p>
-    <p><strong>Riesgos y Blockers Activos:</strong><br>${d.blockers}</p>
+    <h3>5. RUTA DE ATERRIZAJE (LA EJECUCIÓN PRÁCTICA)</h3>
+    <p><strong>The Discovery Gap (Información o permisos indispensables por conseguir antes de poder programar nada):</strong><br>${d.discovery}</p>
+    <p><strong>Validación "MVP" (Iteración de 2 Semanas como Simulación Tecnológica):</strong><br>${d.mvp}</p>
+    <p><strong>Riesgos y Blockers Activos Reales:</strong><br>${d.blockers}</p>
   `;
 
   setTimeout(()=>{
     document.getElementById('loading').style.display = 'none';
     document.getElementById('paper-content').innerHTML = html;
     document.getElementById('results-view').style.display = 'block';
-  },1800);
+  },1500);
 }
 
 function copyDox() {
   const tc = document.getElementById('paper-content').innerText;
   navigator.clipboard.writeText(tc).then(() => {
     const btn = document.getElementById('btn-copy');
-    btn.innerText = '¡DOCUMENTO COPIADO EXITOSAMENTE!';
+    btn.innerText = '¡DOCUMENTO ESTRATÉGICO COPIADO EXITOSAMENTE AL PORTAPAPELES!';
     btn.style.background = '#41EAD4'; btn.style.color = '#000';
-    setTimeout(() => { btn.innerText = 'COPY PASTE: Copiar todo el Plan'; btn.style.background = '#111'; btn.style.color = '#fff';}, 3000);
+    setTimeout(() => { btn.innerText = 'COPY PASTE: Copiar todo el Plan Operativo'; btn.style.background = '#111'; btn.style.color = '#fff';}, 3500);
   });
 }
 
