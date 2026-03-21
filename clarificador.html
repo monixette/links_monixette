@@ -679,7 +679,7 @@ function generatePlan() {
     <p class="text-xs text-gray-500 mb-3">Copia este prompt y pégalo directamente en ChatGPT, Claude Code o AntiGravity para comenzar a programar este MVP de inmediato.</p>
     <div class="bg-[#111] p-4 rounded-xl border border-gray-700 relative group">
       <button onclick="copyPromptDef()" class="absolute top-3 right-3 bg-[#333] hover:bg-ls-gold text-white hover:text-black text-[10px] uppercase font-bold px-3 py-1 rounded transition">Copiar Prompt</button>
-      <pre id="prd-prompt-text" class="text-gray-300 font-mono text-[0.75rem] w-full overflow-x-auto whitespace-pre-wrap leading-relaxed pr-16">Actúa como un Tech Lead y Arquitecto de IA. Tenemos el mandato de construir un Mínimo Producto Viable (MVP) en 2 semanas, sujeto a fuertes restricciones de tiempo organizacional. Revisa nuestro Product Requirements Document (PRD) y propón la arquitectura técnica de caja negra más simple posible.
+      <pre id="prd-prompt-text" class="text-gray-300 font-mono text-[0.75rem] w-full overflow-x-auto whitespace-pre-wrap leading-relaxed pr-16" spellcheck="false">Actúa como un Consultor de Innovación Tecnológica y Arquitecto High-Level. Tu objetivo es guiar a un líder de negocios a validar un Mínimo Producto Viable (MVP) en 2 semanas, sujeto a fuertes restricciones organizacionales. Revisa nuestro Brief Estratégico y comunícate de manera dialogada, clara y libre de tecnicismos complejos de programación.
 
 [CONTEXTO DE NEGOCIO Y VISIÓN]
 - Dolor Actual: ${d.pain}
@@ -699,7 +699,12 @@ ${tArr.length > 0 ? "  - " + tArr.join('\n  - ') : "  - No hay talento técnico 
 - Limitantes Corporativas identificadas:
 ${lArr.length > 0 ? "  - " + lArr.join('\n  - ') : "  - Ninguna burocracia documentada."}
 
-INSTRUCCIÓN: NO sobrediseñes. No inventes Agentes complejos si un Script o automatización sencilla (ncode/lowcode) basta. Basado en el talento In-House especificado y nuestras limitaciones corporativas, diseña la ruta de ejecución número 1. ¿Cuál es la primera línea que debemos programar hoy?</pre>
+INSTRUCCIÓN:
+Por favor, NO asumas automáticamente que vamos a programar desde cero y NO me devuelvas código (ej: JSONs o APIs). En su lugar:
+1. Dame una evaluación estratégica High-Level de si esto es viable dadas nuestras limitantes, y cómo se relaciona el MVP con el objetivo final.
+2. Preséntame 2 o 3 Caminos Estratégicos o Arquitecturas (ej. Solución Manual, Solución Low-Code/No-Code, Solución Híbrida) que cumplan nuestro Criterio de Éxito en 2 semanas.
+3. Para cada camino, dame una viñeta simple de Pros y Contras evaluando la complejidad, la fricción de usuario y el costo de mantenimiento.
+4. Termina haciéndome 3 preguntas estratégicas para que podamos dialogar y yo pueda decidir con qué camino continuar.</pre>
     </div>
   `;
 
