@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>LifeSwitch™ — Demo Prototype</title>
+<link href="https://fonts.googleapis.com/css2?family=Wix+Madefor+Display:wght@300;400;500;600;700;800&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+/* ═══════════════════════════════════════════════
+   LIFESTRATEGICS V2026 — LIFESWITCH PROTOTYPE
+   Dark Mode · Glassmorphism · Cyberpunk subtle
+   ═══════════════════════════════════════════════ */
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+
+:root{
+  --bg:#1A1A1D; /* Darker than before */
+  --card:rgba(255,255,255,0.02);
+  --border:rgba(255,255,255,0.05);
+  --red-switch:#E63946;
+  --text:#fff;
+  --text-sec:rgba(255,255,255,0.7);
+  --blue:#41EAD4;
+}
+
+body{
+  background:var(--bg);color:var(--text);
+  font-family:'Wix Madefor Display',sans-serif;
+  line-height:1.6;-webkit-font-smoothing:antialiased;
+  padding:20px;
+}
+
+/* ── HERO ── */
+.hero {
+  text-align:center;
+  padding:80px 20px 60px;
+  position:relative;
+  overflow:hidden;
+}
+
+.hero h1 {
+  font-size: clamp(2.5rem, 6vw, 4rem);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  margin-bottom: 20px;
+  background: linear-gradient(135deg, #fff 0%, #a1a1aa 100%);
+  -webkit-background-clip: text;
+  color: transparent;
+}
+
+.hero p {
+  font-size: 1.2rem;
+  color: var(--text-sec);
+  max-width: 600px;
+  margin: 0 auto 40px;
+}
+
+/* THE BUTTON */
+.switch-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 30px;
+}
+
+.red-button {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 30% 30%, #ff5e6b, var(--red-switch));
+  box-shadow: 
+    0 0 20px rgba(230, 57, 70, 0.4),
+    inset 0 10px 20px rgba(255,255,255,0.4),
+    inset 0 -10px 20px rgba(0,0,0,0.3),
+    0 15px 25px rgba(0,0,0,0.5);
+  border: 4px solid #111;
+  cursor: pointer;
+  transition: all 0.1s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+}
+
+.red-button:active {
+  transform: translateY(8px);
+  box-shadow: 
+    0 0 10px rgba(230, 57, 70, 0.6),
+    inset 0 10px 20px rgba(255,255,255,0.3),
+    inset 0 -5px 10px rgba(0,0,0,0.4),
+    0 5px 10px rgba(0,0,0,0.5);
+}
+
+.red-button::after {
+  content: 'OFF';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-family: 'DM Mono', monospace;
+  font-weight: 700;
+  font-size: 1.5rem;
+  color: #fff;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+  pointer-events: none;
+}
+
+/* ── BRIEF CARDS ── */
+.brief-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 20px;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 30px;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  transition: transform 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  border-color: rgba(255,255,255,0.15);
+}
+
+.card h3 {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.9rem;
+  color: var(--blue);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 12px;
+}
+
+.card p {
+  color: rgba(255,255,255,0.85);
+  font-size: 1.05rem;
+}
+
+/* Particle Canvas Background */
+#particle-canvas{position:fixed;top:0;left:0;width:100vw;height:100vh;pointer-events:none;z-index:-1;opacity:0.4;}
+
+/* Pulse animation for the button */
+@keyframes pulse {
+  0% { box-shadow: 0 0 0 0 rgba(230, 57, 70, 0.4); }
+  70% { box-shadow: 0 0 0 20px rgba(230, 57, 70, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(230, 57, 70, 0); }
+}
+.red-button { animation: pulse 2s infinite; }
+.red-button:active { animation: none; }
+
+</style>
+</head>
+<body>
+
+<canvas id="particle-canvas"></canvas>
+
+<div class="hero">
+  <h1>LifeSwitch™</h1>
+  <p>Desconectarse de la oficina nunca fue tan físico. Un solo golpe a este botón nuclear apaga tu ecosistema de trabajo y enciende tu vida personal.</p>
+  
+  <div class="switch-container">
+    <div class="red-button" onclick="triggerSwitch()"></div>
+  </div>
+  <p style="font-family:'DM Mono'; font-size:0.8rem; color: #888; margin-top: -15px;">Pulsa el botón para probar la transición</p>
+</div>
+
+<!-- Prototipo del Brief -->
+<div class="brief-grid" id="brief">
+  <div class="card">
+    <h3>1. Target</h3>
+    <p>Profesionales remotos e híbridos ahogados por el "always on" y la incapacidad de separar su espacio vital de la oficina.</p>
+  </div>
+  <div class="card">
+    <h3>2. El Dolor</h3>
+    <p>El "sangrado mental" y la compulsión a revisar el celular o responder mensajes fuera de hora (Burnout por interrupción tecnológica).</p>
+  </div>
+  <div class="card">
+    <h3>3. Propuesta de Valor</h3>
+    <p>Fricción cero: una transición tangible, visceral y de un solo toque entre estado "produciendo" y estado "viviendo".</p>
+  </div>
+  <div class="card">
+    <h3>4. La Magia (Features)</h3>
+    <p>Cierra todas las apps corporativas (Slack, Teams), activa modo <i>No Molestar</i> en MacOS/Win, y cambia luces inteligentes a cálidas automáticamente.</p>
+  </div>
+  <div class="card">
+    <h3>5. ROI (Métricas)</h3>
+    <p>Aumentar +30% en calidad del sueño reportada en HR, y reducir horas extras "fantasmas" que destruyen la retención lateral.</p>
+  </div>
+  <div class="card">
+    <h3>6. Recursos clave</h3>
+    <p>Software proxy de interceptación a nivel OS. Diseño de hardware USB periférico barato estilo "panic button".</p>
+  </div>
+  <div class="card">
+    <h3>7. Modelo de Negocio</h3>
+    <p>Venta SaaS + Hardware (B2B) a Corporativos. Se vende como un "Kit de Cuidado Empleado Remoto" con reporte analítico anonimizado de burnout.</p>
+  </div>
+  <div class="card">
+    <h3>8. Primer Hito</h3>
+    <p>Desarrollar una MVP beta (solo aplicación de escritorio con atajo de teclado <i>Cmd+Shift+L</i>) para testear la adherencia durante 1 semana.</p>
+  </div>
+</div>
+
+<script>
+function triggerSwitch() {
+  const bg = document.body;
+  const h1 = document.querySelector('h1');
+  if(bg.style.backgroundColor === 'rgb(4, 59, 92)') {
+    bg.style.backgroundColor = '';
+    h1.innerText = 'LifeSwitch™';
+    document.querySelector('.red-button').style.background = 'radial-gradient(circle at 30% 30%, #ff5e6b, var(--red-switch))';
+  } else {
+    // Modo "Vida" (Relajado)
+    bg.style.backgroundColor = '#043b5c';
+    bg.style.transition = 'background-color 1s ease';
+    h1.innerText = 'Modo Vida Activado';
+    h1.style.color = '#41EAD4';
+    h1.style.background = 'none';
+    h1.style.webkitTextFillColor = 'initial';
+    document.querySelector('.red-button').style.background = '#333';
+  }
+}
+
+// Particle Canvas
+const canvas=document.getElementById('particle-canvas');
+if(canvas){
+  const ctx=canvas.getContext('2d');let particles=[];
+  function init(){canvas.width=window.innerWidth;canvas.height=window.innerHeight;particles=[];for(let i=0;i<40;i++)particles.push({x:Math.random()*canvas.width,y:Math.random()*canvas.height,vx:(Math.random()-.5)*.3,vy:(Math.random()-.5)*.3,size:Math.random()*1.5+.5});}
+  function animate(){requestAnimationFrame(animate);ctx.clearRect(0,0,canvas.width,canvas.height);particles.forEach(p=>{p.x+=p.vx;p.y+=p.vy;if(p.x<0||p.x>canvas.width)p.vx*=-1;if(p.y<0||p.y>canvas.height)p.vy*=-1;ctx.beginPath();ctx.arc(p.x,p.y,p.size,0,Math.PI*2);ctx.fillStyle='rgba(65,234,212,0.3)';ctx.fill();});}
+  window.addEventListener('resize',init);
+  init();animate();
+}
+</script>
+</body>
+</html>
