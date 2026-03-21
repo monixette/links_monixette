@@ -551,10 +551,10 @@ function renderRadios(ids) {
   ids.forEach(id => {
     let cat = id.fac>=2.5 && id.imp>=2.5 ? "text-[#41EAD4] font-semibold" : (id.fac<2.5 && id.imp>=2.5 ? "text-ls-gold font-semibold" : "text-ls-muted");
     let cLabel = id.fac>=2.5 && id.imp>=2.5 ? "(Victoria Rápida)" : (id.fac<2.5 && id.imp>=2.5 ? "(Apuesta Temeraria)" : "(Descartar / Bajo Impacto)");
-    ht += \`<label class="flex items-start p-3 bg-black/20 border border-white/10 rounded-xl cursor-pointer hover:bg-white/5 transition mb-1 text-sm">
-      <input type="radio" name="winner" value="\${id.text}" class="mt-1 mr-3 w-4 h-4 accent-ls-blue" \${sel===id.text?'checked':''}>
-      <div><span class="text-white">Idea \${id.id}: \${id.text}</span><br><span class="\${cat} text-xs uppercase tracking-wide">\${cLabel}</span></div>
-    </label>\`;
+    ht += `<label class="flex items-start p-3 bg-black/20 border border-white/10 rounded-xl cursor-pointer hover:bg-white/5 transition mb-1 text-sm">
+      <input type="radio" name="winner" value="${id.text}" class="mt-1 mr-3 w-4 h-4 accent-ls-blue" ${sel===id.text?'checked':''}>
+      <div><span class="text-white">Idea ${id.id}: ${id.text}</span><br><span class="${cat} text-xs uppercase tracking-wide">${cLabel}</span></div>
+    </label>`;
   });
   c.innerHTML = ht || '<span class="text-ls-red text-sm">Escribe ideas arriba primero.</span>';
 }
@@ -579,49 +579,84 @@ function generatePlan() {
     pain: document.getElementById('q-pain').value, target: document.getElementById('q-target').value,
     vision: document.getElementById('q-vision').value, rubric: document.getElementById('madurez-rubric').innerText,
     budget: document.getElementById('q-budget').value, data: document.getElementById('q-data').value,
-    talentList: tArr.length>0 ? tArr.map(t=>\`<li>\${t}</li>\`).join('') : '<li class="text-ls-red font-semibold">Alarma: Carece de talento in-house requerido; externalización al 100%.</li>',
-    limitsList: lArr.length>0 ? lArr.map(l=>\`<li>\${l}</li>\`).join('') : '<li>Ninguna traba sistémica detectada. Vía libre.</li>',
+    talentList: tArr.length>0 ? tArr.map(t=>`<li>${t}</li>`).join('') : '<li class="text-ls-red font-semibold">Alarma: Carece de talento in-house requerido; externalización al 100%.</li>',
+    limitsList: lArr.length>0 ? lArr.map(l=>`<li>${l}</li>`).join('') : '<li>Ninguna traba sistémica detectada. Vía libre.</li>',
     winner: document.querySelector('input[name="winner"]:checked')?.value || "Problema: Idea no seleccionada.",
     discovery: qD.value, mvp: qM.value, blockers: qB.value
   };
 
-  const ht = \`
+  const ht = `
     <h1 class="text-3xl font-display font-black tracking-tight mb-2 border-b-4 border-ls-blue inline-block pb-1">EXECUTIVE BRIEF: AI STRATEGY</h1>
-    <p class="font-mono text-gray-500 text-xs mb-8 uppercase tracking-widest">Generado el \${d.date} | LifeStrategics V3.5</p>
+    <p class="font-mono text-gray-500 text-xs mb-8 uppercase tracking-widest">Generado el ${d.date} | LifeStrategics V3.5</p>
     
     <h3 class="font-display text-ls-blue font-bold text-lg uppercase tracking-wide border-b border-gray-200 pb-1 mb-3 mt-6">1. El Diagnóstico (As-Is)</h3>
-    <p class="mb-3 text-sm leading-relaxed"><strong class="font-display">Dolor Operativo Crítico:</strong><br>\${d.pain}</p>
-    <p class="mb-5 text-sm leading-relaxed"><strong class="font-display">Usuarios Afectados:</strong> \${d.target}</p>
+    <p class="mb-3 text-sm leading-relaxed"><strong class="font-display">Dolor Operativo Crítico:</strong><br>${d.pain}</p>
+    <p class="mb-5 text-sm leading-relaxed"><strong class="font-display">Usuarios Afectados:</strong> ${d.target}</p>
 
     <h3 class="font-display text-ls-blue font-bold text-lg uppercase tracking-wide border-b border-gray-200 pb-1 mb-3 mt-6">2. La Visión Operativa (To-Be)</h3>
-    <p class="mb-3 text-sm leading-relaxed"><strong class="font-display">Meta Escenario Ideal:</strong><br>\${d.vision}</p>
-    <p class="mb-5 text-sm leading-relaxed"><strong class="font-display">Madurez Digital Identificada:</strong><br><span class="text-gray-600 font-medium">\${d.rubric}</span></p>
+    <p class="mb-3 text-sm leading-relaxed"><strong class="font-display">Meta Escenario Ideal:</strong><br>${d.vision}</p>
+    <p class="mb-5 text-sm leading-relaxed"><strong class="font-display">Madurez Digital Identificada:</strong><br><span class="text-gray-600 font-medium">${d.rubric}</span></p>
 
     <h3 class="font-display text-ls-blue font-bold text-lg uppercase tracking-wide border-b border-gray-200 pb-1 mb-3 mt-6">3. El Gap Sistémico</h3>
-    <p class="mb-2 text-sm leading-relaxed"><strong class="font-display">Presupuesto Mapeado:</strong> \${d.budget}</p>
-    <p class="mb-3 text-sm leading-relaxed"><strong class="font-display">Estado Data Actual:</strong> \${d.data}</p>
+    <p class="mb-2 text-sm leading-relaxed"><strong class="font-display">Presupuesto Mapeado:</strong> ${d.budget}</p>
+    <p class="mb-3 text-sm leading-relaxed"><strong class="font-display">Estado Data Actual:</strong> ${d.data}</p>
     <p class="mb-1 text-sm leading-relaxed font-display font-bold">Capas Técnicas In-House Resolutivas:</p>
-    <ul class="list-disc pl-5 mb-4 text-sm text-gray-700">\${d.talentList}</ul>
+    <ul class="list-disc pl-5 mb-4 text-sm text-gray-700">${d.talentList}</ul>
     <p class="mb-1 text-sm leading-relaxed font-display font-bold">Limitantes Organizacionales Físicas:</p>
-    <ul class="list-disc pl-5 mb-6 text-sm text-gray-700">\${d.limitsList}</ul>
+    <ul class="list-disc pl-5 mb-6 text-sm text-gray-700">${d.limitsList}</ul>
 
     <div class="bg-gray-50 border-l-4 border-ls-blue p-5 rounded-r-2xl my-6">
       <h4 class="font-display font-bold text-gray-900 mb-2 uppercase tracking-wide text-[0.95rem]">🎯 4. INICIATIVA CENTRAL SELECCIONADA</h4>
-      <p class="text-xl font-body font-semibold text-black leading-snug mb-2">"\${d.winner}"</p>
+      <p class="text-xl font-body font-semibold text-black leading-snug mb-2">"${d.winner}"</p>
       <p class="text-xs font-mono text-gray-500 uppercase tracking-wide">Refinada iterativamente vía Escáner de Impacto/Factibilidad.</p>
     </div>
 
     <h3 class="font-display text-ls-blue font-bold text-lg uppercase tracking-wide border-b border-gray-200 pb-1 mb-3 mt-8">5. Plan de Aterrizaje Ejecutable</h3>
-    <p class="mb-4 text-sm leading-relaxed"><strong class="font-display">El Discovery Gap (Misión de Investigación):</strong><br>\${d.discovery}</p>
-    <p class="mb-4 text-sm leading-relaxed"><strong class="font-display">MVP Experimental (Validación Teórica Semanal):</strong><br>\${d.mvp}</p>
-    <p class="mb-4 text-sm leading-relaxed"><strong class="font-display text-red-600">Riesgo Falla Fatal (Blockers de Corto Plazo):</strong><br>\${d.blockers}</p>
-  \`;
+    <p class="mb-4 text-sm leading-relaxed"><strong class="font-display">El Discovery Gap (Misión de Investigación):</strong><br>${d.discovery}</p>
+    <p class="mb-4 text-sm leading-relaxed"><strong class="font-display">MVP Experimental (Validación Teórica Semanal):</strong><br>${d.mvp}</p>
+    <p class="mb-4 text-sm leading-relaxed"><strong class="font-display text-red-600">Riesgo Falla Fatal (Blockers de Corto Plazo):</strong><br>${d.blockers}</p>
+
+    <!-- PRD PROMPT SECTION -->
+    <h3 class="font-display text-ls-gold font-bold text-lg uppercase tracking-wide border-b border-gray-200 pb-1 mb-3 mt-10">🚀 Bonus: Prompt de Arranque Técnico (PRD)</h3>
+    <p class="text-xs text-gray-500 mb-3">Copia este prompt y pégalo directamente en ChatGPT, Claude Code o AntiGravity para comenzar a programar este MVP de inmediato.</p>
+    <div class="bg-[#111] p-4 rounded-xl border border-gray-700 relative group">
+      <button onclick="copyPromptDef()" class="absolute top-3 right-3 bg-[#333] hover:bg-ls-gold text-white hover:text-black text-[10px] uppercase font-bold px-3 py-1 rounded transition">Copiar Prompt</button>
+      <pre id="prd-prompt-text" class="text-gray-300 font-mono text-[0.75rem] w-full overflow-x-auto whitespace-pre-wrap leading-relaxed pr-16">Actúa como un Tech Lead y Arquitecto de IA. Tenemos el mandato de construir un Mínimo Producto Viable (MVP) en 2 semanas, sujeto a fuertes restricciones de tiempo organizacional. Revisa nuestro Product Requirements Document (PRD) y propón la arquitectura técnica de caja negra más simple posible.
+
+[CONTEXTO DE NEGOCIO Y VISIÓN]
+- Dolor Actual: ${d.pain}
+- Visión Tecnológica: ${d.vision}
+- Presupuesto Autorizado: ${d.budget}
+
+[SCOPE DEL MVP Y ÉXITO]
+- Resolución Ganadora: "${d.winner}"
+- Criterio estricto de éxito a 2 semanas: ${d.mvp}
+- Tarea Previa a resolver (Discovery): ${d.discovery}
+
+[CAPACIDAD Y RIESGOS]
+- Riesgo Mortal a evitar: ${d.blockers}
+- Estado de los Datos: ${d.data}
+- Rol de talento In-House útil:
+${tArr.length > 0 ? "  - " + tArr.join('\\n  - ') : "  - No hay talento técnico interno."}
+- Limitantes Corporativas identificadas:
+${lArr.length > 0 ? "  - " + lArr.join('\\n  - ') : "  - Ninguna burocracia documentada."}
+
+INSTRUCCIÓN: NO sobrediseñes. No inventes Agentes complejos si un Script o automatización sencilla (ncode/lowcode) basta. Basado en el talento In-House especificado y nuestras limitaciones corporativas, diseña la ruta de ejecución número 1. ¿Cuál es la primera línea que debemos programar hoy?</pre>
+    </div>
+  `;
 
   setTimeout(()=>{
     document.getElementById('loading').classList.add('hidden'); document.getElementById('loading').classList.remove('block');
     document.getElementById('results-view').classList.remove('hidden'); document.getElementById('results-view').classList.add('block');
     document.querySelector('.report-paper').innerHTML = ht;
   },1800);
+}
+
+function copyPromptDef() {
+  const t = document.getElementById('prd-prompt-text').innerText;
+  navigator.clipboard.writeText(t).then(()=>{
+    alert("¡Prompt PRD Copiado al portapapeles! Llévalo a tu AI agent favorito.");
+  });
 }
 
 function copyDox() {
