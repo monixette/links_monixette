@@ -619,6 +619,9 @@ function generatePlan() {
   const qD = document.getElementById('q-discovery'); const qM = document.getElementById('q-mvp'); const qB = document.getElementById('q-blockers');
   if(!qD.value.trim()||!qM.value.trim()||!qB.value.trim()){ qD.classList.add('border-ls-red'); qM.classList.add('border-ls-red'); qB.classList.add('border-ls-red'); window.scrollTo(0,document.body.scrollHeight); return; }
   
+  const winnerNode = document.querySelector('input[name="winner"]:checked');
+  if(!winnerNode) { alert("¡Alarma! No has seleccionado una Idea Ganadora de la Matriz. Por favor haz scroll hacia arriba/ve a la Fase 4 y selecciona la estrategia priorizada."); return; }
+
   document.getElementById('wizard-form').style.display='none';
   document.getElementById('loading').classList.remove('hidden'); document.getElementById('loading').classList.add('block');
   window.scrollTo({top:0, behavior:'smooth'});
@@ -628,15 +631,16 @@ function generatePlan() {
   if(extL) lArr.push("Específica: "+extL);
   let tArr=Array.from(document.querySelectorAll('input[name="talento"]:checked')).map(e=>e.value);
 
+  const clP = (s) => s.replace(/\n\s*\n/g, '\\n').replace(/\n/g, ' ').trim();
   const d = {
     date: new Date().toLocaleDateString('es-ES',{year:'numeric',month:'long',day:'numeric'}),
-    pain: document.getElementById('q-pain').value, target: document.getElementById('q-target').value,
-    vision: document.getElementById('q-vision').value, rubric: document.getElementById('madurez-rubric').innerText,
+    pain: clP(document.getElementById('q-pain').value), target: document.getElementById('q-target').value.trim(),
+    vision: clP(document.getElementById('q-vision').value), rubric: document.getElementById('madurez-rubric').innerText,
     budget: document.getElementById('q-budget').value, data: document.getElementById('q-data').value,
     talentList: tArr.length>0 ? tArr.map(t=>`<li>${t}</li>`).join('') : '<li class="text-ls-red font-semibold">Alarma: Carece de talento in-house requerido; externalización al 100%.</li>',
     limitsList: lArr.length>0 ? lArr.map(l=>`<li>${l}</li>`).join('') : '<li>Ninguna traba sistémica detectada. Vía libre.</li>',
-    winner: document.querySelector('input[name="winner"]:checked')?.value || "Problema: Idea no seleccionada.",
-    discovery: qD.value, mvp: qM.value, blockers: qB.value
+    winner: winnerNode.value,
+    discovery: clP(qD.value), mvp: clP(qM.value), blockers: clP(qB.value)
   };
 
   const ht = `
@@ -691,9 +695,9 @@ function generatePlan() {
 - Riesgo Mortal a evitar: ${d.blockers}
 - Estado de los Datos: ${d.data}
 - Rol de talento In-House útil:
-${tArr.length > 0 ? "  - " + tArr.join('\\n  - ') : "  - No hay talento técnico interno."}
+${tArr.length > 0 ? "  - " + tArr.join('\n  - ') : "  - No hay talento técnico interno."}
 - Limitantes Corporativas identificadas:
-${lArr.length > 0 ? "  - " + lArr.join('\\n  - ') : "  - Ninguna burocracia documentada."}
+${lArr.length > 0 ? "  - " + lArr.join('\n  - ') : "  - Ninguna burocracia documentada."}
 
 INSTRUCCIÓN: NO sobrediseñes. No inventes Agentes complejos si un Script o automatización sencilla (ncode/lowcode) basta. Basado en el talento In-House especificado y nuestras limitaciones corporativas, diseña la ruta de ejecución número 1. ¿Cuál es la primera línea que debemos programar hoy?</pre>
     </div>
