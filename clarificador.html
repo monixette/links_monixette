@@ -1,649 +1,918 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>Asistente Estratégico | LifeStrategics</title>
-<meta name="theme-color" content="#242426">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Asistente Estratégico | LifeStrategics</title>
+  <meta name="theme-color" content="#242426">
 
-<!-- Typography -->
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Wix+Madefor+Display:wght@400;500;600;700;800&family=Wix+Madefor+Text:ital,wght@0,400;0,500;1,400&family=Dancing+Script:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <!-- Typography -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Wix+Madefor+Display:wght@400;500;600;700;800&family=Wix+Madefor+Text:ital,wght@0,400;0,500;1,400&family=Dancing+Script:wght@400;500;600;700&display=swap"
+    rel="stylesheet">
 
-<!-- Tailwind CSS -->
-<script src="https://cdn.tailwindcss.com"></script>
-<script>
-  tailwind.config = {
-    theme: {
-      extend: {
-        fontFamily: {
-          display: ['"Wix Madefor Display"', 'sans-serif'],
-          body: ['"Wix Madefor Text"', 'sans-serif'],
-          accent: ['"Dancing Script"', 'cursive']
-        },
-        colors: {
-          ls: {
-            bg: '#242426',
-            blue: '#58AFCD',
-            gold: '#C5A149',
-            red: '#D15152',
-            muted: '#9CA3AF'
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            display: ['"Wix Madefor Display"', 'sans-serif'],
+            body: ['"Wix Madefor Text"', 'sans-serif'],
+            accent: ['"Dancing Script"', 'cursive']
+          },
+          colors: {
+            ls: {
+              bg: '#242426',
+              blue: '#58AFCD',
+              gold: '#C5A149',
+              red: '#D15152',
+              muted: '#9CA3AF'
+            }
           }
         }
       }
     }
-  }
-</script>
+  </script>
 
-<style>
-/* LifeStrategics V2 Glassmorphism Core */
-body { background: #242426; color: #ffffff; -webkit-font-smoothing: antialiased; }
-.mobile-shell { width: 100%; max-width: 480px; margin: 0 auto; min-height: 100dvh; position: relative; }
+  <style>
+    /* LifeStrategics V2 Glassmorphism Core */
+    body {
+      background: #242426;
+      color: #ffffff;
+      -webkit-font-smoothing: antialiased;
+    }
 
-/* Standard Link Card */
-.ls-card {
-  background: rgba(255, 255, 255, 0.04);
-  border: 1px solid rgba(255, 255, 255, 0.10);
-  border-radius: 20px;
-  padding: 22px;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-}
-/* Input / Textareas */
-.ls-input {
-  width: 100%; background: rgba(0,0,0,0.2); border: 1px solid rgba(255,255,255,0.1); 
-  border-radius: 12px; padding: 14px 16px; color: #fff; font-family: 'Wix Madefor Text', sans-serif;
-  transition: all 0.2s; font-size: 0.95rem; margin-top: 8px;
-}
-.ls-input:focus { outline: none; border-color: #58AFCD; background: rgba(0,0,0,0.4); box-shadow: 0 0 0 2px rgba(88,175,205,0.2); }
-textarea.ls-input { min-height: 100px; resize: vertical; }
+    .mobile-shell {
+      width: 100%;
+      max-width: 480px;
+      margin: 0 auto;
+      min-height: 100dvh;
+      position: relative;
+    }
 
-select.ls-input {
-  appearance: none; -webkit-appearance: none;
-  background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%239CA3AF' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
-  background-repeat: no-repeat; background-position: right 1rem center; background-size: 1em; padding-right: 2.5rem;
-}
-select.ls-input option { background: #242426; color: #fff; }
+    /* Standard Link Card */
+    .ls-card {
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.10);
+      border-radius: 20px;
+      padding: 22px;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
 
-/* Buttons */
-.ls-btn {
-  background: rgba(255, 255, 255, 0.04); border: 1px solid rgba(255, 255, 255, 0.10);
-  border-radius: 20px; padding: 14px 22px; width: 100%; text-align: center;
-  font-family: 'Wix Madefor Display', sans-serif; font-weight: 600; cursor: pointer;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); display: flex; align-items: center; justify-content: center;
-}
-.ls-btn:hover {
-  border-color: rgba(255, 255, 255, 0.22); background: rgba(255, 255, 255, 0.07);
-  transform: translateY(-2px); box-shadow: 0 12px 32px rgba(0, 0, 0, 0.35);
-}
-.ls-btn-primary { background: #58AFCD; color: #000; border: none; }
-.ls-btn-primary:hover { background: #4ca1bd; border-color: transparent; }
+    /* Input / Textareas */
+    .ls-input {
+      width: 100%;
+      background: rgba(0, 0, 0, 0.2);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 12px;
+      padding: 14px 16px;
+      color: #fff;
+      font-family: 'Wix Madefor Text', sans-serif;
+      transition: all 0.2s;
+      font-size: 0.95rem;
+      margin-top: 8px;
+    }
 
-/* Animated Border Container (For Matrix or Final Actions) */
-.glowing-wrapper { position: relative; border-radius: 20px; padding: 2px; overflow: hidden; }
-.glowing-wrapper::before {
-  content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%;
-  background: conic-gradient(from 0deg, transparent 10%, #C5A149 15%, #C5A149 28%, transparent 35%, transparent 45%, #58AFCD 50%, #58AFCD 63%, transparent 70%, transparent 80%, #D15152 85%, #D15152 100%);
-  animation: rotate 6s linear infinite; z-index: 1; pointer-events: none;
-}
-.glowing-inner { background: rgba(30, 30, 32, 0.95); backdrop-filter: blur(20px); border-radius: 18px; position: relative; z-index: 2; padding: 20px; }
-@keyframes rotate { 100% { transform: rotate(360deg); } }
+    .ls-input:focus {
+      outline: none;
+      border-color: #58AFCD;
+      background: rgba(0, 0, 0, 0.4);
+      box-shadow: 0 0 0 2px rgba(88, 175, 205, 0.2);
+    }
 
-/* Range Sliders */
-input[type="range"] { width:100%; height:6px; border-radius:3px; background:rgba(255,255,255,0.1); outline:none; -webkit-appearance:none; accent-color:#C5A149; margin-top:12px; }
-input[type="range"]::-webkit-slider-thumb { -webkit-appearance:none; width:22px; height:22px; border-radius:50%; background:#C5A149; cursor:pointer; box-shadow: 0 4px 10px rgba(197, 161, 73, 0.4);}
+    textarea.ls-input {
+      min-height: 100px;
+      resize: vertical;
+    }
 
-/* Checkboxes */
-.ls-check-item {
-  display: flex; align-items: flex-start; padding: 14px 16px;
-  background: rgba(0,0,0,0.15); border: 1px solid rgba(255,255,255,0.08); border-radius: 12px;
-  cursor: pointer; transition: background 0.2s; margin-bottom: 8px; font-size: 0.9rem; color: #E5E7EB;
-}
-.ls-check-item:hover { background: rgba(255,255,255,0.04); }
-.ls-check-item input { margin-top: 3px; margin-right: 12px; width: 18px; height: 18px; accent-color: #58AFCD; flex-shrink: 0; }
+    select.ls-input {
+      appearance: none;
+      -webkit-appearance: none;
+      background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%239CA3AF' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+      background-repeat: no-repeat;
+      background-position: right 1rem center;
+      background-size: 1em;
+      padding-right: 2.5rem;
+    }
 
-/* Phases & Transitions */
-.phase { display:none; animation: fadeUp 0.4s cubic-bezier(0.4, 0, 0.2, 1) forwards; }
-.phase.active { display:block; }
-@keyframes fadeUp { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+    select.ls-input option {
+      background: #242426;
+      color: #fff;
+    }
 
-/* Print Mode */
-@media print {
-  body { background: #fff !important; color: #000 !important; }
-  header, .progress-bars, .nav-buttons, .action-buttons, .glowing-wrapper::before, .phase { display: none !important; }
-  .mobile-shell { max-width: 100% !important; padding: 0 !important; margin: 0 !important; }
-  #results-view { display: block !important; padding: 0 !important; }
-  .report-paper { box-shadow: none !important; border: none !important; margin: 0 !important; padding: 0 !important; color: #111 !important; background: transparent !important; }
-  .report-paper h1, .report-paper h3 { border-color: #333 !important; color: #111 !important; }
-  .ls-card { border: none !important; background: transparent !important; padding: 0 !important; }
-}
-</style>
+    /* Buttons */
+    .ls-btn {
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.10);
+      border-radius: 20px;
+      padding: 14px 22px;
+      width: 100%;
+      text-align: center;
+      font-family: 'Wix Madefor Display', sans-serif;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .ls-btn:hover {
+      border-color: rgba(255, 255, 255, 0.22);
+      background: rgba(255, 255, 255, 0.07);
+      transform: translateY(-2px);
+      box-shadow: 0 12px 32px rgba(0, 0, 0, 0.35);
+    }
+
+    .ls-btn-primary {
+      background: #58AFCD;
+      color: #000;
+      border: none;
+    }
+
+    .ls-btn-primary:hover {
+      background: #4ca1bd;
+      border-color: transparent;
+    }
+
+    /* Animated Border Container (For Matrix or Final Actions) */
+    .glowing-wrapper {
+      position: relative;
+      border-radius: 20px;
+      padding: 2px;
+      overflow: hidden;
+    }
+
+    .glowing-wrapper::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: conic-gradient(from 0deg, transparent 10%, #C5A149 15%, #C5A149 28%, transparent 35%, transparent 45%, #58AFCD 50%, #58AFCD 63%, transparent 70%, transparent 80%, #D15152 85%, #D15152 100%);
+      animation: rotate 6s linear infinite;
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    .glowing-inner {
+      background: rgba(30, 30, 32, 0.95);
+      backdrop-filter: blur(20px);
+      border-radius: 18px;
+      position: relative;
+      z-index: 2;
+      padding: 20px;
+    }
+
+    @keyframes rotate {
+      100% {
+        transform: rotate(360deg);
+      }
+    }
+
+    /* Range Sliders */
+    input[type="range"] {
+      width: 100%;
+      height: 6px;
+      border-radius: 3px;
+      background: rgba(255, 255, 255, 0.1);
+      outline: none;
+      -webkit-appearance: none;
+      accent-color: #C5A149;
+      margin-top: 12px;
+    }
+
+    input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      background: #C5A149;
+      cursor: pointer;
+      box-shadow: 0 4px 10px rgba(197, 161, 73, 0.4);
+    }
+
+    /* Checkboxes */
+    .ls-check-item {
+      display: flex;
+      align-items: flex-start;
+      padding: 14px 16px;
+      background: rgba(0, 0, 0, 0.15);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 12px;
+      cursor: pointer;
+      transition: background 0.2s;
+      margin-bottom: 8px;
+      font-size: 0.9rem;
+      color: #E5E7EB;
+    }
+
+    .ls-check-item:hover {
+      background: rgba(255, 255, 255, 0.04);
+    }
+
+    .ls-check-item input {
+      margin-top: 3px;
+      margin-right: 12px;
+      width: 18px;
+      height: 18px;
+      accent-color: #58AFCD;
+      flex-shrink: 0;
+    }
+
+    /* Phases & Transitions */
+    .phase {
+      display: none;
+      animation: fadeUp 0.4s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+    }
+
+    .phase.active {
+      display: block;
+    }
+
+    @keyframes fadeUp {
+      from {
+        opacity: 0;
+        transform: translateY(12px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Print Mode */
+    @media print {
+      body {
+        background: #fff !important;
+        color: #000 !important;
+      }
+
+      header,
+      .progress-bars,
+      .nav-buttons,
+      .action-buttons,
+      .glowing-wrapper::before,
+      .phase {
+        display: none !important;
+      }
+
+      .mobile-shell {
+        max-width: 100% !important;
+        padding: 0 !important;
+        margin: 0 !important;
+      }
+
+      #results-view {
+        display: block !important;
+        padding: 0 !important;
+      }
+
+      .report-paper {
+        box-shadow: none !important;
+        border: none !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        color: #111 !important;
+        background: transparent !important;
+      }
+
+      .report-paper h1,
+      .report-paper h3 {
+        border-color: #333 !important;
+        color: #111 !important;
+      }
+
+      .ls-card {
+        border: none !important;
+        background: transparent !important;
+        padding: 0 !important;
+      }
+    }
+  </style>
 </head>
+
 <body class="font-body">
 
-<!-- Particle Canvas Background (Subtle) -->
-<canvas id="particle-canvas" class="fixed inset-0 pointer-events-none opacity-70 z-0"></canvas>
+  <!-- Particle Canvas Background (Subtle) -->
+  <canvas id="particle-canvas" class="fixed inset-0 pointer-events-none opacity-70 z-0"></canvas>
 
-<div class="mobile-shell pt-6 pb-24 z-10">
+  <div class="mobile-shell pt-6 pb-24 z-10">
 
-  <!-- Header -->
-  <header class="sticky top-0 z-50 bg-[#242426]/90 backdrop-blur-md pb-4 pt-2 mb-6 border-b border-white/10">
-    <div class="flex flex-col items-center text-center px-4">
-      <img src="lifestrategics_logo_plain.png" alt="LifeStrategics" class="w-[140px] h-auto object-contain mb-1 opacity-90 drop-shadow-[0_0_8px_rgba(255,255,255,0.1)]">
-      <h1 class="font-display font-normal text-white text-md tracking-wide">Strategic Wizard <span class="text-ls-gold text-[0.65rem] align-top bg-ls-gold/10 px-1.5 rounded ml-1 border border-ls-gold/20 font-bold uppercase tracking-widest">V4</span></h1>
-    </div>
-    
-    <!-- Progress Dots -->
-    <div class="progress-bars flex justify-between items-center mt-4 px-2 relative">
-      <div class="absolute top-[50%] left-4 right-4 h-[1px] bg-white/10 -z-10"></div>
-      <div class="w-6 h-6 rounded-full flex items-center justify-center text-[10px] font-bold transition-colors bg-ls-blue text-black" id="dot-1">1</div>
-      <div class="w-6 h-6 rounded-full flex items-center justify-center text-[10px] font-bold transition-colors bg-[#333] border border-white/10 text-ls-muted" id="dot-2">2</div>
-      <div class="w-6 h-6 rounded-full flex items-center justify-center text-[10px] font-bold transition-colors bg-[#333] border border-white/10 text-ls-muted" id="dot-3">3</div>
-      <div class="w-6 h-6 rounded-full flex items-center justify-center text-[10px] font-bold transition-colors bg-[#333] border border-white/10 text-ls-muted" id="dot-4">4</div>
-      <div class="w-6 h-6 rounded-full flex items-center justify-center text-[10px] font-bold transition-colors bg-[#333] border border-white/10 text-ls-muted" id="dot-5">5</div>
-    </div>
-  </header>
-
-  <main>
-    <form id="wizard-form" onsubmit="return false" class="px-1">
-
-      <!-- FASE 1: AS-IS -->
-      <div class="phase active space-y-6" id="phase-1">
-        <div class="mb-8">
-          <h2 class="font-display font-bold text-2xl text-white mb-1">1. Diagnóstico (As-Is)</h2>
-          <p class="text-ls-muted text-sm">Desahógate. ¿Dónde estamos parados hoy sin maquillaje corporativo?</p>
-        </div>
-        
-        <div class="ls-card">
-          <label class="block font-display font-semibold text-[1.05rem] mb-1">El dolor operativo principal</label>
-          <span class="text-xs text-ls-muted block mb-2 leading-snug">Quéjate profundo: Ej. "Perdemos 15 horas a la semana conciliando excells y me la paso borrando spam."</span>
-          <textarea id="q-pain" class="ls-input" placeholder="Describe la cruda realidad aquí..." required></textarea>
-        </div>
-
-        <div class="ls-card">
-          <label class="block font-display font-semibold text-[1.05rem] mb-1">¿Quién(es) sufren esto?</label>
-          <span class="text-xs text-ls-muted block mb-2 leading-snug">Ej: Yo mismo, el equipo de UX, los clientes al esperar respuestas...</span>
-          <input type="text" id="q-target" class="ls-input" placeholder="Nombra a los afectados..." required>
-        </div>
+    <!-- Header -->
+    <header class="sticky top-0 z-50 bg-[#242426]/90 backdrop-blur-md pb-4 pt-2 mb-6 border-b border-white/10">
+      <div class="flex flex-col items-center text-center px-4">
+        <img src="lifestrategics_logo_plain.png" alt="LifeStrategics"
+          class="w-[140px] h-auto object-contain mb-1 opacity-90 drop-shadow-[0_0_8px_rgba(255,255,255,0.1)]">
+        <h1 class="font-display font-normal text-white text-md tracking-wide">Strategic Wizard <span
+            class="text-ls-gold text-[0.65rem] align-top bg-ls-gold/10 px-1.5 rounded ml-1 border border-ls-gold/20 font-bold uppercase tracking-widest">V4</span>
+        </h1>
       </div>
 
-      <!-- FASE 2: TO-BE -->
-      <div class="phase space-y-6" id="phase-2">
-        <div class="mb-8">
-          <h2 class="font-display font-bold text-2xl text-white mb-1">2. Visión Ideal (To-Be)</h2>
-          <p class="text-ls-muted text-sm">Olvídate de presupuestos y código. ¿Cuál es el éxito?</p>
-        </div>
-
-        <div class="ls-card">
-          <label class="block font-display font-semibold text-[1.05rem] mb-1">Si tuvieras una varita mágica...</label>
-          <span class="text-xs text-ls-muted block mb-2 leading-snug">Ej: "Los reportes se armarían solos y mi conocimiento estaría sistematizado en agentes."</span>
-          <textarea id="q-vision" class="ls-input" placeholder="Describe la meta sin fricciones..." required></textarea>
-        </div>
-
-        <div class="ls-card">
-          <label class="block font-display font-semibold text-[1.05rem] mb-1">Madurez digital de los usuarios</label>
-          <span class="text-xs text-ls-muted block mb-3 leading-snug">Desliza para clasificar el nivel tecnológico de quienes usarán esto:</span>
-          <input type="range" id="q-madurez" min="0" max="10" value="5" oninput="updateRubric()">
-          <div class="flex justify-between text-[10px] text-ls-muted mt-2 font-bold opacity-70">
-            <span>0</span><span>5</span><span>10</span>
-          </div>
-          <div class="mt-4 p-4 rounded-xl bg-ls-gold/10 border-l-2 border-ls-gold text-sm leading-snug" id="madurez-rubric">
-            <strong class="text-ls-gold block mb-1 font-display">Nivel Medio (5):</strong> Usan herramientas básicas pero luchan con cambios técnicos.
-          </div>
-        </div>
+      <!-- Progress Dots -->
+      <div class="progress-bars flex justify-between items-center mt-4 px-2 relative">
+        <div class="absolute top-[50%] left-4 right-4 h-[1px] bg-white/10 -z-10"></div>
+        <div
+          class="w-6 h-6 rounded-full flex items-center justify-center text-[10px] font-bold transition-colors bg-ls-blue text-black"
+          id="dot-1">1</div>
+        <div
+          class="w-6 h-6 rounded-full flex items-center justify-center text-[10px] font-bold transition-colors bg-[#333] border border-white/10 text-ls-muted"
+          id="dot-2">2</div>
+        <div
+          class="w-6 h-6 rounded-full flex items-center justify-center text-[10px] font-bold transition-colors bg-[#333] border border-white/10 text-ls-muted"
+          id="dot-3">3</div>
+        <div
+          class="w-6 h-6 rounded-full flex items-center justify-center text-[10px] font-bold transition-colors bg-[#333] border border-white/10 text-ls-muted"
+          id="dot-4">4</div>
+        <div
+          class="w-6 h-6 rounded-full flex items-center justify-center text-[10px] font-bold transition-colors bg-[#333] border border-white/10 text-ls-muted"
+          id="dot-5">5</div>
       </div>
+    </header>
 
-      <!-- FASE 3: GAP -->
-      <div class="phase space-y-5" id="phase-3">
-        <div class="mb-6">
-          <h2 class="font-display font-bold text-2xl text-white mb-1">3. Mapeo del Gap</h2>
-          <p class="text-ls-muted text-sm">Aterrizando expectativas para no diseñar proyectos imposibles.</p>
-        </div>
+    <main>
+      <form id="wizard-form" onsubmit="return false" class="px-1">
 
-        <div class="ls-card">
-          <label class="block font-display font-semibold text-lg mb-2">Presupuesto mensual (Tech)</label>
-          <select id="q-budget" class="ls-input">
-            <option value="Nivel 0: Modesto ($0 USD) — Solo herramientas gratuitas y Open Source">Nivel 0 ($0) — Todo Gratis Open Source</option>
-            <option value="Nivel 1: Explorador (Hasta $20 USD/mes) — Suscripciones LLM básicas (ChatGPT Plus, Claude Pro)">Nivel 1 (~$20/mes) — Suscripciones IA Básicas</option>
-            <option value="Nivel 2: Intermedio (Hasta $150 USD/mes) — IA + Otras apps (Make, Airtable Básico, HeyGen)">Nivel 2 (~$150/mes) — IA + Apps accesorias (Ej: Make)</option>
-            <option value="Nivel 3: Avanzado (Hasta $500 USD/mes) — Licencias Pro y Consumo de APIs fuertes">Nivel 3 (~$500/mes) — IA Pro + APIs Cloud</option>
-            <option value="Nivel 4: Enterprise (+$1,000 USD/mes) — Infraestructura completa, bases de datos remotas">Nivel 4 (+$1k/mes) — Infraestructura Cloud Custom</option>
-          </select>
-        </div>
+        <!-- FASE 1: AS-IS -->
+        <div class="phase active space-y-6" id="phase-1">
+          <div class="mb-8">
+            <h2 class="font-display font-bold text-2xl text-white mb-1">1. Diagnóstico (As-Is)</h2>
+            <p class="text-ls-muted text-sm">Desahógate. ¿Dónde estamos parados hoy sin maquillaje corporativo?</p>
+          </div>
 
-        <div class="ls-card">
-          <label class="block font-display font-semibold text-lg mb-2">Estado actual de los datos</label>
-          <select id="q-data" class="ls-input">
-            <option value="Todo está centralizado (Ej. En un CRM o sistema ordenado listo para consultarse)">Todo centralizado (Base de datos CRM lista)</option>
-            <option value="Es un caos: usamos múltiples Excels, PDFs o correos desordenados por todos lados">Un caos: Múltiples Excels y documentos sueltos</option>
-            <option value="No guardamos ni registramos información formalmente aún (Empezamos de cero)">No existen datos previos (Empezamos de cero)</option>
-          </select>
-        </div>
+          <div class="ls-card">
+            <label class="block font-display font-semibold text-[1.05rem] mb-1">El dolor operativo principal</label>
+            <span class="text-xs text-ls-muted block mb-2 leading-snug">Quéjate profundo: Ej. "Perdemos 15 horas a la
+              semana conciliando excells y me la paso borrando spam."</span>
+            <textarea id="q-pain" class="ls-input" placeholder="Describe la cruda realidad aquí..." required></textarea>
+          </div>
 
-        <div class="ls-card">
-          <label class="block font-display font-semibold text-lg mb-1">Habilidades In-House Actuales</label>
-          <span class="text-xs text-ls-muted block mb-3 leading-snug">¿Qué saben hacer sin subcontratar? Selecciona las que dominen:</span>
-          <div>
-            <label class="ls-check-item"><input type="checkbox" name="talento" value="Diseño Visual / Front-End (UX/UI)"><span class="pt-[1px]"><b>Diseño UI:</b> Hacer interfaces bonitas</span></label>
-            <label class="ls-check-item"><input type="checkbox" name="talento" value="Lógica Interna (Configuración de Zaps/Make)"><span class="pt-[1px]"><b>Lógica:</b> Automatizaciones Zappier/Make</span></label>
-            <label class="ls-check-item"><input type="checkbox" name="talento" value="Bases de Datos (Manejo correcto de BD)"><span class="pt-[1px]"><b>Datos:</b> Búsqueda y gestión de BD reales</span></label>
-            <label class="ls-check-item"><input type="checkbox" name="talento" value="Integración IA Avanzada (Conexión APIs / RAG)"><span class="pt-[1px]"><b>IA Avanzada:</b> APIs o técnicas RAG</span></label>
-            <label class="ls-check-item"><input type="checkbox" name="talento" value="Servidores y Nube (Deploy a producción)"><span class="pt-[1px]"><b>Despliegue:</b> Subir todo a la nube/server</span></label>
+          <div class="ls-card">
+            <label class="block font-display font-semibold text-[1.05rem] mb-1">¿Quién(es) sufren esto?</label>
+            <span class="text-xs text-ls-muted block mb-2 leading-snug">Ej: Yo mismo, el equipo de UX, los clientes al
+              esperar respuestas...</span>
+            <input type="text" id="q-target" class="ls-input" placeholder="Nombra a los afectados..." required>
           </div>
         </div>
 
-        <div class="ls-card">
-          <label class="block font-display font-semibold text-lg mb-1">Limitantes Sistémicas</label>
-          <span class="text-xs text-ls-muted block mb-3 leading-snug">Selecciona las trabas organizacionales reales:</span>
-          <div>
-            <label class="ls-check-item"><input type="checkbox" name="limitantes" value="Red Tape Técnico (Legal/IT bloquean permisos)"><span class="pt-[1px]"><b>Red Tape:</b> Legal/IT bloquean accesos</span></label>
-            <label class="ls-check-item"><input type="checkbox" name="limitantes" value="Resistencia al cambio en los usuarios finales"><span class="pt-[1px]"><b>Resistencia Humana:</b> Odian usar cosas nuevas</span></label>
-            <label class="ls-check-item"><input type="checkbox" name="limitantes" value="Falta de tiempo (Es un side-project de <5hrs/semana)"><span class="pt-[1px]"><b>Tiempo Oculto:</b> Solo tengo 5hrs/semana</span></label>
-            <label class="ls-check-item"><input type="checkbox" name="limitantes" value="Fuerte dependencia tecnológica de terceros (Oauth, APIs)"><span class="pt-[1px]"><b>Dependencia:</b> Requerimos APIs frágiles</span></label>
+        <!-- FASE 2: TO-BE -->
+        <div class="phase space-y-6" id="phase-2">
+          <div class="mb-8">
+            <h2 class="font-display font-bold text-2xl text-white mb-1">2. Visión Ideal (To-Be)</h2>
+            <p class="text-ls-muted text-sm">Olvídate de presupuestos y código. ¿Cuál es el éxito?</p>
           </div>
-          <textarea id="q-limitantes-text" class="ls-input !min-h-[60px]" placeholder="¿Alguna otra limitante clave?"></textarea>
-        </div>
-      </div>
 
-      <!-- FASE 4: IDEACIÓN VISUAL -->
-      <div class="phase space-y-6" id="phase-4">
-        <div class="mb-4">
-          <h2 class="font-display font-bold text-2xl text-white mb-1">4. Caminos Estratégicos</h2>
-          <p class="text-ls-muted text-sm">Evalúa Impacto vs. Factibilidad Operativa.</p>
-        </div>
+          <div class="ls-card">
+            <label class="block font-display font-semibold text-[1.05rem] mb-1">Si tuvieras una varita mágica...</label>
+            <span class="text-xs text-ls-muted block mb-2 leading-snug">Ej: "Los reportes se armarían solos y mi
+              conocimiento estaría sistematizado en agentes."</span>
+            <textarea id="q-vision" class="ls-input" placeholder="Describe la meta sin fricciones..."
+              required></textarea>
+          </div>
 
-        <!-- STICKY MATRIX in GLOWING WRAPPER -->
-        <div class="sticky top-[80px] z-[45] mb-8 mt-2">
-          <div class="glowing-wrapper shadow-2xl">
-            <div class="glowing-inner flex flex-col items-center">
-              <h3 class="font-display text-ls-blue font-semibold mb-3 tracking-wide text-sm uppercase">Matriz de Priorización</h3>
-              <canvas id="matrixCanvas" width="280" height="280" class="bg-[#18181a] rounded-xl w-full max-w-[280px]"></canvas>
+          <div class="ls-card">
+            <label class="block font-display font-semibold text-[1.05rem] mb-1">Madurez digital de los usuarios</label>
+            <span class="text-xs text-ls-muted block mb-3 leading-snug">Desliza para clasificar el nivel tecnológico de
+              quienes usarán esto:</span>
+            <input type="range" id="q-madurez" min="0" max="10" value="5" oninput="updateRubric()">
+            <div class="flex justify-between text-[10px] text-ls-muted mt-2 font-bold opacity-70">
+              <span>0</span><span>5</span><span>10</span>
+            </div>
+            <div class="mt-4 p-4 rounded-xl bg-ls-gold/10 border-l-2 border-ls-gold text-sm leading-snug"
+              id="madurez-rubric">
+              <strong class="text-ls-gold block mb-1 font-display">Nivel Medio (5):</strong> Usan herramientas básicas
+              pero luchan con cambios técnicos.
             </div>
           </div>
         </div>
 
-        <div class="space-y-4">
-          <!-- IDEA BLOCKS -->
-          <div class="ls-card relative overflow-hidden transition-all duration-300" id="ib-1">
-            <div class="absolute left-0 top-0 bottom-0 w-1 bg-white/10" id="il-1"></div>
-            <div class="flex justify-between items-center text-xs font-bold mb-2 uppercase tracking-wide">
-              <span class="text-white">Idea 1</span> <span class="text-ls-red">Requerida</span>
-            </div>
-            <input type="text" id="i1-text" class="ls-input !mt-0 !bg-black/30 w-full" placeholder="Escribe tu primera solución..." required onkeyup="updateMatrix()">
-            <div class="flex gap-4 mt-3">
-              <div class="flex-1">
-                <label class="text-[10px] uppercase tracking-wider text-ls-muted flex justify-between"> Impacto <span id="val-i1-imp" class="text-ls-blue font-bold">3</span></label>
-                <input type="range" id="i1-imp" min="0" max="5" step="0.5" value="3" class="!mt-1 !h-1" oninput="updateVal('i1-imp'); updateMatrix()">
-              </div>
-              <div class="flex-1">
-                <label class="text-[10px] uppercase tracking-wider text-ls-muted flex justify-between"> Fácil <span id="val-i1-fac" class="text-ls-gold font-bold">3</span></label>
-                <input type="range" id="i1-fac" min="0" max="5" step="0.5" value="3" class="!mt-1 !h-1" oninput="updateVal('i1-fac'); updateMatrix()">
-              </div>
+        <!-- FASE 3: GAP -->
+        <div class="phase space-y-5" id="phase-3">
+          <div class="mb-6">
+            <h2 class="font-display font-bold text-2xl text-white mb-1">3. Mapeo del Gap</h2>
+            <p class="text-ls-muted text-sm">Aterrizando expectativas para no diseñar proyectos imposibles.</p>
+          </div>
+
+          <div class="ls-card">
+            <label class="block font-display font-semibold text-lg mb-2">Presupuesto mensual (Tech)</label>
+            <select id="q-budget" class="ls-input">
+              <option value="Nivel 0: Modesto ($0 USD) — Solo herramientas gratuitas y Open Source">Nivel 0 ($0) — Todo
+                Gratis Open Source</option>
+              <option
+                value="Nivel 1: Explorador (Hasta $20 USD/mes) — Suscripciones LLM básicas (ChatGPT Plus, Claude Pro)">
+                Nivel 1 (~$20/mes) — Suscripciones IA Básicas</option>
+              <option
+                value="Nivel 2: Intermedio (Hasta $150 USD/mes) — IA + Otras apps (Make, Airtable Básico, HeyGen)">Nivel
+                2 (~$150/mes) — IA + Apps accesorias (Ej: Make)</option>
+              <option value="Nivel 3: Avanzado (Hasta $500 USD/mes) — Licencias Pro y Consumo de APIs fuertes">Nivel 3
+                (~$500/mes) — IA Pro + APIs Cloud</option>
+              <option value="Nivel 4: Enterprise (+$1,000 USD/mes) — Infraestructura completa, bases de datos remotas">
+                Nivel 4 (+$1k/mes) — Infraestructura Cloud Custom</option>
+            </select>
+          </div>
+
+          <div class="ls-card">
+            <label class="block font-display font-semibold text-lg mb-2">Estado actual de los datos</label>
+            <select id="q-data" class="ls-input">
+              <option value="Todo está centralizado (Ej. En un CRM o sistema ordenado listo para consultarse)">Todo
+                centralizado (Base de datos CRM lista)</option>
+              <option value="Es un caos: usamos múltiples Excels, PDFs o correos desordenados por todos lados">Un caos:
+                Múltiples Excels y documentos sueltos</option>
+              <option value="No guardamos ni registramos información formalmente aún (Empezamos de cero)">No existen
+                datos previos (Empezamos de cero)</option>
+            </select>
+          </div>
+
+          <div class="ls-card">
+            <label class="block font-display font-semibold text-lg mb-1">Habilidades In-House Actuales</label>
+            <span class="text-xs text-ls-muted block mb-3 leading-snug">¿Qué saben hacer sin subcontratar? Selecciona
+              las que dominen:</span>
+            <div>
+              <label class="ls-check-item"><input type="checkbox" name="talento"
+                  value="Diseño Visual / Front-End (UX/UI)"><span class="pt-[1px]"><b>Diseño UI:</b> Hacer interfaces
+                  bonitas</span></label>
+              <label class="ls-check-item"><input type="checkbox" name="talento"
+                  value="Lógica Interna (Configuración de Zaps/Make)"><span class="pt-[1px]"><b>Lógica:</b>
+                  Automatizaciones Zappier/Make</span></label>
+              <label class="ls-check-item"><input type="checkbox" name="talento"
+                  value="Bases de Datos (Manejo correcto de BD)"><span class="pt-[1px]"><b>Datos:</b> Búsqueda y gestión
+                  de BD reales</span></label>
+              <label class="ls-check-item"><input type="checkbox" name="talento"
+                  value="Integración IA Avanzada (Conexión APIs / RAG)"><span class="pt-[1px]"><b>IA Avanzada:</b> APIs
+                  o técnicas RAG</span></label>
+              <label class="ls-check-item"><input type="checkbox" name="talento"
+                  value="Servidores y Nube (Deploy a producción)"><span class="pt-[1px]"><b>Despliegue:</b> Subir todo a
+                  la nube/server</span></label>
             </div>
           </div>
 
-          <div class="ls-card relative overflow-hidden transition-all duration-300" id="ib-2">
-            <div class="absolute left-0 top-0 bottom-0 w-1 bg-white/10" id="il-2"></div>
-            <div class="flex justify-between items-center text-xs font-bold mb-2 uppercase tracking-wide">
-              <span class="text-white">Idea 2</span> <span class="text-ls-red">Requerida</span>
+          <div class="ls-card">
+            <label class="block font-display font-semibold text-lg mb-1">Limitantes Sistémicas</label>
+            <span class="text-xs text-ls-muted block mb-3 leading-snug">Selecciona las trabas organizacionales
+              reales:</span>
+            <div>
+              <label class="ls-check-item"><input type="checkbox" name="limitantes"
+                  value="Red Tape Técnico (Legal/IT bloquean permisos)"><span class="pt-[1px]"><b>Red Tape:</b> Legal/IT
+                  bloquean accesos</span></label>
+              <label class="ls-check-item"><input type="checkbox" name="limitantes"
+                  value="Resistencia al cambio en los usuarios finales"><span class="pt-[1px]"><b>Resistencia
+                    Humana:</b> Odian usar cosas nuevas</span></label>
+              <label class="ls-check-item"><input type="checkbox" name="limitantes"
+                  value="Falta de tiempo (Es un side-project de <5hrs/semana)"><span class="pt-[1px]"><b>Tiempo
+                    Oculto:</b> Solo tengo 5hrs/semana</span></label>
+              <label class="ls-check-item"><input type="checkbox" name="limitantes"
+                  value="Fuerte dependencia tecnológica de terceros (Oauth, APIs)"><span
+                  class="pt-[1px]"><b>Dependencia:</b> Requerimos APIs frágiles</span></label>
             </div>
-            <input type="text" id="i2-text" class="ls-input !mt-0 !bg-black/30 w-full" placeholder="Itera radicalmente..." required onkeyup="updateMatrix()">
-            <div class="flex gap-4 mt-3">
-              <div class="flex-1">
-                <label class="text-[10px] uppercase tracking-wider text-ls-muted flex justify-between"> Impacto <span id="val-i2-imp" class="text-ls-blue font-bold">3</span></label>
-                <input type="range" id="i2-imp" min="0" max="5" step="0.5" value="3" class="!mt-1 !h-1" oninput="updateVal('i2-imp'); updateMatrix()">
-              </div>
-              <div class="flex-1">
-                <label class="text-[10px] uppercase tracking-wider text-ls-muted flex justify-between"> Fácil <span id="val-i2-fac" class="text-ls-gold font-bold">3</span></label>
-                <input type="range" id="i2-fac" min="0" max="5" step="0.5" value="3" class="!mt-1 !h-1" oninput="updateVal('i2-fac'); updateMatrix()">
-              </div>
-            </div>
+            <textarea id="q-limitantes-text" class="ls-input !min-h-[60px]"
+              placeholder="¿Alguna otra limitante clave?"></textarea>
+          </div>
+        </div>
+
+        <!-- FASE 4: IDEACIÓN VISUAL -->
+        <div class="phase space-y-6" id="phase-4">
+          <div class="mb-4">
+            <h2 class="font-display font-bold text-2xl text-white mb-1">4. Caminos Estratégicos</h2>
+            <p class="text-ls-muted text-sm">Evalúa Impacto vs. Factibilidad Operativa.</p>
           </div>
 
-          <div class="ls-card relative overflow-hidden transition-all duration-300" id="ib-3">
-            <div class="absolute left-0 top-0 bottom-0 w-1 bg-white/10" id="il-3"></div>
-            <div class="flex justify-between items-center text-xs font-bold mb-2 uppercase tracking-wide">
-              <span class="text-white">Idea 3</span> <span class="text-ls-red">Requerida</span>
-            </div>
-            <input type="text" id="i3-text" class="ls-input !mt-0 !bg-black/30 w-full" placeholder="Busca otra perspectiva..." required onkeyup="updateMatrix()">
-            <div class="flex gap-4 mt-3">
-              <div class="flex-1">
-                <label class="text-[10px] uppercase tracking-wider text-ls-muted flex justify-between"> Impacto <span id="val-i3-imp" class="text-ls-blue font-bold">3</span></label>
-                <input type="range" id="i3-imp" min="0" max="5" step="0.5" value="3" class="!mt-1 !h-1" oninput="updateVal('i3-imp'); updateMatrix()">
-              </div>
-              <div class="flex-1">
-                <label class="text-[10px] uppercase tracking-wider text-ls-muted flex justify-between"> Fácil <span id="val-i3-fac" class="text-ls-gold font-bold">3</span></label>
-                <input type="range" id="i3-fac" min="0" max="5" step="0.5" value="3" class="!mt-1 !h-1" oninput="updateVal('i3-fac'); updateMatrix()">
+          <!-- STICKY MATRIX in GLOWING WRAPPER -->
+          <div class="sticky top-[80px] z-[45] mb-8 mt-2">
+            <div class="glowing-wrapper shadow-2xl">
+              <div class="glowing-inner flex flex-col items-center">
+                <h3 class="font-display text-ls-blue font-semibold mb-3 tracking-wide text-sm uppercase">Matriz de
+                  Priorización</h3>
+                <canvas id="matrixCanvas" width="280" height="280"
+                  class="bg-[#18181a] rounded-xl w-full max-w-[280px]"></canvas>
               </div>
             </div>
           </div>
 
-          <div class="ls-card relative overflow-hidden opacity-75" id="ib-4">
-            <div class="absolute left-0 top-0 bottom-0 w-1 bg-white/10" id="il-4"></div>
-            <div class="flex justify-between items-center text-xs font-bold mb-2 uppercase tracking-wide">
-              <span class="text-white">Idea 4</span> <span class="text-ls-muted">Opcional</span>
-            </div>
-            <input type="text" id="i4-text" class="ls-input !mt-0 !bg-black/30 w-full" placeholder="Refinamiento extra..." onkeyup="updateMatrix()">
-            <div class="flex gap-4 mt-3">
-              <div class="flex-1">
-                <label class="text-[10px] uppercase tracking-wider text-ls-muted flex justify-between"> Impacto <span id="val-i4-imp" class="text-gray-400 font-bold">3</span></label>
-                <input type="range" id="i4-imp" min="0" max="5" step="0.5" value="3" class="!mt-1 !h-1" oninput="updateVal('i4-imp'); updateMatrix()">
+          <div class="space-y-4">
+            <!-- IDEA BLOCKS -->
+            <div class="ls-card relative overflow-hidden transition-all duration-300" id="ib-1">
+              <div class="absolute left-0 top-0 bottom-0 w-1 bg-white/10" id="il-1"></div>
+              <div class="flex justify-between items-center text-xs font-bold mb-2 uppercase tracking-wide">
+                <span class="text-white">Idea 1</span> <span class="text-ls-red">Requerida</span>
               </div>
-              <div class="flex-1">
-                <label class="text-[10px] uppercase tracking-wider text-ls-muted flex justify-between"> Fácil <span id="val-i4-fac" class="text-gray-400 font-bold">3</span></label>
-                <input type="range" id="i4-fac" min="0" max="5" step="0.5" value="3" class="!mt-1 !h-1" oninput="updateVal('i4-fac'); updateMatrix()">
+              <input type="text" id="i1-text" class="ls-input !mt-0 !bg-black/30 w-full"
+                placeholder="Escribe tu primera solución..." required onkeyup="updateMatrix()">
+              <div class="flex gap-4 mt-3">
+                <div class="flex-1">
+                  <label class="text-[10px] uppercase tracking-wider text-ls-muted flex justify-between"> Impacto <span
+                      id="val-i1-imp" class="text-ls-blue font-bold">3</span></label>
+                  <input type="range" id="i1-imp" min="0" max="5" step="0.5" value="3" class="!mt-1 !h-1"
+                    oninput="updateVal('i1-imp'); updateMatrix()">
+                </div>
+                <div class="flex-1">
+                  <label class="text-[10px] uppercase tracking-wider text-ls-muted flex justify-between"> Fácil <span
+                      id="val-i1-fac" class="text-ls-gold font-bold">3</span></label>
+                  <input type="range" id="i1-fac" min="0" max="5" step="0.5" value="3" class="!mt-1 !h-1"
+                    oninput="updateVal('i1-fac'); updateMatrix()">
+                </div>
               </div>
+            </div>
+
+            <div class="ls-card relative overflow-hidden transition-all duration-300" id="ib-2">
+              <div class="absolute left-0 top-0 bottom-0 w-1 bg-white/10" id="il-2"></div>
+              <div class="flex justify-between items-center text-xs font-bold mb-2 uppercase tracking-wide">
+                <span class="text-white">Idea 2</span> <span class="text-ls-red">Requerida</span>
+              </div>
+              <input type="text" id="i2-text" class="ls-input !mt-0 !bg-black/30 w-full"
+                placeholder="Itera radicalmente..." required onkeyup="updateMatrix()">
+              <div class="flex gap-4 mt-3">
+                <div class="flex-1">
+                  <label class="text-[10px] uppercase tracking-wider text-ls-muted flex justify-between"> Impacto <span
+                      id="val-i2-imp" class="text-ls-blue font-bold">3</span></label>
+                  <input type="range" id="i2-imp" min="0" max="5" step="0.5" value="3" class="!mt-1 !h-1"
+                    oninput="updateVal('i2-imp'); updateMatrix()">
+                </div>
+                <div class="flex-1">
+                  <label class="text-[10px] uppercase tracking-wider text-ls-muted flex justify-between"> Fácil <span
+                      id="val-i2-fac" class="text-ls-gold font-bold">3</span></label>
+                  <input type="range" id="i2-fac" min="0" max="5" step="0.5" value="3" class="!mt-1 !h-1"
+                    oninput="updateVal('i2-fac'); updateMatrix()">
+                </div>
+              </div>
+            </div>
+
+            <div class="ls-card relative overflow-hidden transition-all duration-300" id="ib-3">
+              <div class="absolute left-0 top-0 bottom-0 w-1 bg-white/10" id="il-3"></div>
+              <div class="flex justify-between items-center text-xs font-bold mb-2 uppercase tracking-wide">
+                <span class="text-white">Idea 3</span> <span class="text-ls-red">Requerida</span>
+              </div>
+              <input type="text" id="i3-text" class="ls-input !mt-0 !bg-black/30 w-full"
+                placeholder="Busca otra perspectiva..." required onkeyup="updateMatrix()">
+              <div class="flex gap-4 mt-3">
+                <div class="flex-1">
+                  <label class="text-[10px] uppercase tracking-wider text-ls-muted flex justify-between"> Impacto <span
+                      id="val-i3-imp" class="text-ls-blue font-bold">3</span></label>
+                  <input type="range" id="i3-imp" min="0" max="5" step="0.5" value="3" class="!mt-1 !h-1"
+                    oninput="updateVal('i3-imp'); updateMatrix()">
+                </div>
+                <div class="flex-1">
+                  <label class="text-[10px] uppercase tracking-wider text-ls-muted flex justify-between"> Fácil <span
+                      id="val-i3-fac" class="text-ls-gold font-bold">3</span></label>
+                  <input type="range" id="i3-fac" min="0" max="5" step="0.5" value="3" class="!mt-1 !h-1"
+                    oninput="updateVal('i3-fac'); updateMatrix()">
+                </div>
+              </div>
+            </div>
+
+            <div class="ls-card relative overflow-hidden opacity-75" id="ib-4">
+              <div class="absolute left-0 top-0 bottom-0 w-1 bg-white/10" id="il-4"></div>
+              <div class="flex justify-between items-center text-xs font-bold mb-2 uppercase tracking-wide">
+                <span class="text-white">Idea 4</span> <span class="text-ls-muted">Opcional</span>
+              </div>
+              <input type="text" id="i4-text" class="ls-input !mt-0 !bg-black/30 w-full"
+                placeholder="Refinamiento extra..." onkeyup="updateMatrix()">
+              <div class="flex gap-4 mt-3">
+                <div class="flex-1">
+                  <label class="text-[10px] uppercase tracking-wider text-ls-muted flex justify-between"> Impacto <span
+                      id="val-i4-imp" class="text-gray-400 font-bold">3</span></label>
+                  <input type="range" id="i4-imp" min="0" max="5" step="0.5" value="3" class="!mt-1 !h-1"
+                    oninput="updateVal('i4-imp'); updateMatrix()">
+                </div>
+                <div class="flex-1">
+                  <label class="text-[10px] uppercase tracking-wider text-ls-muted flex justify-between"> Fácil <span
+                      id="val-i4-fac" class="text-gray-400 font-bold">3</span></label>
+                  <input type="range" id="i4-fac" min="0" max="5" step="0.5" value="3" class="!mt-1 !h-1"
+                    oninput="updateVal('i4-fac'); updateMatrix()">
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="mt-8 pt-6 border-t border-white/10">
+            <label class="block font-display font-semibold text-lg text-ls-blue mb-1">Selecciona la Idea
+              Ganadora</label>
+            <span class="text-xs text-ls-muted block mb-4">Recomendamos una "Victoria Rápida" (Arriba a la
+              derecha).</span>
+            <div class="flex flex-col gap-2" id="winner-container">
+              <!-- JS radios -->
             </div>
           </div>
         </div>
 
-        <div class="mt-8 pt-6 border-t border-white/10">
-          <label class="block font-display font-semibold text-lg text-ls-blue mb-1">Selecciona la Idea Ganadora</label>
-          <span class="text-xs text-ls-muted block mb-4">Recomendamos una "Victoria Rápida" (Arriba a la derecha).</span>
-          <div class="flex flex-col gap-2" id="winner-container">
-            <!-- JS radios -->
+        <!-- FASE 5: IMPLEMENTACIÓN -->
+        <div class="phase space-y-6" id="phase-5">
+          <div class="mb-6">
+            <h2 class="font-display font-bold text-2xl text-white mb-1">5. Aterrizaje Ejecutable</h2>
+            <p class="text-ls-muted text-sm">Traduciendo la idea ganadora al mundo real.</p>
           </div>
-        </div>
-      </div>
 
-      <!-- FASE 5: IMPLEMENTACIÓN -->
-      <div class="phase space-y-6" id="phase-5">
-        <div class="mb-6">
-          <h2 class="font-display font-bold text-2xl text-white mb-1">5. Aterrizaje Ejecutable</h2>
-          <p class="text-ls-muted text-sm">Traduciendo la idea ganadora al mundo real.</p>
-        </div>
-
-        <div class="ls-card">
-          <label class="block font-display font-semibold text-lg mb-1">El Discovery Gap</label>
-          <span class="text-xs text-ls-muted block mb-3 leading-snug">¿Qué permiso legal, clave API o impedimento técnico IGNORAS y DEBES investigar primero?</span>
-          <textarea id="q-discovery" class="ls-input" placeholder="Ej: Averiguar si me prestan la base de datos de marketing..." required></textarea>
-        </div>
-
-        <div class="ls-card">
-          <label class="block font-display font-semibold text-lg mb-1">Tu MVP a 2 Semanas</label>
-          <span class="text-xs text-ls-muted block mb-3 leading-snug">¿Cuál es el simulacro validatorio más barato sin necesidad de programar toda la app?</span>
-          <textarea id="q-mvp" class="ls-input" placeholder="Ej: Redirigir correos manuales a ChatGPT..." required></textarea>
-        </div>
-
-        <div class="ls-card shadow-[0_0_20px_rgba(209,81,82,0.1)] border-ls-red/30">
-          <label class="block font-display font-semibold text-lg text-ls-red mb-1">Riesgos Mortales</label>
-          <span class="text-xs text-ls-muted block mb-3 leading-snug">Sé pesimista. Si en 3 meses esto fracasó, ¿por qué fue?</span>
-          <textarea id="q-blockers" class="ls-input" placeholder="Ej: Porque los usuarios odiaron la interfaz y regresaron al Excel..." required></textarea>
-        </div>
-
-        <button type="button" class="glowing-wrapper w-full mt-8 cursor-pointer group" onclick="generatePlan()">
-          <div class="glowing-inner !bg-ls-bg transition-colors group-hover:!bg-[#1a1a1c] text-center font-display font-bold text-lg tracking-wide text-white">
-            Sintetizar Plan Final
+          <div class="ls-card">
+            <label class="block font-display font-semibold text-lg mb-1">El Discovery Gap</label>
+            <span class="text-xs text-ls-muted block mb-3 leading-snug">¿Qué permiso legal, clave API o impedimento
+              técnico IGNORAS y DEBES investigar primero?</span>
+            <textarea id="q-discovery" class="ls-input"
+              placeholder="Ej: Averiguar si me prestan la base de datos de marketing..." required></textarea>
           </div>
-        </button>
-      </div>
 
-      <!-- Footer Nav UI -->
-      <div class="nav-buttons flex justify-between gap-4 mt-10 pt-6 border-t border-white/10">
-        <div class="flex gap-2 w-1/2">
-          <button type="button" class="ls-btn !px-4 hidden text-sm" id="btn-prev" onclick="goPrev()">Retroceder</button>
-          <button type="button" class="ls-btn !px-4 !bg-transparent text-ls-muted hover:text-white text-sm" onclick="location.reload()">↺ Limpiar</button>
+          <div class="ls-card">
+            <label class="block font-display font-semibold text-lg mb-1">Tu MVP a 2 Semanas</label>
+            <span class="text-xs text-ls-muted block mb-3 leading-snug">¿Cuál es el simulacro validatorio más barato sin
+              necesidad de programar toda la app?</span>
+            <textarea id="q-mvp" class="ls-input" placeholder="Ej: Redirigir correos manuales a ChatGPT..."
+              required></textarea>
+          </div>
+
+          <div class="ls-card shadow-[0_0_20px_rgba(209,81,82,0.1)] border-ls-red/30">
+            <label class="block font-display font-semibold text-lg text-ls-red mb-1">Riesgos Mortales</label>
+            <span class="text-xs text-ls-muted block mb-3 leading-snug">Sé pesimista. Si en 3 meses esto fracasó, ¿por
+              qué fue?</span>
+            <textarea id="q-blockers" class="ls-input"
+              placeholder="Ej: Porque los usuarios odiaron la interfaz y regresaron al Excel..." required></textarea>
+          </div>
+
+          <button type="button" class="glowing-wrapper w-full mt-8 cursor-pointer group" onclick="generatePlan()">
+            <div
+              class="glowing-inner !bg-ls-bg transition-colors group-hover:!bg-[#1a1a1c] text-center font-display font-bold text-lg tracking-wide text-white">
+              Sintetizar Plan Final
+            </div>
+          </button>
         </div>
-        <button type="button" class="ls-btn ls-btn-primary flex-1 shadow-lg shadow-ls-blue/20" id="btn-next" onclick="goNext()">
-          Continuar <span class="ml-2 font-mono group-hover:translate-x-1 transition-transform">-></span>
-        </button>
+
+        <!-- Footer Nav UI -->
+        <div class="nav-buttons flex justify-between gap-4 mt-10 pt-6 border-t border-white/10">
+          <div class="flex gap-2 w-1/2">
+            <button type="button" class="ls-btn !px-4 hidden text-sm" id="btn-prev"
+              onclick="goPrev()">Retroceder</button>
+            <button type="button" class="ls-btn !px-4 !bg-transparent text-ls-muted hover:text-white text-sm"
+              onclick="location.reload()">↺ Limpiar</button>
+          </div>
+          <button type="button" class="ls-btn ls-btn-primary flex-1 shadow-lg shadow-ls-blue/20" id="btn-next"
+            onclick="goNext()">
+            Continuar <span class="ml-2 font-mono group-hover:translate-x-1 transition-transform">-></span>
+          </button>
+        </div>
+
+      </form>
+
+      <!-- LOADING STATE -->
+      <div id="loading" class="hidden text-center py-20">
+        <div class="w-12 h-12 rounded-full border-4 border-white/10 border-t-ls-blue animate-spin mx-auto mb-6"></div>
+        <p class="font-display font-bold text-ls-blue animate-pulse tracking-widest uppercase text-sm">Sintetizando
+          Plan...</p>
       </div>
 
-    </form>
+      <!-- RESULTS VIEW -->
+      <div id="results-view" class="hidden pb-10">
+        <div class="report-paper bg-white text-gray-900 rounded-3xl p-8 shadow-2xl">
+          <!-- Injected via JS -->
+        </div>
 
-    <!-- LOADING STATE -->
-    <div id="loading" class="hidden text-center py-20">
-      <div class="w-12 h-12 rounded-full border-4 border-white/10 border-t-ls-blue animate-spin mx-auto mb-6"></div>
-      <p class="font-display font-bold text-ls-blue animate-pulse tracking-widest uppercase text-sm">Sintetizando Plan...</p>
-    </div>
-
-    <!-- RESULTS VIEW -->
-    <div id="results-view" class="hidden pb-10">
-      <div class="report-paper bg-white text-gray-900 rounded-3xl p-8 shadow-2xl">
-        <!-- Injected via JS -->
+        <div class="action-buttons flex flex-col gap-4 mt-8">
+          <button id="btn-copy" onclick="copyDox()"
+            class="ls-btn !bg-ls-bg border-2 !border-[#333] hover:!bg-[#111] !text-white !font-bold">
+            ☍ Copiar Texto del Plan
+          </button>
+          <button onclick="window.print()"
+            class="ls-btn !bg-transparent !border-ls-blue !text-ls-blue hover:!bg-ls-blue/10">
+            Obtener PDF / Imprimir
+          </button>
+          <a href="#" class="text-center text-ls-muted hover:text-white text-sm font-semibold mt-4 block"
+            onclick="location.reload()">Empezar Nuevo Proyecto ↺</a>
+        </div>
       </div>
-      
-      <div class="action-buttons flex flex-col gap-4 mt-8">
-        <button id="btn-copy" onclick="copyDox()" class="ls-btn !bg-ls-bg border-2 !border-[#333] hover:!bg-[#111] !text-white !font-bold">
-          ☍ Copiar Texto del Plan
-        </button>
-        <button onclick="window.print()" class="ls-btn !bg-transparent !border-ls-blue !text-ls-blue hover:!bg-ls-blue/10">
-          Obtener PDF / Imprimir
-        </button>
-        <a href="#" class="text-center text-ls-muted hover:text-white text-sm font-semibold mt-4 block" onclick="location.reload()">Empezar Nuevo Proyecto ↺</a>
-      </div>
-    </div>
 
-  </main>
-</div>
+    </main>
+  </div>
 
-<script>
-// ---------- UI LOGIC ----------
-let currentPhase = 1; const totalPhases = 5;
+  <script>
+    // ---------- UI LOGIC ----------
+    let currentPhase = 1; const totalPhases = 5;
 
-// Background Particles Engine (Interactive V1 clone)
-const canvas = document.getElementById('particle-canvas');
-if (canvas) {
-    const ctx = canvas.getContext('2d');
-    let particles = [];
-    let mouse = { x: null, y: null };
+    // Background Particles Engine (Interactive V1 clone)
+    const canvas = document.getElementById('particle-canvas');
+    if (canvas) {
+      const ctx = canvas.getContext('2d');
+      let particles = [];
+      let mouse = { x: null, y: null };
 
-    function init() {
+      function init() {
         canvas.width = window.innerWidth;
         canvas.height = window.innerHeight;
         particles = [];
         const count = window.innerWidth < 600 ? 30 : 45;
         for (let i = 0; i < count; i++) {
-            particles.push({
-                x: Math.random() * canvas.width,
-                y: Math.random() * canvas.height,
-                vx: (Math.random() - 0.5) * 0.35,
-                vy: (Math.random() - 0.5) * 0.35,
-                size: Math.random() * 1.8 + 0.4
-            });
+          particles.push({
+            x: Math.random() * canvas.width,
+            y: Math.random() * canvas.height,
+            vx: (Math.random() - 0.5) * 0.35,
+            vy: (Math.random() - 0.5) * 0.35,
+            size: Math.random() * 1.8 + 0.4
+          });
         }
-    }
+      }
 
-    function animate() {
+      function animate() {
         requestAnimationFrame(animate);
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         particles.forEach((p, i) => {
-            p.x += p.vx;
-            p.y += p.vy;
-            if (p.x < 0 || p.x > canvas.width) p.vx *= -1;
-            if (p.y < 0 || p.y > canvas.height) p.vy *= -1;
-            ctx.beginPath();
-            ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
-            ctx.fillStyle = 'rgba(255,255,255,0.35)';
-            ctx.fill();
+          p.x += p.vx;
+          p.y += p.vy;
+          if (p.x < 0 || p.x > canvas.width) p.vx *= -1;
+          if (p.y < 0 || p.y > canvas.height) p.vy *= -1;
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+          ctx.fillStyle = 'rgba(255,255,255,0.35)';
+          ctx.fill();
 
-            for (let j = i + 1; j < particles.length; j++) {
-                const p2 = particles[j];
-                const dx = p.x - p2.x;
-                const dy = p.y - p2.y;
-                const dist = Math.sqrt(dx * dx + dy * dy);
-                if (dist < 140) {
-                    ctx.beginPath();
-                    ctx.strokeStyle = `rgba(255, 255, 255, ${0.08 - dist / 1750})`;
-                    ctx.lineWidth = 0.4;
-                    ctx.moveTo(p.x, p.y);
-                    ctx.lineTo(p2.x, p2.y);
-                    ctx.stroke();
-                }
+          for (let j = i + 1; j < particles.length; j++) {
+            const p2 = particles[j];
+            const dx = p.x - p2.x;
+            const dy = p.y - p2.y;
+            const dist = Math.sqrt(dx * dx + dy * dy);
+            if (dist < 140) {
+              ctx.beginPath();
+              ctx.strokeStyle = `rgba(255, 255, 255, ${0.08 - dist / 1750})`;
+              ctx.lineWidth = 0.4;
+              ctx.moveTo(p.x, p.y);
+              ctx.lineTo(p2.x, p2.y);
+              ctx.stroke();
             }
+          }
 
-            if (mouse.x !== null && mouse.y !== null) {
-                const mdx = p.x - mouse.x;
-                const mdy = p.y - mouse.y;
-                const mDist = Math.sqrt(mdx * mdx + mdy * mdy);
-                if (mDist < 160) {
-                    ctx.beginPath();
-                    ctx.strokeStyle = `rgba(255, 255, 255, ${0.3 - mDist / 530})`;
-                    ctx.lineWidth = 0.7;
-                    ctx.moveTo(p.x, p.y);
-                    ctx.lineTo(mouse.x, mouse.y);
-                    ctx.stroke();
-                }
+          if (mouse.x !== null && mouse.y !== null) {
+            const mdx = p.x - mouse.x;
+            const mdy = p.y - mouse.y;
+            const mDist = Math.sqrt(mdx * mdx + mdy * mdy);
+            if (mDist < 160) {
+              ctx.beginPath();
+              ctx.strokeStyle = `rgba(255, 255, 255, ${0.3 - mDist / 530})`;
+              ctx.lineWidth = 0.7;
+              ctx.moveTo(p.x, p.y);
+              ctx.lineTo(mouse.x, mouse.y);
+              ctx.stroke();
             }
+          }
         });
-    }
+      }
 
-    window.addEventListener('resize', init);
-    window.addEventListener('mousemove', (e) => { mouse.x = e.clientX; mouse.y = e.clientY; });
-    window.addEventListener('touchmove', (e) => {
+      window.addEventListener('resize', init);
+      window.addEventListener('mousemove', (e) => { mouse.x = e.clientX; mouse.y = e.clientY; });
+      window.addEventListener('touchmove', (e) => {
         if (e.touches.length > 0) { mouse.x = e.touches[0].clientX; mouse.y = e.touches[0].clientY; }
-    });
-    window.addEventListener('touchend', () => { mouse.x = null; mouse.y = null; });
-    init();
-    animate();
-}
-
-// Rubric
-const rubrys = [
-  "Nivel Nulo (0-2): Procesos manuales. Miedo e inexperiencia.",
-  "Nivel Básico (3-4): Uso aislado de Excel y WhatsApp sin automatizar.",
-  "Nivel Medio (5-6): Adoptaron SAP/CRMs pero copian y pegan manual.",
-  "Nivel Alto (7-8): Entienden flujos lógicos abstractos y automatizan No-Code.",
-  "Nivel Experto (9-10): Programan bots, APIs e integran nativamente."
-];
-function updateRubric() {
-  const val = parseInt(document.getElementById('q-madurez').value);
-  let ix = val<=2 ? 0 : val<=4 ? 1 : val<=6 ? 2 : val<=8 ? 3 : 4;
-  document.getElementById('madurez-rubric').innerHTML = `<strong class="text-ls-gold block font-display mb-1">Promedio Nivel ${val}:</strong> ${rubrys[ix]}`;
-}
-
-// Nav
-function goNext() {
-  const cDiv = document.getElementById(`phase-${currentPhase}`);
-  let isValid = true;
-  cDiv.querySelectorAll('[required]').forEach(i => {
-    if(!i.value.trim()){ i.classList.add('border-ls-red','bg-ls-red/5'); isValid=false; }
-    else { i.classList.remove('border-ls-red','bg-ls-red/5'); }
-  });
-  if(currentPhase===4) {
-    const wins = document.querySelectorAll('input[name="winner"]');
-    if(wins.length===0 || !Array.from(wins).some(r=>r.checked)){ alert("¡Selecciona la Idea Ganadora debajo de la matriz!"); isValid=false; }
-  }
-  if(!isValid) return;
-
-  if(currentPhase < totalPhases) {
-    if(currentPhase===3) setTimeout(updateMatrix, 100);
-    document.getElementById(`phase-${currentPhase}`).classList.remove('active');
-    document.getElementById(`dot-${currentPhase}`).classList.replace('bg-ls-blue','bg-ls-blue/20');
-    document.getElementById(`dot-${currentPhase}`).classList.add('text-ls-blue');
-    currentPhase++;
-    document.getElementById(`phase-${currentPhase}`).classList.add('active');
-    document.getElementById(`dot-${currentPhase}`).classList.replace('bg-[#333]','bg-ls-blue');
-    document.getElementById(`dot-${currentPhase}`).classList.replace('text-ls-muted','text-black');
-    document.getElementById(`dot-${currentPhase}`).classList.remove('border-white/10');
-  }
-  updateBtns(); window.scrollTo({top:0, behavior:'smooth'});
-}
-function goPrev() {
-  if (currentPhase > 1) {
-    document.getElementById(`phase-${currentPhase}`).classList.remove('active');
-    document.getElementById(`dot-${currentPhase}`).classList.replace('bg-ls-blue','bg-[#333]');
-    document.getElementById(`dot-${currentPhase}`).classList.replace('text-black','text-ls-muted');
-    document.getElementById(`dot-${currentPhase}`).classList.add('border-white/10');
-    currentPhase--;
-    document.getElementById(`phase-${currentPhase}`).classList.add('active');
-    document.getElementById(`dot-${currentPhase}`).classList.replace('bg-ls-blue/20','bg-ls-blue');
-    document.getElementById(`dot-${currentPhase}`).classList.replace('text-ls-blue','text-black');
-  }
-  updateBtns(); window.scrollTo({top:0, behavior:'smooth'});
-}
-function updateBtns() {
-  document.getElementById('btn-prev').style.display = currentPhase===1 ? 'none' : 'block';
-  document.getElementById('btn-next').style.display = currentPhase===totalPhases ? 'none' : 'flex';
-}
-function updateVal(id) { document.getElementById('val-'+id).innerText = document.getElementById(id).value; }
-
-// Matrix
-function getIdeas() {
-  const ids = [];
-  for(let i=1; i<=5; i++) {
-    const node = document.getElementById(`i${i}-text`);
-    const wrap = document.getElementById(`ib-${i}`);
-    const line = document.getElementById(`il-${i}`);
-    if(node && node.value.trim().length > 0) {
-      ids.push({ id:i, text:node.value.trim(), imp:parseFloat(document.getElementById(`i${i}-imp`).value), fac:parseFloat(document.getElementById(`i${i}-fac`).value) });
-      wrap.classList.remove('opacity-75'); wrap.classList.add('bg-white/[0.06]'); line.classList.replace('bg-white/10','bg-ls-blue');
-    } else if(node) {
-      wrap.classList.add('opacity-75'); wrap.classList.remove('bg-white/[0.06]'); line.classList.replace('bg-ls-blue','bg-white/10');
+      });
+      window.addEventListener('touchend', () => { mouse.x = null; mouse.y = null; });
+      init();
+      animate();
     }
-  } return ids;
-}
-function drawMatrix(ids) {
-  const m = document.getElementById('matrixCanvas'); const ct = m.getContext('2d');
-  const w = m.width; const h = m.height; ct.clearRect(0,0,w,h);
-  
-  // Custom Dark Matrix Palette
-  ct.fillStyle = 'rgba(65, 234, 212, 0.12)'; ct.fillRect(w/2, 0, w/2, h/2); // Green TR
-  ct.fillStyle = 'rgba(197, 161, 73, 0.15)'; ct.fillRect(0, 0, w/2, h/2); // Gold TL
-  ct.fillStyle = 'rgba(209, 81, 82, 0.08)'; ct.fillRect(0, h/2, w, h/2); // Red B
-  ct.strokeStyle = 'rgba(255,255,255,0.1)'; ct.lineWidth = 1; ct.beginPath();
-  ct.moveTo(0, h/2); ct.lineTo(w, h/2); ct.moveTo(w/2, 0); ct.lineTo(w/2, h); ct.stroke();
-  
-  ct.fillStyle = 'rgba(255,255,255,0.5)'; ct.font = '9px sans-serif';
-  ct.fillText('Apuestas Estratégicas', 8, 16); ct.fillText('Victorias Rápidas', w/2+8, 16);
-  ct.fillText('Difícil ->', 8, h/2+14); ct.fillText('<- Fácil', w-45, h/2+14); ct.fillText('Descartar', w/2-24, h-8);
 
-  const pad=16; const drW=w-(pad*2); const drH=h-(pad*2);
-  ids.forEach(id => {
-    const px = pad + (id.fac/5)*drW; const py = pad + drH - ((id.imp/5)*drH);
-    ct.beginPath(); ct.arc(px,py,14,0,2*Math.PI);
-    ct.fillStyle = px>w/2 && py<h/2 ? '#41EAD4' : (px<=w/2 && py<h/2 ? '#C5A149' : '#555');
-    ct.fill(); ct.strokeStyle='#18181a'; ct.lineWidth=2; ct.stroke();
-    ct.fillStyle='#18181a'; ct.font='bold 14px sans-serif'; ct.textAlign='center'; ct.textBaseline='middle';
-    ct.fillText(id.id.toString(), px, py);
-  });
-}
-function renderRadios(ids) {
-  const c = document.getElementById('winner-container');
-  const sel = document.querySelector('input[name="winner"]:checked')?.value;
-  let ht = '';
-  ids.forEach(id => {
-    let cat = id.fac>=2.5 && id.imp>=2.5 ? "text-[#41EAD4] font-semibold" : (id.fac<2.5 && id.imp>=2.5 ? "text-ls-gold font-semibold" : "text-ls-muted");
-    let cLabel = id.fac>=2.5 && id.imp>=2.5 ? "(Victoria Rápida)" : (id.fac<2.5 && id.imp>=2.5 ? "(Apuesta Temeraria)" : "(Descartar / Bajo Impacto)");
-    ht += `<label class="flex items-start p-3 bg-black/20 border border-white/10 rounded-xl cursor-pointer hover:bg-white/5 transition mb-1 text-sm">
-      <input type="radio" name="winner" value="${id.text}" class="mt-1 mr-3 w-4 h-4 accent-ls-blue" ${sel===id.text?'checked':''}>
+    // Rubric
+    const rubrys = [
+      "Nivel Nulo (0-2): Procesos manuales. Miedo e inexperiencia.",
+      "Nivel Básico (3-4): Uso aislado de Excel y WhatsApp sin automatizar.",
+      "Nivel Medio (5-6): Adoptaron SAP/CRMs pero copian y pegan manual.",
+      "Nivel Alto (7-8): Entienden flujos lógicos abstractos y automatizan No-Code.",
+      "Nivel Experto (9-10): Programan bots, APIs e integran nativamente."
+    ];
+    function updateRubric() {
+      const val = parseInt(document.getElementById('q-madurez').value);
+      let ix = val <= 2 ? 0 : val <= 4 ? 1 : val <= 6 ? 2 : val <= 8 ? 3 : 4;
+      document.getElementById('madurez-rubric').innerHTML = `<strong class="text-ls-gold block font-display mb-1">Promedio Nivel ${val}:</strong> ${rubrys[ix]}`;
+    }
+
+    // Nav
+    function goNext() {
+      const cDiv = document.getElementById(`phase-${currentPhase}`);
+      let isValid = true;
+      cDiv.querySelectorAll('[required]').forEach(i => {
+        if (!i.value.trim()) { i.classList.add('border-ls-red', 'bg-ls-red/5'); isValid = false; }
+        else { i.classList.remove('border-ls-red', 'bg-ls-red/5'); }
+      });
+      if (currentPhase === 4) {
+        const wins = document.querySelectorAll('input[name="winner"]');
+        if (wins.length === 0 || !Array.from(wins).some(r => r.checked)) { alert("¡Selecciona la Idea Ganadora debajo de la matriz!"); isValid = false; }
+      }
+      if (!isValid) return;
+
+      if (currentPhase < totalPhases) {
+        if (currentPhase === 3) setTimeout(updateMatrix, 100);
+        document.getElementById(`phase-${currentPhase}`).classList.remove('active');
+        document.getElementById(`dot-${currentPhase}`).classList.replace('bg-ls-blue', 'bg-ls-blue/20');
+        document.getElementById(`dot-${currentPhase}`).classList.add('text-ls-blue');
+        currentPhase++;
+        document.getElementById(`phase-${currentPhase}`).classList.add('active');
+        document.getElementById(`dot-${currentPhase}`).classList.replace('bg-[#333]', 'bg-ls-blue');
+        document.getElementById(`dot-${currentPhase}`).classList.replace('text-ls-muted', 'text-black');
+        document.getElementById(`dot-${currentPhase}`).classList.remove('border-white/10');
+      }
+      updateBtns(); window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+    function goPrev() {
+      if (currentPhase > 1) {
+        document.getElementById(`phase-${currentPhase}`).classList.remove('active');
+        document.getElementById(`dot-${currentPhase}`).classList.replace('bg-ls-blue', 'bg-[#333]');
+        document.getElementById(`dot-${currentPhase}`).classList.replace('text-black', 'text-ls-muted');
+        document.getElementById(`dot-${currentPhase}`).classList.add('border-white/10');
+        currentPhase--;
+        document.getElementById(`phase-${currentPhase}`).classList.add('active');
+        document.getElementById(`dot-${currentPhase}`).classList.replace('bg-ls-blue/20', 'bg-ls-blue');
+        document.getElementById(`dot-${currentPhase}`).classList.replace('text-ls-blue', 'text-black');
+      }
+      updateBtns(); window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+    function updateBtns() {
+      document.getElementById('btn-prev').style.display = currentPhase === 1 ? 'none' : 'block';
+      document.getElementById('btn-next').style.display = currentPhase === totalPhases ? 'none' : 'flex';
+    }
+    function updateVal(id) { document.getElementById('val-' + id).innerText = document.getElementById(id).value; }
+
+    // Matrix
+    function getIdeas() {
+      const ids = [];
+      for (let i = 1; i <= 5; i++) {
+        const node = document.getElementById(`i${i}-text`);
+        const wrap = document.getElementById(`ib-${i}`);
+        const line = document.getElementById(`il-${i}`);
+        if (node && node.value.trim().length > 0) {
+          ids.push({ id: i, text: node.value.trim(), imp: parseFloat(document.getElementById(`i${i}-imp`).value), fac: parseFloat(document.getElementById(`i${i}-fac`).value) });
+          wrap.classList.remove('opacity-75'); wrap.classList.add('bg-white/[0.06]'); line.classList.replace('bg-white/10', 'bg-ls-blue');
+        } else if (node) {
+          wrap.classList.add('opacity-75'); wrap.classList.remove('bg-white/[0.06]'); line.classList.replace('bg-ls-blue', 'bg-white/10');
+        }
+      } return ids;
+    }
+    function drawMatrix(ids) {
+      const m = document.getElementById('matrixCanvas'); const ct = m.getContext('2d');
+      const w = m.width; const h = m.height; ct.clearRect(0, 0, w, h);
+
+      // Custom Dark Matrix Palette
+      ct.fillStyle = 'rgba(65, 234, 212, 0.12)'; ct.fillRect(w / 2, 0, w / 2, h / 2); // Green TR
+      ct.fillStyle = 'rgba(197, 161, 73, 0.15)'; ct.fillRect(0, 0, w / 2, h / 2); // Gold TL
+      ct.fillStyle = 'rgba(209, 81, 82, 0.08)'; ct.fillRect(0, h / 2, w, h / 2); // Red B
+      ct.strokeStyle = 'rgba(255,255,255,0.1)'; ct.lineWidth = 1; ct.beginPath();
+      ct.moveTo(0, h / 2); ct.lineTo(w, h / 2); ct.moveTo(w / 2, 0); ct.lineTo(w / 2, h); ct.stroke();
+
+      ct.fillStyle = 'rgba(255,255,255,0.5)'; ct.font = '9px sans-serif';
+      ct.fillText('Apuestas Estratégicas', 8, 16); ct.fillText('Victorias Rápidas', w / 2 + 8, 16);
+      ct.fillText('Difícil ->', 8, h / 2 + 14); ct.fillText('<- Fácil', w - 45, h / 2 + 14); ct.fillText('Descartar', w / 2 - 24, h - 8);
+
+      const pad = 16; const drW = w - (pad * 2); const drH = h - (pad * 2);
+      ids.forEach(id => {
+        const px = pad + (id.fac / 5) * drW; const py = pad + drH - ((id.imp / 5) * drH);
+        ct.beginPath(); ct.arc(px, py, 14, 0, 2 * Math.PI);
+        ct.fillStyle = px > w / 2 && py < h / 2 ? '#41EAD4' : (px <= w / 2 && py < h / 2 ? '#C5A149' : '#555');
+        ct.fill(); ct.strokeStyle = '#18181a'; ct.lineWidth = 2; ct.stroke();
+        ct.fillStyle = '#18181a'; ct.font = 'bold 14px sans-serif'; ct.textAlign = 'center'; ct.textBaseline = 'middle';
+        ct.fillText(id.id.toString(), px, py);
+      });
+    }
+    function renderRadios(ids) {
+      const c = document.getElementById('winner-container');
+      const sel = document.querySelector('input[name="winner"]:checked')?.value;
+      let ht = '';
+      ids.forEach(id => {
+        let cat = id.fac >= 2.5 && id.imp >= 2.5 ? "text-[#41EAD4] font-semibold" : (id.fac < 2.5 && id.imp >= 2.5 ? "text-ls-gold font-semibold" : "text-ls-muted");
+        let cLabel = id.fac >= 2.5 && id.imp >= 2.5 ? "(Victoria Rápida)" : (id.fac < 2.5 && id.imp >= 2.5 ? "(Apuesta Temeraria)" : "(Descartar / Bajo Impacto)");
+        ht += `<label class="flex items-start p-3 bg-black/20 border border-white/10 rounded-xl cursor-pointer hover:bg-white/5 transition mb-1 text-sm">
+      <input type="radio" name="winner" value="${id.text}" class="mt-1 mr-3 w-4 h-4 accent-ls-blue" ${sel === id.text ? 'checked' : ''}>
       <div><span class="text-white">Idea ${id.id}: ${id.text}</span><br><span class="${cat} text-xs uppercase tracking-wide">${cLabel}</span></div>
     </label>`;
-  });
-  c.innerHTML = ht || '<span class="text-ls-red text-sm">Escribe ideas arriba primero.</span>';
-}
-function updateMatrix() { const ids = getIdeas(); drawMatrix(ids); renderRadios(ids); }
+      });
+      c.innerHTML = ht || '<span class="text-ls-red text-sm">Escribe ideas arriba primero.</span>';
+    }
+    function updateMatrix() { const ids = getIdeas(); drawMatrix(ids); renderRadios(ids); }
 
-// Final Plan Generation
-function generatePlan() {
-  const qD = document.getElementById('q-discovery'); const qM = document.getElementById('q-mvp'); const qB = document.getElementById('q-blockers');
-  if(!qD.value.trim()||!qM.value.trim()||!qB.value.trim()){ qD.classList.add('border-ls-red'); qM.classList.add('border-ls-red'); qB.classList.add('border-ls-red'); window.scrollTo(0,document.body.scrollHeight); return; }
-  
-  const winnerNode = document.querySelector('input[name="winner"]:checked');
-  if(!winnerNode) { alert("¡Alarma! No has seleccionado una Idea Ganadora de la Matriz. Por favor haz scroll hacia arriba/ve a la Fase 4 y selecciona la estrategia priorizada."); return; }
+    // Final Plan Generation
+    function generatePlan() {
+      const qD = document.getElementById('q-discovery'); const qM = document.getElementById('q-mvp'); const qB = document.getElementById('q-blockers');
+      if (!qD.value.trim() || !qM.value.trim() || !qB.value.trim()) { qD.classList.add('border-ls-red'); qM.classList.add('border-ls-red'); qB.classList.add('border-ls-red'); window.scrollTo(0, document.body.scrollHeight); return; }
 
-  document.getElementById('wizard-form').style.display='none';
-  document.getElementById('loading').classList.remove('hidden'); document.getElementById('loading').classList.add('block');
-  window.scrollTo({top:0, behavior:'smooth'});
+      const winnerNode = document.querySelector('input[name="winner"]:checked');
+      if (!winnerNode) { alert("¡Alarma! No has seleccionado una Idea Ganadora de la Matriz. Por favor haz scroll hacia arriba/ve a la Fase 4 y selecciona la estrategia priorizada."); return; }
 
-  const extL=document.getElementById('q-limitantes-text').value.trim();
-  let lArr=Array.from(document.querySelectorAll('input[name="limitantes"]:checked')).map(e=>e.value);
-  if(extL) lArr.push("Específica: "+extL);
-  let tArr=Array.from(document.querySelectorAll('input[name="talento"]:checked')).map(e=>e.value);
+      document.getElementById('wizard-form').style.display = 'none';
+      document.getElementById('loading').classList.remove('hidden'); document.getElementById('loading').classList.add('block');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
 
-  const clP = (s) => s.replace(/\n\s*\n/g, '\\n').replace(/\n/g, ' ').trim();
-  const d = {
-    date: new Date().toLocaleDateString('es-ES',{year:'numeric',month:'long',day:'numeric'}),
-    pain: clP(document.getElementById('q-pain').value), target: document.getElementById('q-target').value.trim(),
-    vision: clP(document.getElementById('q-vision').value), rubric: document.getElementById('madurez-rubric').innerText,
-    budget: document.getElementById('q-budget').value, data: document.getElementById('q-data').value,
-    talentList: tArr.length>0 ? tArr.map(t=>`<li>${t}</li>`).join('') : '<li class="text-ls-red font-semibold">Alarma: Carece de talento in-house requerido; externalización al 100%.</li>',
-    limitsList: lArr.length>0 ? lArr.map(l=>`<li>${l}</li>`).join('') : '<li>Ninguna traba sistémica detectada. Vía libre.</li>',
-    winner: winnerNode.value,
-    discovery: clP(qD.value), mvp: clP(qM.value), blockers: clP(qB.value)
-  };
+      const extL = document.getElementById('q-limitantes-text').value.trim();
+      let lArr = Array.from(document.querySelectorAll('input[name="limitantes"]:checked')).map(e => e.value);
+      if (extL) lArr.push("Específica: " + extL);
+      let tArr = Array.from(document.querySelectorAll('input[name="talento"]:checked')).map(e => e.value);
 
-  const ht = `
+      const clP = (s) => s.replace(/\n\s*\n/g, '\\n').replace(/\n/g, ' ').trim();
+      const d = {
+        date: new Date().toLocaleDateString('es-ES', { year: 'numeric', month: 'long', day: 'numeric' }),
+        pain: clP(document.getElementById('q-pain').value), target: document.getElementById('q-target').value.trim(),
+        vision: clP(document.getElementById('q-vision').value), rubric: document.getElementById('madurez-rubric').innerText,
+        budget: document.getElementById('q-budget').value, data: document.getElementById('q-data').value,
+        talentList: tArr.length > 0 ? tArr.map(t => `<li>${t}</li>`).join('') : '<li class="text-ls-red font-semibold">Alarma: Carece de talento in-house requerido; externalización al 100%.</li>',
+        limitsList: lArr.length > 0 ? lArr.map(l => `<li>${l}</li>`).join('') : '<li>Ninguna traba sistémica detectada. Vía libre.</li>',
+        winner: winnerNode.value,
+        discovery: clP(qD.value), mvp: clP(qM.value), blockers: clP(qB.value)
+      };
+
+      const ht = `
     <h1 class="text-3xl font-display font-black tracking-tight mb-2 border-b-4 border-ls-blue inline-block pb-1">EXECUTIVE BRIEF: AI STRATEGY</h1>
     <p class="font-mono text-gray-500 text-xs mb-8 uppercase tracking-widest">Generado el ${d.date} | LifeStrategics V3.5</p>
     
@@ -708,30 +977,31 @@ Por favor, NO asumas automáticamente que vamos a programar desde cero y NO me d
     </div>
   `;
 
-  setTimeout(()=>{
-    document.getElementById('loading').classList.add('hidden'); document.getElementById('loading').classList.remove('block');
-    document.getElementById('results-view').classList.remove('hidden'); document.getElementById('results-view').classList.add('block');
-    document.querySelector('.report-paper').innerHTML = ht;
-  },1800);
-}
+      setTimeout(() => {
+        document.getElementById('loading').classList.add('hidden'); document.getElementById('loading').classList.remove('block');
+        document.getElementById('results-view').classList.remove('hidden'); document.getElementById('results-view').classList.add('block');
+        document.querySelector('.report-paper').innerHTML = ht;
+      }, 1800);
+    }
 
-function copyPromptDef() {
-  const t = document.getElementById('prd-prompt-text').innerText;
-  navigator.clipboard.writeText(t).then(()=>{
-    alert("¡Prompt PRD Copiado al portapapeles! Llévalo a tu AI agent favorito.");
-  });
-}
+    function copyPromptDef() {
+      const t = document.getElementById('prd-prompt-text').innerText;
+      navigator.clipboard.writeText(t).then(() => {
+        alert("¡Prompt PRD Copiado al portapapeles! Llévalo a tu AI agent favorito.");
+      });
+    }
 
-function copyDox() {
-  const t = document.querySelector('.report-paper').innerText;
-  navigator.clipboard.writeText(t).then(()=>{
-    const b = document.getElementById('btn-copy'); b.innerText = '✓ ¡Copiado Exitosamente!';
-    b.classList.replace('!bg-ls-bg','!bg-ls-blue'); b.classList.replace('!text-white','!text-black');
-    setTimeout(()=> { b.innerText = '☍ Copiar Texto del Plan'; b.classList.replace('!bg-ls-blue','!bg-ls-bg'); b.classList.replace('!text-black','!text-white');},3000);
-  });
-}
-document.addEventListener("DOMContentLoaded", updateRubric);
-window.addEventListener('keydown',e=>{if(e.key==='Enter'&&e.target.nodeName==='INPUT'){e.preventDefault();return false;}},true);
-</script>
+    function copyDox() {
+      const t = document.querySelector('.report-paper').innerText;
+      navigator.clipboard.writeText(t).then(() => {
+        const b = document.getElementById('btn-copy'); b.innerText = '✓ ¡Copiado Exitosamente!';
+        b.classList.replace('!bg-ls-bg', '!bg-ls-blue'); b.classList.replace('!text-white', '!text-black');
+        setTimeout(() => { b.innerText = '☍ Copiar Texto del Plan'; b.classList.replace('!bg-ls-blue', '!bg-ls-bg'); b.classList.replace('!text-black', '!text-white'); }, 3000);
+      });
+    }
+    document.addEventListener("DOMContentLoaded", updateRubric);
+    window.addEventListener('keydown', e => { if (e.key === 'Enter' && e.target.nodeName === 'INPUT') { e.preventDefault(); return false; } }, true);
+  </script>
 </body>
+
 </html>
