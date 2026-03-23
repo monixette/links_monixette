@@ -945,38 +945,81 @@
     <p class="mb-4 text-sm leading-relaxed"><strong class="font-display">MVP Experimental (Validación Teórica Semanal):</strong><br>${d.mvp}</p>
     <p class="mb-4 text-sm leading-relaxed"><strong class="font-display text-red-600">Riesgo Falla Fatal (Blockers de Corto Plazo):</strong><br>${d.blockers}</p>
 
-    <!-- PRD PROMPT SECTION -->
-    <h3 class="font-display text-ls-gold font-bold text-lg uppercase tracking-wide border-b border-gray-200 pb-1 mb-3 mt-10">🚀 Bonus: Prompt de Arranque Técnico (PRD)</h3>
-    <p class="text-xs text-gray-500 mb-3">Copia este prompt y pégalo directamente en ChatGPT, Claude Code o AntiGravity para comenzar a programar este MVP de inmediato.</p>
+    <!-- DISCOVERY CONSULTING PROMPT -->
+    <h3 class="font-display text-ls-gold font-bold text-lg uppercase tracking-wide border-b border-gray-200 pb-1 mb-3 mt-10">🧭 Tu siguiente paso: consultoría estratégica con IA</h3>
+    <p class="text-xs text-gray-500 mb-3 leading-relaxed">Este prompt NO genera código ni arquitectura técnica. Su propósito es iniciar un proceso de consultoría donde la IA cuestione tu idea, identifique gaps que no estás viendo y te proponga caminos estratégicos antes de gastar un solo peso. Cópialo y pégalo en ChatGPT, Claude o la herramienta de tu preferencia.</p>
     <div class="bg-[#111] p-4 rounded-xl border border-gray-700 relative group">
       <button onclick="copyPromptDef()" class="absolute top-3 right-3 bg-[#333] hover:bg-ls-gold text-white hover:text-black text-[10px] uppercase font-bold px-3 py-1 rounded transition">Copiar Prompt</button>
-      <pre id="prd-prompt-text" class="text-gray-300 font-mono text-[0.75rem] w-full overflow-x-auto whitespace-pre-wrap leading-relaxed pr-16" spellcheck="false">Actúa como un Consultor de Innovación Tecnológica y Arquitecto High-Level. Tu objetivo es guiar a un líder de negocios a validar un Mínimo Producto Viable (MVP) en 2 semanas, sujeto a fuertes restricciones organizacionales. Revisa nuestro Brief Estratégico y comunícate de manera dialogada, clara y libre de tecnicismos complejos de programación.
+      <pre id="prd-prompt-text" class="text-gray-300 font-mono text-[0.75rem] w-full overflow-x-auto whitespace-pre-wrap leading-relaxed pr-16" spellcheck="false">Eres una persona experta en consultoría de innovación tecnológica y diseño de productos digitales. Tu rol NO es darme código ni arquitectura técnica todavía. Tu rol es ayudarme a validar si mi idea de MVP tiene sentido antes de gastar un solo peso.
 
-[CONTEXTO DE NEGOCIO Y VISIÓN]
-- Dolor Actual: ${d.pain}
-- Visión Tecnológica: ${d.vision}
-- Presupuesto Autorizado: ${d.budget}
+Vamos a trabajar en 3 fases. No avances a la siguiente fase hasta que yo confirme.
 
-[SCOPE DEL MVP Y ÉXITO]
-- Resolución Ganadora: "${d.winner}"
-- Criterio estricto de éxito a 2 semanas: ${d.mvp}
-- Tarea Previa a resolver (Discovery): ${d.discovery}
+FASE 1: STRESS TEST ESTRATÉGICO
+Analiza mi contexto completo y respóndeme con honestidad brutal:
+- ¿Mi dolor es un problema real de mercado o solo una molestia personal?
+- ¿Mi idea ganadora realmente resuelve ese dolor, o solo lo disfraza?
+- ¿Hay algo que no estoy viendo (un gap, una dependencia, un riesgo fatal)?
+Hazme 3 preguntas incómodas que debería poder responder antes de continuar.
 
-[CAPACIDAD Y RIESGOS]
-- Riesgo Mortal a evitar: ${d.blockers}
-- Estado de los Datos: ${d.data}
-- Rol de talento In-House útil:
-${tArr.length > 0 ? "  - " + tArr.join('\n  - ') : "  - No hay talento técnico interno."}
-- Limitantes Corporativas identificadas:
-${lArr.length > 0 ? "  - " + lArr.join('\n  - ') : "  - Ninguna burocracia documentada."}
+FASE 2: CAMINOS ESTRATÉGICOS
+Una vez resueltas tus preguntas, proponme 2 o 3 caminos para construir esto (desde lo más simple y manual hasta lo más sofisticado). Para cada camino incluye: qué herramientas usaría, cuánto costaría al mes, qué tan difícil es de mantener, y qué tan rápido puedo tener un primer resultado funcional.
 
-INSTRUCCIÓN:
-Por favor, NO asumas automáticamente que vamos a programar desde cero y NO me devuelvas código (ej: JSONs o APIs). En su lugar:
-1. Dame una evaluación estratégica High-Level de si esto es viable dadas nuestras limitantes, y cómo se relaciona el MVP con el objetivo final.
-2. Preséntame 2 o 3 Caminos Estratégicos o Arquitecturas (ej. Solución Manual, Solución Low-Code/No-Code, Solución Híbrida) que cumplan nuestro Criterio de Éxito en 2 semanas.
-3. Para cada camino, dame una viñeta simple de Pros y Contras evaluando la complejidad, la fricción de usuario y el costo de mantenimiento.
-4. Termina haciéndome 3 preguntas estratégicas para que podamos dialogar y yo pueda decidir con qué camino continuar.</pre>
+FASE 3: SCOPING TÉCNICO INICIAL
+Cuando yo elija un camino, genera un documento de alcance técnico inicial que incluya: componentes del sistema, flujo de datos simplificado, dependencias externas, riesgos técnicos y un checklist de lo que necesito tener listo antes de escribir la primera línea de código o configurar el primer flujo. Este documento debe servir como insumo para que un equipo técnico pueda generar un PRD (Product Requirements Document) formal y completo.
+
+MI CONTEXTO:
+- Problema que sufro: ${d.pain}
+- Quiénes lo sufren: ${d.target}
+- Mi visión de la solución: ${d.vision}
+- Madurez digital de quienes la usarán: ${d.rubric}
+- Presupuesto real: ${d.budget}
+- Estado actual de mis datos: ${d.data}
+- Talento técnico disponible:
+${tArr.length > 0 ? "  - " + tArr.join('\n  - ') : "  - No contamos con talento técnico interno."}
+- Limitantes organizacionales:
+${lArr.length > 0 ? "  - " + lArr.join('\n  - ') : "  - Ninguna limitante documentada."}
+- La idea que quiero validar: "${d.winner}"
+- Lo que necesito investigar antes: ${d.discovery}
+- Mi criterio de éxito a 2 semanas: ${d.mvp}
+- Lo que más me preocupa que falle: ${d.blockers}
+
+Empieza por la Fase 1. Sé directo, cuestiona todo y no me valides por cortesía.</pre>
     </div>
+
+    <!-- PRD GUIDE (COLLAPSIBLE) -->
+    <details class="mt-8 border border-gray-200 rounded-2xl overflow-hidden">
+      <summary class="cursor-pointer bg-gray-50 px-5 py-4 font-display font-bold text-gray-800 text-sm uppercase tracking-wide hover:bg-gray-100 transition flex justify-between items-center">
+        <span>📋 Guía: ¿Qué es un PRD y cómo documentar tu proyecto para desarrollo?</span>
+        <span class="text-gray-400 text-lg ml-2">+</span>
+      </summary>
+      <div class="px-5 py-5 text-sm text-gray-700 leading-relaxed space-y-4 bg-white">
+        <p>Si después de la consultoría estratégica decides que tu solución requiere desarrollo de software (ya sea con código, herramientas No-Code o una combinación), el siguiente paso profesional es documentar tu proyecto en un <strong>PRD (Product Requirements Document)</strong>.</p>
+        <p>Un PRD es el documento que conecta la visión de negocio con la ejecución técnica. Es lo que le entregas a un equipo de desarrollo, a una agencia o a una herramienta de programación con IA para que construyan exactamente lo que necesitas, sin malentendidos.</p>
+        <p class="font-display font-bold text-gray-900 mt-4 mb-2">Estructura recomendada de un PRD profesional:</p>
+        <ol class="list-decimal pl-5 space-y-2">
+          <li><strong>Resumen ejecutivo:</strong> Descripción en 2 o 3 párrafos del producto, su propósito y el problema que resuelve.</li>
+          <li><strong>Problema y contexto de negocio:</strong> El dolor específico, quiénes lo sufren, qué impacto tiene actualmente en métricas reales.</li>
+          <li><strong>Personas usuarias y segmentos:</strong> Perfiles concretos de quienes usarán el producto (no "todo el mundo", sino roles específicos con necesidades distintas).</li>
+          <li><strong>Alcance explícito (In Scope / Out of Scope):</strong> Lo que SÍ y lo que NO se va a construir en esta versión. Esto previene el "ya que estamos, agrégale también esto" que arruina proyectos.</li>
+          <li><strong>User Stories con criterios de aceptación:</strong> Descripciones en formato "Como [persona], quiero [acción], para que [beneficio]". Cada una debe tener condiciones verificables de éxito (Given/When/Then).</li>
+          <li><strong>Requerimientos funcionales:</strong> Lista detallada de lo que el sistema debe hacer (ej. "Permitir subir archivos PDF de hasta 10MB").</li>
+          <li><strong>Requerimientos no funcionales:</strong> Rendimiento esperado (velocidad de carga, tiempo de respuesta), disponibilidad (uptime), escalabilidad y compatibilidad con dispositivos.</li>
+          <li><strong>Modelo de datos:</strong> Qué información guarda el sistema, cómo se relaciona entre sí y dónde se almacena. Este punto es clave para que las decisiones de base de datos no se tomen al azar.</li>
+          <li><strong>Contratos de API:</strong> Si el sistema se comunica con otros servicios, se deben definir los puntos de conexión (endpoints), qué datos envía y qué datos recibe.</li>
+          <li><strong>Autenticación, autorización y seguridad:</strong> Quién puede acceder a qué, cómo se verifican identidades, qué datos son sensibles y cómo se protegen.</li>
+          <li><strong>Arquitectura propuesta:</strong> Diagrama visual de alto nivel mostrando los componentes del sistema, cómo se comunican entre sí y dónde viven (nube, servidor local, servicios externos).</li>
+          <li><strong>Stack tecnológico recomendado:</strong> Las herramientas, lenguajes y plataformas sugeridas, con una justificación breve de por qué se eligieron sobre las alternativas.</li>
+          <li><strong>Manejo de errores y edge cases:</strong> Qué pasa cuando algo falla (la API no responde, el campo está vacío, se pierde la conexión). Documentar esto previene sorpresas en producción.</li>
+          <li><strong>Observabilidad:</strong> Cómo sabrás que el sistema está funcionando correctamente o que se rompió a las 3am. Incluye logging (registro de eventos), monitoreo y alertas.</li>
+          <li><strong>Estrategia de migración:</strong> Si reemplazas un sistema existente, documenta cómo harás la transición sin perder datos ni interrumpir el servicio.</li>
+          <li><strong>Dependencias externas y riesgos técnicos:</strong> Servicios de terceros de los que depende tu producto (APIs, proveedores de nube) y qué pasa si alguno cambia de precio, se cae o desaparece.</li>
+          <li><strong>Roadmap:</strong> Fases de desarrollo (MVP, Versión 2, Versión 3) con entregables y fechas estimadas.</li>
+          <li><strong>Métricas de éxito y Definition of Done:</strong> Números específicos que indicarán si el producto cumplió su objetivo (ej. "Reducir el tiempo de cotización de 3 horas a 15 minutos").</li>
+          <li><strong>Glosario:</strong> Definiciones claras de términos técnicos y de negocio para que todas las personas involucradas hablen el mismo idioma.</li>
+        </ol>
+        <p class="mt-4 text-xs text-gray-400 italic">No necesitas llenar todo esto desde el primer día. Comienza con los puntos 1 a 7 y ve profundizando conforme avances con tu equipo técnico o herramienta de desarrollo.</p>
+      </div>
+    </details>
   `;
 
       setTimeout(() => {
@@ -989,7 +1032,7 @@ Por favor, NO asumas automáticamente que vamos a programar desde cero y NO me d
     function copyPromptDef() {
       const t = document.getElementById('prd-prompt-text').innerText;
       navigator.clipboard.writeText(t).then(() => {
-        alert("¡Prompt PRD Copiado al portapapeles! Llévalo a tu AI agent favorito.");
+        alert("¡Prompt de consultoría copiado! Pégalo en ChatGPT o Claude para comenzar tu Discovery.");
       });
     }
 
