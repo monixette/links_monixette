@@ -1,0 +1,1998 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+  <title>Creación de Dashboards | LifeStrategics</title>
+  <meta name="description"
+    content="Herramienta de facilitación para diseñar tableros efectivos: construye visibilidad eligiendo el formato correcto para la pregunta correcta.">
+  <link href="https://fonts.googleapis.com/css2?family=Wix+Madefor+Display:wght@400;500;600;700;800&display=swap"
+    rel="stylesheet">
+  <style>
+    :root {
+      --bg: #242426;
+      --bg-deep: #1A1A1C;
+      --gold: #C5A149;
+      --gold-dim: rgba(197, 161, 73, 0.15);
+      --gold-faint: rgba(197, 161, 73, 0.08);
+      --blue: #58AFCD;
+      --blue-dim: rgba(88, 175, 205, 0.15);
+      --red: #D15152;
+      --red-dim: rgba(209, 81, 82, 0.15);
+      --text: #ffffff;
+      --text-muted: #C0C7CF;
+      --text-dim: #8E95A0;
+      --card-bg: rgba(255, 255, 255, 0.04);
+      --card-border: rgba(255, 255, 255, 0.08);
+      --card-border-hover: rgba(255, 255, 255, 0.16);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Wix Madefor Display', sans-serif;
+      font-size: 15px;
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+
+    #particle-canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0.75;
+    }
+
+    /* COVER */
+    .cover {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      padding: 80px 28px 48px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .cover-eyebrow {
+      font-size: 10px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 28px;
+      font-weight: 600;
+    }
+
+    .cover-title {
+      font-size: clamp(32px, 8vw, 56px);
+      font-weight: 800;
+      line-height: 1.1;
+      margin-bottom: 18px;
+      max-width: 600px;
+      letter-spacing: -0.02em;
+    }
+
+    .cover-title .gold {
+      color: var(--gold);
+    }
+
+    .cover-divider {
+      width: 40px;
+      height: 2px;
+      background: var(--gold);
+      margin: 0 auto 24px;
+    }
+
+    .cover-subtitle {
+      font-size: 14px;
+      font-weight: 400;
+      color: var(--text-muted);
+      max-width: 440px;
+      margin-bottom: 36px;
+      line-height: 1.8;
+    }
+
+    .bead-visual {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      margin-bottom: 36px;
+    }
+
+    .bead {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      animation: pulse 3s ease-in-out infinite;
+    }
+
+    .bead:nth-child(odd) {
+      background: var(--gold);
+    }
+
+    .bead:nth-child(2) {
+      background: var(--blue);
+      animation-delay: 0.2s;
+    }
+
+    .bead:nth-child(4) {
+      background: var(--red);
+      animation-delay: 0.4s;
+    }
+
+    .bead:nth-child(6) {
+      background: var(--blue);
+      animation-delay: 0.6s;
+    }
+
+    .bead:nth-child(8) {
+      background: var(--red);
+      animation-delay: 0.8s;
+    }
+
+    .thread-line {
+      width: 14px;
+      height: 2px;
+      background: rgba(197, 161, 73, 0.25);
+    }
+
+    @keyframes pulse {
+
+      0%,
+      100% {
+        transform: scale(1);
+        opacity: 0.6;
+      }
+
+      50% {
+        transform: scale(1.25);
+        opacity: 1;
+      }
+    }
+
+    /* STICKY NAV */
+    .sticky-nav {
+      position: fixed;
+      top: -60px;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      height: 52px;
+      background: rgba(26, 26, 28, 0.6);
+      backdrop-filter: blur(24px) saturate(1.4);
+      -webkit-backdrop-filter: blur(24px) saturate(1.4);
+      border-bottom: 1px solid var(--card-border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 14px;
+      padding: 0 20px;
+      transition: top 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .sticky-nav.visible {
+      top: 0;
+    }
+
+    .sticky-nav-logo {
+      height: 20px;
+      width: auto;
+      flex-shrink: 0;
+      opacity: 0.85;
+    }
+
+    .sticky-nav-brand {
+      display: flex;
+      flex-direction: column;
+      line-height: 1.15;
+      white-space: nowrap;
+    }
+
+    .sticky-nav-brand-tool {
+      font-size: 9px;
+      font-weight: 500;
+      color: var(--text-dim);
+      letter-spacing: 0.05em;
+    }
+
+    .cover-logo {
+      height: 28px;
+      width: auto;
+      margin-bottom: 14px;
+      opacity: 0.7;
+    }
+
+    .sticky-nav-sep {
+      width: 1px;
+      height: 20px;
+      background: var(--card-border);
+      flex-shrink: 0;
+    }
+
+    .sticky-nav-pills {
+      display: flex;
+      gap: 4px;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+    }
+
+    .sticky-nav-pills::-webkit-scrollbar {
+      display: none;
+    }
+
+    .nav-pill {
+      padding: 5px 10px;
+      border-radius: 999px;
+      font-size: 10px;
+      font-weight: 500;
+      color: var(--text-dim);
+      text-decoration: none;
+      white-space: nowrap;
+      transition: all 0.2s;
+    }
+
+    .nav-pill:hover,
+    .nav-pill.active {
+      color: var(--gold);
+      background: var(--gold-faint);
+    }
+
+    /* ANCHOR PILLS (in hero) */
+    .anchor-pills {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+
+    .anchor-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 16px;
+      border-radius: 999px;
+      border: 1px solid var(--card-border);
+      background: var(--card-bg);
+      color: var(--text-muted);
+      font-size: 12px;
+      font-weight: 500;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      backdrop-filter: blur(8px);
+    }
+
+    .anchor-pill:hover {
+      border-color: var(--gold);
+      color: var(--gold);
+      background: var(--gold-faint);
+      transform: translateY(-2px);
+    }
+
+    .anchor-pill .pill-num {
+      font-size: 9px;
+      font-weight: 700;
+      opacity: 0.5;
+    }
+
+    /* LAYOUT */
+    .page {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 40px 24px 60px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .section {
+      margin-bottom: 80px;
+    }
+
+    .section-number {
+      font-size: 10px;
+      letter-spacing: 0.2em;
+      color: var(--gold);
+      text-transform: uppercase;
+      margin-bottom: 10px;
+      font-weight: 700;
+    }
+
+    .section-title {
+      font-size: clamp(24px, 5vw, 32px);
+      font-weight: 800;
+      line-height: 1.15;
+      margin-bottom: 8px;
+      letter-spacing: -0.02em;
+    }
+
+    .section-intro {
+      font-size: 14px;
+      color: var(--text-muted);
+      max-width: 600px;
+      margin-bottom: 40px;
+      line-height: 1.8;
+      border-left: 2px solid var(--gold);
+      padding-left: 18px;
+    }
+
+    /* METAPHOR */
+    .metaphor-block {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-radius: 20px;
+      padding: 32px 28px;
+      margin-bottom: 32px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .metaphor-block p {
+      font-size: 14px;
+      line-height: 1.85;
+      margin-bottom: 12px;
+      color: var(--text-muted);
+    }
+
+    .metaphor-block p:last-child {
+      margin-bottom: 0;
+    }
+
+    .metaphor-block strong {
+      color: var(--gold);
+      font-weight: 600;
+    }
+
+    /* NOISE BOX */
+    .noise-box {
+      background: var(--gold-faint);
+      border: 1px solid rgba(197, 161, 73, 0.2);
+      border-radius: 16px;
+      padding: 24px;
+      margin-bottom: 32px;
+    }
+
+    .noise-box .noise-title {
+      font-size: 16px;
+      font-weight: 700;
+      margin-bottom: 12px;
+      color: var(--gold);
+    }
+
+    .noise-box p {
+      font-size: 13px;
+      line-height: 1.8;
+      color: var(--text-muted);
+      margin-bottom: 8px;
+    }
+
+    .noise-box p:last-child {
+      margin-bottom: 0;
+    }
+
+    .noise-box strong {
+      color: var(--text);
+      font-weight: 600;
+    }
+
+    /* PYRAMID */
+    .pyramid-container {
+      margin-bottom: 40px;
+    }
+
+    .pyramid-level {
+      display: flex;
+      align-items: stretch;
+      margin-bottom: 3px;
+    }
+
+    .pyramid-label {
+      width: 80px;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      padding-right: 12px;
+      font-size: 9px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      font-weight: 600;
+    }
+
+    .pyramid-bar {
+      flex: 1;
+      border-radius: 12px;
+      padding: 14px 18px;
+      font-size: 13px;
+      line-height: 1.55;
+      color: var(--text-muted);
+    }
+
+    .pyramid-bar strong {
+      display: block;
+      font-size: 11px;
+      font-weight: 700;
+      margin-bottom: 2px;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+
+    .level-nsm .pyramid-bar {
+      background: var(--bg-deep);
+      border: 1px solid var(--card-border);
+    }
+
+    .level-nsm .pyramid-bar strong {
+      color: var(--gold);
+    }
+
+    .level-okr .pyramid-bar {
+      background: rgba(30, 30, 32, 0.8);
+      border: 1px solid var(--card-border);
+    }
+
+    .level-okr .pyramid-bar strong {
+      color: var(--blue);
+    }
+
+    .level-kpi .pyramid-bar {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+    }
+
+    .level-kpi .pyramid-bar strong {
+      color: var(--red);
+    }
+
+    .level-metric .pyramid-bar {
+      background: transparent;
+      border: 1px solid var(--card-border);
+    }
+
+    .level-metric .pyramid-bar strong {
+      color: var(--text-dim);
+    }
+
+    .pyramid-note {
+      font-size: 12px;
+      color: var(--text-dim);
+      margin-bottom: 40px;
+      padding-left: 92px;
+    }
+
+    /* CASES */
+    .cases-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-bottom: 32px;
+    }
+
+    .case-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 20px;
+      overflow: hidden;
+      transition: border-color 0.3s;
+    }
+
+    .case-card:hover {
+      border-color: var(--card-border-hover);
+    }
+
+    .case-header {
+      background: var(--bg-deep);
+      padding: 16px 18px;
+      border-bottom: 1px solid var(--card-border);
+    }
+
+    .case-tag {
+      font-size: 9px;
+      letter-spacing: 0.12em;
+      color: var(--gold);
+      text-transform: uppercase;
+      margin-bottom: 4px;
+      font-weight: 700;
+    }
+
+    .case-title {
+      font-size: 15px;
+      font-weight: 700;
+    }
+
+    .case-row {
+      padding: 10px 18px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+    }
+
+    .case-row:last-child {
+      border-bottom: none;
+    }
+
+    .case-row-label {
+      font-size: 8px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 3px;
+      font-weight: 700;
+    }
+
+    .case-row-content {
+      font-size: 12px;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+
+    .metric-tag {
+      display: inline-block;
+      background: var(--gold-dim);
+      border: 1px solid rgba(197, 161, 73, 0.25);
+      border-radius: 8px;
+      padding: 3px 8px;
+      font-size: 10px;
+      font-weight: 500;
+      margin: 2px 2px 2px 0;
+      color: var(--gold);
+    }
+
+    .kpi-tag {
+      display: inline-block;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid var(--card-border);
+      border-radius: 8px;
+      padding: 3px 8px;
+      font-size: 10px;
+      font-weight: 500;
+      margin: 2px 2px 2px 0;
+      color: var(--text-dim);
+    }
+
+    /* CRITERIA */
+    .criteria-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-bottom: 32px;
+    }
+
+    .criteria-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 20px;
+      overflow: hidden;
+      transition: border-color 0.3s;
+    }
+
+    .criteria-card:hover {
+      border-color: var(--card-border-hover);
+    }
+
+    .criteria-icon-bar {
+      height: 4px;
+    }
+
+    .criteria-icon-bar.bar-blue {
+      background: var(--blue);
+    }
+
+    .criteria-icon-bar.bar-red {
+      background: var(--red);
+    }
+
+    .criteria-icon-bar.bar-gold {
+      background: var(--gold);
+    }
+
+    .criteria-inner {
+      padding: 20px 22px;
+    }
+
+    .criteria-verb {
+      font-size: 18px;
+      font-weight: 800;
+      margin-bottom: 2px;
+    }
+
+    .criteria-question {
+      font-size: 10px;
+      color: var(--text-dim);
+      margin-bottom: 12px;
+      font-weight: 500;
+    }
+
+    .criteria-desc {
+      font-size: 13px;
+      color: var(--text-muted);
+      line-height: 1.7;
+      margin-bottom: 12px;
+    }
+
+    .criteria-example {
+      background: rgba(255, 255, 255, 0.03);
+      border-left: 2px solid var(--card-border);
+      border-radius: 0 10px 10px 0;
+      padding: 10px 14px;
+      font-size: 12px;
+      color: var(--text-muted);
+      line-height: 1.65;
+      margin-bottom: 8px;
+    }
+
+    .criteria-example strong {
+      color: var(--gold);
+      font-weight: 600;
+    }
+
+    .criteria-signal {
+      font-size: 11px;
+      color: var(--text-dim);
+    }
+
+    /* FORMAT CARDS */
+    .format-cards {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .fcard {
+      display: grid;
+      grid-template-columns: 56px 1fr;
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 20px;
+      overflow: hidden;
+      transition: border-color 0.3s, transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .fcard:hover {
+      border-color: var(--card-border-hover);
+      transform: translateY(-3px);
+      box-shadow: 0 8px 32px rgba(197,161,73,0.08);
+    }
+
+    .fcard-num {
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+      padding-top: 24px;
+      font-size: 22px;
+      font-weight: 800;
+      color: var(--gold);
+      border-right: 1px solid rgba(255, 255, 255, 0.04);
+      background: var(--bg-deep);
+    }
+
+    .fcard-body {
+      padding: 20px 22px;
+    }
+
+    .fcard-header {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-bottom: 10px;
+    }
+
+    .fcard-name {
+      font-size: 16px;
+      font-weight: 700;
+    }
+
+    .format-tag {
+      display: inline-block;
+      font-size: 8px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 2px 7px;
+      border-radius: 6px;
+      font-weight: 700;
+    }
+
+    .tag-blue {
+      background: var(--blue-dim);
+      color: var(--blue);
+    }
+
+    .tag-red {
+      background: var(--red-dim);
+      color: var(--red);
+    }
+
+    .tag-gold {
+      background: var(--gold-dim);
+      color: var(--gold);
+    }
+
+    .tag-raw {
+      background: rgba(255, 255, 255, 0.04);
+      color: var(--text-dim);
+    }
+
+    .fcard-def {
+      font-size: 13px;
+      line-height: 1.75;
+      color: var(--text-muted);
+      margin-bottom: 14px;
+      border-left: 2px solid var(--card-border);
+      padding-left: 14px;
+    }
+
+    .fcard-example {
+      background: rgba(255, 255, 255, 0.02);
+      border-radius: 12px;
+      padding: 14px 16px;
+      font-size: 12px;
+      line-height: 1.7;
+      color: var(--text-muted);
+      margin-bottom: 12px;
+    }
+
+    .fcard-example-label {
+      font-size: 9px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 6px;
+      font-weight: 700;
+    }
+
+    .fcard-limits {
+      background: rgba(255, 255, 255, 0.02);
+      border-radius: 12px;
+      padding: 12px 16px;
+      font-size: 12px;
+      line-height: 1.65;
+      color: var(--text-dim);
+      margin-bottom: 12px;
+    }
+
+    .fcard-limits-label {
+      font-size: 9px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--red);
+      margin-bottom: 5px;
+      font-weight: 700;
+    }
+
+    .fcard-when {
+      font-size: 12px;
+      line-height: 1.7;
+      color: var(--text-dim);
+    }
+
+    .fwhen-yes {
+      color: var(--blue);
+      font-weight: 600;
+    }
+
+    .fwhen-no {
+      color: var(--red);
+      font-weight: 600;
+    }
+
+    /* MATRIX */
+    .matrix-wrap {
+      overflow: auto;
+      border: 1px solid var(--card-border);
+      border-radius: 16px;
+      max-height: 520px;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: thin;
+      scrollbar-color: rgba(197,161,73,0.3) transparent;
+    }
+    .matrix-wrap::-webkit-scrollbar { width: 5px; height: 5px; }
+    .matrix-wrap::-webkit-scrollbar-track { background: transparent; }
+    .matrix-wrap::-webkit-scrollbar-thumb { background: rgba(197,161,73,0.25); border-radius: 4px; }
+    .matrix-wrap::-webkit-scrollbar-thumb:hover { background: rgba(197,161,73,0.45); }
+    .matrix-wrap::-webkit-scrollbar-corner { background: transparent; }
+
+    .matrix-table {
+      width: 100%;
+      border-collapse: separate;
+      border-spacing: 0;
+      font-size: 11px;
+      min-width: 780px;
+    }
+
+    .matrix-table thead tr {
+      background: var(--bg-deep);
+    }
+
+    .matrix-table thead th {
+      padding: 12px 8px;
+      font-size: 9px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--gold);
+      text-align: center;
+      font-weight: 600;
+      border-right: 1px solid rgba(255, 255, 255, 0.04);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      position: sticky;
+      top: 0;
+      z-index: 3;
+      background: var(--bg-deep);
+    }
+
+    .matrix-table thead th.dim-col {
+      text-align: left;
+      width: 180px;
+      color: var(--text-dim);
+      padding-left: 14px;
+      position: sticky;
+      top: 0;
+      left: 0;
+      z-index: 4;
+      background: var(--bg-deep);
+    }
+
+    .matrix-table tbody tr {
+      border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+    }
+
+    .matrix-table tbody td {
+      padding: 8px;
+      text-align: center;
+      border-right: 1px solid rgba(255, 255, 255, 0.04);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+      vertical-align: middle;
+      background: var(--bg);
+    }
+
+    .matrix-table tbody td.dim-label {
+      text-align: left;
+      padding: 8px 14px;
+      position: sticky;
+      left: 0;
+      z-index: 2;
+      background: var(--bg);
+    }
+
+    .dim-name {
+      display: block;
+      font-weight: 600;
+      color: var(--text);
+      font-size: 11px;
+      margin-bottom: 1px;
+    }
+
+    .dim-desc {
+      display: block;
+      font-size: 9px;
+      color: var(--text-dim);
+      line-height: 1.4;
+    }
+
+    .mc {
+      display: inline-block;
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+    }
+
+    .mc-high {
+      background: var(--blue);
+    }
+
+    .mc-mod {
+      background: var(--gold);
+    }
+
+    .mc-low {
+      background: rgba(255, 255, 255, 0.12);
+    }
+
+    .matrix-legend {
+      display: flex;
+      gap: 20px;
+      margin-top: 16px;
+      flex-wrap: wrap;
+    }
+
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 11px;
+      color: var(--text-dim);
+    }
+
+    .legend-dot {
+      display: inline-block;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    .legend-dot-high {
+      background: var(--blue);
+    }
+
+    .legend-dot-mod {
+      background: var(--gold);
+    }
+
+    .legend-dot-low {
+      background: rgba(255, 255, 255, 0.12);
+    }
+
+    @media (max-width: 700px) {
+      .matrix-wrap {
+        max-height: 420px;
+      }
+
+      .matrix-table thead th {
+        font-size: 7px;
+        padding: 8px 4px;
+      }
+
+      .matrix-table thead th.dim-col {
+        width: 110px;
+        padding-left: 8px;
+      }
+
+      .matrix-table tbody td {
+        padding: 6px 3px;
+      }
+
+      .matrix-table tbody td.dim-label {
+        padding: 6px 8px;
+      }
+
+      .dim-desc {
+        display: none;
+      }
+
+      .mc {
+        width: 10px;
+        height: 10px;
+      }
+
+      .matrix-table {
+        min-width: 600px;
+      }
+    }
+
+    /* EXERCISE */
+    .exercise-block {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 20px;
+      padding: 32px 28px;
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+    }
+
+    .exercise-block h3 {
+      font-size: 20px;
+      font-weight: 800;
+      margin-bottom: 4px;
+    }
+
+    .exercise-subtitle {
+      color: var(--text-dim);
+      font-size: 11px;
+      margin-bottom: 24px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .exercise-steps {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .exercise-step {
+      display: flex;
+      gap: 14px;
+      align-items: flex-start;
+    }
+
+    .step-num {
+      width: 28px;
+      height: 28px;
+      background: var(--bg-deep);
+      color: var(--gold);
+      border: 1px solid rgba(197, 161, 73, 0.2);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      font-weight: 700;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    .step-text {
+      font-size: 13px;
+      line-height: 1.7;
+      color: var(--text-muted);
+    }
+
+    .step-text strong {
+      color: var(--text);
+      font-weight: 600;
+    }
+
+    .scenario-cards {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-top: 24px;
+    }
+
+    .scenario-card {
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid var(--card-border);
+      border-radius: 14px;
+      padding: 16px;
+      transition: border-color 0.3s, transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .scenario-card:hover {
+      border-color: var(--card-border-hover);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 24px rgba(197,161,73,0.06);
+    }
+
+    .scenario-label {
+      font-size: 9px;
+      letter-spacing: 0.12em;
+      color: var(--gold);
+      text-transform: uppercase;
+      margin-bottom: 6px;
+      font-weight: 700;
+    }
+
+    .scenario-text {
+      font-size: 12px;
+      line-height: 1.65;
+      color: var(--text-muted);
+    }
+
+    hr {
+      border: none;
+      border-top: 1px solid var(--card-border);
+      margin: 48px 0;
+    }
+
+    .footer {
+      text-align: center;
+      padding: 40px 24px 32px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .footer-brand {
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      opacity: 0.5;
+    }
+
+    .footer-copy {
+      font-size: 9px;
+      color: var(--text-dim);
+      opacity: 0.35;
+      margin-top: 4px;
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    @media (max-width: 700px) {
+
+      .cases-grid,
+      .criteria-grid,
+      .scenario-cards {
+        grid-template-columns: 1fr;
+      }
+
+      .fcard {
+        grid-template-columns: 44px 1fr;
+      }
+
+      .pyramid-label {
+        width: 56px;
+        font-size: 7px;
+      }
+
+      .pyramid-note {
+        padding-left: 68px;
+      }
+
+      .cover {
+        padding: 60px 24px 40px;
+      }
+
+      .page {
+        padding: 32px 20px 48px;
+      }
+
+      .sticky-nav {
+        gap: 12px;
+      }
+
+      .sticky-nav-brand {
+        font-size: 9px;
+      }
+
+      .nav-pill {
+        font-size: 10px;
+        padding: 5px 10px;
+      }
+    }
+
+    @media print {
+      .cover {
+        padding: 40px;
+      }
+
+      body {
+        background: #fff;
+        color: #111;
+        font-size: 12px;
+      }
+
+      #particle-canvas,
+      .sticky-nav {
+        display: none;
+      }
+
+      .reveal {
+        opacity: 1;
+        transform: none;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <canvas id="particle-canvas"></canvas>
+
+  <!-- STICKY NAV -->
+  <nav class="sticky-nav" id="stickyNav">
+    <img src="lifestrategics_logo_plain.png" alt="LifeStrategics" class="sticky-nav-logo">
+    <div class="sticky-nav-brand">
+      <span class="sticky-nav-brand-tool">Creación de Dashboards</span>
+    </div>
+    <span class="sticky-nav-sep"></span>
+    <div class="sticky-nav-pills">
+      <a href="#intro" class="nav-pill">Intro</a>
+      <a href="#piramide" class="nav-pill">Pirámide</a>
+      <a href="#criterios" class="nav-pill">Criterios</a>
+      <a href="#formatos" class="nav-pill">Formatos</a>
+      <a href="#matriz" class="nav-pill">Matriz</a>
+      <a href="#ejercicio" class="nav-pill">Ejercicio</a>
+    </div>
+  </nav>
+
+  <!-- COVER -->
+  <div class="cover" id="coverSection">
+    <img src="lifestrategics_logo_plain.png" alt="LifeStrategics" class="cover-logo">
+    <div class="cover-eyebrow">Herramienta de Facilitación</div>
+    <div class="bead-visual">
+      <div class="bead"></div>
+      <div class="thread-line"></div>
+      <div class="bead"></div>
+      <div class="thread-line"></div>
+      <div class="bead"></div>
+      <div class="thread-line"></div>
+      <div class="bead"></div>
+      <div class="thread-line"></div>
+      <div class="bead"></div>
+      <div class="thread-line"></div>
+      <div class="bead"></div>
+      <div class="thread-line"></div>
+      <div class="bead"></div>
+      <div class="thread-line"></div>
+      <div class="bead"></div>
+    </div>
+    <h1 class="cover-title">Creación de <span class="gold">Dashboards</span></h1>
+    <div class="cover-divider"></div>
+    <p class="cover-subtitle">Herramienta para facilitar la selección del formato de visualización correcto según la
+      pregunta, la audiencia y la decisión que se necesita habilitar.</p>
+    <div class="anchor-pills">
+      <a href="#intro" class="anchor-pill"><span class="pill-num">00</span> La metáfora</a>
+      <a href="#piramide" class="anchor-pill"><span class="pill-num">01</span> La pirámide</a>
+      <a href="#criterios" class="anchor-pill"><span class="pill-num">02</span> Los 4 criterios</a>
+      <a href="#formatos" class="anchor-pill"><span class="pill-num">03</span> 8 formatos</a>
+      <a href="#matriz" class="anchor-pill"><span class="pill-num">04</span> Matriz</a>
+      <a href="#ejercicio" class="anchor-pill"><span class="pill-num">05</span> Ejercicio</a>
+    </div>
+  </div>
+
+  <div class="page">
+
+    <!-- INTRO -->
+    <div class="section reveal" id="intro">
+      <div class="section-number">Intro</div>
+      <h2 class="section-title">Las cuentas y el hilo</h2>
+      <p class="section-intro">Antes de hablar de tableros (dashboards), hablamos de datos. Y de por qué tener muchos no
+        es lo mismo que tener claridad.</p>
+      <div class="metaphor-block reveal">
+        <p>Los datos son <strong>cuentas</strong>. Cada una tiene color, forma, valor propio. Solas, son hermosas, pero
+          no dicen nada.</p>
+        <p>Un tablero (dashboard) mal diseñado es exactamente eso: muchas cuentas en pantalla. Hay color, hay
+          movimiento, hay números. Pero <strong>no hay collar</strong>.</p>
+        <p>El hilo que convierte las cuentas en joya es <strong>la pregunta que le das a los datos</strong>. Sin esa
+          pregunta, más datos producen más ruido, no más claridad.</p>
+      </div>
+      <div class="noise-box reveal">
+        <div class="noise-title">⚠ El problema del exceso de métricas</div>
+        <p>Plataformas como Meta Ads Manager, Google Ads, o cualquier CRM moderno pueden entregar cientos de métricas.
+          Impresiones, alcance, frecuencia, CTR, CPC, CPM, ROAS, conversiones por dispositivo, por hora, por segmento de
+          edad, por colocación...</p>
+        <p>La tentación es mostrarlas todas. El resultado es un tablero que nadie lee, y peor aún, que da la ilusión de
+          estar monitoreando cuando en realidad solo se está acumulando información.</p>
+        <p><strong>Más métricas no es igual a más visibilidad. Es igual a más ruido.</strong> El criterio para elegir
+          qué mostrar no es "¿está disponible este dato?" sino "¿esta métrica cambia una decisión?"</p>
+      </div>
+    </div>
+    <hr>
+
+    <!-- PYRAMID -->
+    <div class="section reveal" id="piramide">
+      <div class="section-number">Sección 01</div>
+      <h2 class="section-title">La pirámide: del collar a la cuenta</h2>
+      <p class="section-intro">Los tableros efectivos se construyen de arriba hacia abajo: primero la pregunta más
+        importante, luego los datos que la responden. Nunca al revés.</p>
+      <div class="pyramid-container">
+        <div class="pyramid-level level-nsm">
+          <div class="pyramid-label">Estrella</div>
+          <div class="pyramid-bar"><strong>Métrica Estrella (North Star Metric)</strong>¿Vamos bien o mal? Una sola
+            métrica que representa el estado de salud del sistema.</div>
+        </div>
+        <div class="pyramid-level level-okr">
+          <div class="pyramid-label">Estrategia</div>
+          <div class="pyramid-bar"><strong>Objetivos y Resultados Clave (OKRs)</strong>¿En qué nos enfocamos este
+            periodo y cómo sabemos que lo logramos?</div>
+        </div>
+        <div class="pyramid-level level-kpi">
+          <div class="pyramid-label">Proceso</div>
+          <div class="pyramid-bar"><strong>Indicadores Clave de Rendimiento (KPIs)</strong>¿El proceso está funcionando?
+            Detectan desviaciones antes de que el problema sea grande.</div>
+        </div>
+        <div class="pyramid-level level-metric">
+          <div class="pyramid-label">Señales</div>
+          <div class="pyramid-bar"><strong>Métricas individuales</strong>¿Qué está pasando exactamente aquí? Útiles solo
+            en contexto; una métrica sola no dice nada.</div>
+        </div>
+      </div>
+      <p class="pyramid-note">↳ Debajo de las métricas individuales viven las relaciones: ¿qué mueve a qué? Esos son los
+        hallazgos (insights) reales.</p>
+
+      <div class="cases-grid">
+        <div class="case-card">
+          <div class="case-header">
+            <div class="case-tag">Caso 01 · Logística</div>
+            <div class="case-title">Red de distribución regional</div>
+          </div>
+          <div class="case-row">
+            <div class="case-row-label">Métrica Estrella</div>
+            <div class="case-row-content"><span class="metric-tag">Tasa de entrega a tiempo</span></div>
+          </div>
+          <div class="case-row">
+            <div class="case-row-label">Objetivo</div>
+            <div class="case-row-content">Reducir demoras en la última milla a menos del 5% en Q3</div>
+          </div>
+          <div class="case-row">
+            <div class="case-row-label">Resultados Clave</div>
+            <div class="case-row-content"><span class="metric-tag">Entregas a tiempo ≥95%</span><span
+                class="metric-tag">Costo/envío -12%</span><span class="metric-tag">Reclamos &lt;2%</span></div>
+          </div>
+          <div class="case-row">
+            <div class="case-row-label">KPIs</div>
+            <div class="case-row-content"><span class="kpi-tag">Tiempo promedio de ruta</span><span
+                class="kpi-tag">Capacidad utilizada</span><span class="kpi-tag">Devoluciones/zona</span></div>
+          </div>
+          <div class="case-row">
+            <div class="case-row-label">Métricas individuales</div>
+            <div class="case-row-content" style="font-size:11px;color:var(--text-dim)">Km recorridos, peso por vehículo,
+              paradas por ruta, combustible consumido</div>
+          </div>
+        </div>
+        <div class="case-card">
+          <div class="case-header">
+            <div class="case-tag">Caso 02 · Salud</div>
+            <div class="case-title">Clínica privada</div>
+          </div>
+          <div class="case-row">
+            <div class="case-row-label">Métrica Estrella</div>
+            <div class="case-row-content"><span class="metric-tag">Satisfacción del paciente (NPS)</span></div>
+          </div>
+          <div class="case-row">
+            <div class="case-row-label">Objetivo</div>
+            <div class="case-row-content">Mejorar la experiencia de atención y reducir tiempos de espera en urgencias
+            </div>
+          </div>
+          <div class="case-row">
+            <div class="case-row-label">Resultados Clave</div>
+            <div class="case-row-content"><span class="metric-tag">NPS ≥70</span><span class="metric-tag">Espera &lt;15
+                min</span><span class="metric-tag">Reingresos &lt;4%</span></div>
+          </div>
+          <div class="case-row">
+            <div class="case-row-label">KPIs</div>
+            <div class="case-row-content"><span class="kpi-tag">Tiempo triage-consulta</span><span
+                class="kpi-tag">Ocupación camas</span><span class="kpi-tag">Quejas/semana</span></div>
+          </div>
+          <div class="case-row">
+            <div class="case-row-label">Métricas individuales</div>
+            <div class="case-row-content" style="font-size:11px;color:var(--text-dim)">Consultas por hora, medicamentos
+              dispensados, cancelaciones de cita</div>
+          </div>
+        </div>
+        <div class="case-card">
+          <div class="case-header">
+            <div class="case-tag">Caso 03 · SaaS / Producto Digital</div>
+            <div class="case-title">Plataforma B2B de software</div>
+          </div>
+          <div class="case-row">
+            <div class="case-row-label">Métrica Estrella</div>
+            <div class="case-row-content"><span class="metric-tag">Usuarios activos semanales (WAU)</span></div>
+          </div>
+          <div class="case-row">
+            <div class="case-row-label">Objetivo</div>
+            <div class="case-row-content">Mejorar la retención en los primeros 30 días de una cuenta nueva</div>
+          </div>
+          <div class="case-row">
+            <div class="case-row-label">Resultados Clave</div>
+            <div class="case-row-content"><span class="metric-tag">Retención día 30: 65%</span><span
+                class="metric-tag">Primer valor &lt;3 días</span><span class="metric-tag">Cancelación (churn)
+                &lt;3%</span></div>
+          </div>
+          <div class="case-row">
+            <div class="case-row-label">KPIs</div>
+            <div class="case-row-content"><span class="kpi-tag">Finalización del onboarding</span><span
+                class="kpi-tag">Funciones día 7</span><span class="kpi-tag">NPS semana 2</span></div>
+          </div>
+          <div class="case-row">
+            <div class="case-row-label">Métricas individuales</div>
+            <div class="case-row-content" style="font-size:11px;color:var(--text-dim)">Inicios de sesión, páginas
+              visitadas, pasos del onboarding completados, errores en flujo</div>
+          </div>
+        </div>
+        <div class="case-card">
+          <div class="case-header">
+            <div class="case-tag">Caso 04 · Educación</div>
+            <div class="case-title">Programa de capacitación corporativa</div>
+          </div>
+          <div class="case-row">
+            <div class="case-row-label">Métrica Estrella</div>
+            <div class="case-row-content"><span class="metric-tag">Tasa de aplicación post-curso</span></div>
+          </div>
+          <div class="case-row">
+            <div class="case-row-label">Objetivo</div>
+            <div class="case-row-content">Que el 70% de los participantes aplique al menos una herramienta del curso en
+              30 días</div>
+          </div>
+          <div class="case-row">
+            <div class="case-row-label">Resultados Clave</div>
+            <div class="case-row-content"><span class="metric-tag">Aplicación ≥70%</span><span
+                class="metric-tag">Satisfacción 4.5/5</span><span class="metric-tag">Certificación ≥85%</span></div>
+          </div>
+          <div class="case-row">
+            <div class="case-row-label">KPIs</div>
+            <div class="case-row-content"><span class="kpi-tag">Asistencia/módulo</span><span
+                class="kpi-tag">Calificación promedio</span><span class="kpi-tag">Seguimiento 30 días</span></div>
+          </div>
+          <div class="case-row">
+            <div class="case-row-label">Métricas individuales</div>
+            <div class="case-row-content" style="font-size:11px;color:var(--text-dim)">Horas dedicadas, recursos
+              descargados, preguntas realizadas, encuesta de salida</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <hr>
+
+    <!-- CRITERIA -->
+    <div class="section reveal" id="criterios">
+      <div class="section-number">Sección 02</div>
+      <h2 class="section-title">Antes de construir: ¿para qué es?</h2>
+      <p class="section-intro">Todo uso legítimo de datos cae en una de estas cuatro necesidades. Identificarla antes de
+        diseñar determina el formato, el nivel de detalle y quién es la audiencia real.</p>
+      <div class="criteria-grid">
+        <div class="criteria-card">
+          <div class="criteria-icon-bar bar-blue"></div>
+          <div class="criteria-inner">
+            <div class="criteria-verb">🔍 Explorar</div>
+            <div class="criteria-question">"¿Qué está pasando aquí?"</div>
+            <div class="criteria-desc">No hay hipótesis todavía. El usuario necesita libertad para moverse: filtrar,
+              comparar, cambiar dimensiones. No sabe de antemano qué va a encontrar.</div>
+            <div class="criteria-example"><strong>Ejemplo:</strong> El equipo de producto quiere entender por qué
+              ciertos usuarios abandonan la app en los primeros 7 días. No saben si es el onboarding, el dispositivo, la
+              geografía o el plan.</div>
+            <div class="criteria-signal">Señal: la pregunta empieza con "me pregunto si..." o "¿habrá alguna relación
+              entre...?"</div>
+          </div>
+        </div>
+        <div class="criteria-card">
+          <div class="criteria-icon-bar bar-red"></div>
+          <div class="criteria-inner">
+            <div class="criteria-verb">🚨 Alertar</div>
+            <div class="criteria-question">"¿Hay algo fuera de rango?"</div>
+            <div class="criteria-desc">Ya sabes cómo se ve "normal". Quieres que el sistema avise cuando algo se salga
+              de ese rango, sin necesidad de estar mirando todo el tiempo.</div>
+            <div class="criteria-example"><strong>Ejemplo:</strong> El equipo de operaciones de un e-commerce quiere
+              saber si la tasa de errores en pagos supera el 2%. No necesitan ver todos los pagos; necesitan una alarma.
+            </div>
+            <div class="criteria-signal">Señal: la pregunta es "¿está todo bien?" y la respuesta correcta debería ser
+              sí/no.</div>
+          </div>
+        </div>
+        <div class="criteria-card">
+          <div class="criteria-icon-bar bar-blue"></div>
+          <div class="criteria-inner">
+            <div class="criteria-verb">💡 Explicar</div>
+            <div class="criteria-question">"¿Por qué pasó esto?"</div>
+            <div class="criteria-desc">Ya sabes qué pasó. Necesitas comunicarlo a alguien que tomará una decisión. La
+              narrativa importa tanto como el dato; el usuario leerá más que interactuará.</div>
+            <div class="criteria-example"><strong>Ejemplo:</strong> Las ventas del mes cayeron 15%. El director quiere
+              saber por qué antes del lunes. Necesitas un reporte que cuente la historia: qué canal cayó, desde cuándo,
+              qué factor coincide.</div>
+            <div class="criteria-signal">Señal: alguien ya vio el número y preguntó "¿y eso por qué?"</div>
+          </div>
+        </div>
+        <div class="criteria-card">
+          <div class="criteria-icon-bar bar-gold"></div>
+          <div class="criteria-inner">
+            <div class="criteria-verb">✅ Decidir</div>
+            <div class="criteria-question">"¿Qué hacemos?"</div>
+            <div class="criteria-desc">El usuario necesita ver opciones, consecuencias y tradeoffs, y elegir. El visual
+              debe reducir fricción cognitiva: que la decisión correcta sea obvia o que los criterios estén claros.
+            </div>
+            <div class="criteria-example"><strong>Ejemplo:</strong> Marketing tiene presupuesto limitado para Q3. El
+              tablero muestra el retorno de inversión (ROI) de cada canal, tiempo de retorno y costo por prospecto
+              (lead), diseñado para comparar, no para explorar.</div>
+            <div class="criteria-signal">Señal: la reunión termina con una acción concreta asignada a alguien.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <hr>
+
+    <!-- 8 FORMATS -->
+    <div class="section reveal" id="formatos">
+      <div class="section-number">Sección 03</div>
+      <h2 class="section-title">Los 8 formatos de visualización</h2>
+      <p class="section-intro">El tablero (dashboard) es solo uno de ocho posibles formatos. La elección correcta
+        depende de quién es la audiencia, qué decisión debe habilitar y con qué frecuencia se necesita.</p>
+      <div class="format-cards">
+        <div class="fcard">
+          <div class="fcard-num">01</div>
+          <div class="fcard-body">
+            <div class="fcard-header">
+              <div class="fcard-name">Reporte Estándar (Standard Report)</div><span
+                class="format-tag tag-blue">Explicar</span>
+            </div>
+            <div class="fcard-def">Un documento estructurado que presenta información de forma fija, generalmente con
+              periodicidad definida (semanal, mensual). El usuario lo lee, no lo manipula.</div>
+            <div class="fcard-example">
+              <div class="fcard-example-label">Ejemplo concreto</div>Reporte mensual de ventas por región que el área
+              comercial recibe por correo. Muestra: ingreso total, comparativo vs. mes anterior, top 5 cuentas, tasa de
+              cierre y pronóstico (forecast). El gerente lo lee en 5 minutos y sabe dónde está parado.
+            </div>
+            <div class="fcard-limits">
+              <div class="fcard-limits-label">Limitaciones clave</div>No permite explorar. Si el gerente quiere saber
+              por qué cayó una región específica, necesita un reporte diferente o una llamada. Es una fotografía, no una
+              cámara.
+            </div>
+            <div class="fcard-when"><span class="fwhen-yes">✓ Úsalo cuando</span> la audiencia sabe qué buscar, la
+              información es estable y el objetivo es mantener a alguien informado regularmente.<br><span
+                class="fwhen-no">✗ No lo uses cuando</span> el receptor necesita profundizar, filtrar o responder
+              preguntas que cambian cada semana.</div>
+          </div>
+        </div>
+
+        <div class="fcard">
+          <div class="fcard-num">02</div>
+          <div class="fcard-body">
+            <div class="fcard-header">
+              <div class="fcard-name">Archivo de Exportación (Export File)</div><span class="format-tag tag-raw">Datos
+                crudos</span>
+            </div>
+            <div class="fcard-def">Un archivo de datos sin procesar (CSV, Excel, JSON) entregado a alguien que sabe
+              trabajarlo. No tiene diseño, no tiene narrativa; tiene filas y columnas.</div>
+            <div class="fcard-example">
+              <div class="fcard-example-label">Ejemplo concreto</div>El equipo de finanzas solicita al área de datos un
+              CSV con todas las transacciones del trimestre: monto, fecha, país, tipo de cliente, canal de pago. Lo van
+              a cruzar con su modelo propio en Excel para calcular márgenes por segmento.
+            </div>
+            <div class="fcard-limits">
+              <div class="fcard-limits-label">Limitaciones clave</div>Sin contexto ni estructura visual, los datos
+              crudos son inútiles para quien no sabe interpretarlos. Es el formato más económico de producir y el más
+              peligroso de usar con la audiencia equivocada.
+            </div>
+            <div class="fcard-when"><span class="fwhen-yes">✓ Úsalo cuando</span> el receptor es un analista o sistema
+              que procesará los datos por su cuenta.<br><span class="fwhen-no">✗ No lo uses cuando</span> la audiencia
+              necesita entender algo sin procesar datos por sí misma; recibirá un archivo que nunca abrirá.</div>
+          </div>
+        </div>
+
+        <div class="fcard">
+          <div class="fcard-num">03</div>
+          <div class="fcard-body">
+            <div class="fcard-header">
+              <div class="fcard-name">Reporte Analítico (Analytics Report)</div><span
+                class="format-tag tag-blue">Explorar</span><span class="format-tag tag-blue">Explicar</span>
+            </div>
+            <div class="fcard-def">Un documento analítico que combina datos con narrativa, contexto e interpretación. No
+              solo muestra qué pasó; explica por qué y qué significa. El analista ya hizo el trabajo de pensar por el
+              lector.</div>
+            <div class="fcard-example">
+              <div class="fcard-example-label">Ejemplo concreto</div>Análisis post-campaña de 90 días: las conversiones
+              cayeron 22% en la semana 6. El reporte muestra el dato, lo contextualiza con el cambio de algoritmo de
+              Meta de esa semana, compara con campañas anteriores, identifica qué segmentos resistieron mejor y
+              recomienda ajustar la distribución de presupuesto para Q3.
+            </div>
+            <div class="fcard-limits">
+              <div class="fcard-limits-label">Limitaciones clave</div>Tarda en producirse. No sirve para monitoreo en
+              tiempo real. Su valor depende totalmente de la calidad del análisis; un Reporte Analítico mal hecho es más
+              peligroso que no tener nada porque da falsa confianza.
+            </div>
+            <div class="fcard-when"><span class="fwhen-yes">✓ Úsalo cuando</span> algo ya pasó y necesitas entenderlo en
+              profundidad para tomar una decisión de peso: cambio de estrategia, inversión, ajuste de producto.<br><span
+                class="fwhen-no">✗ No lo uses cuando</span> la audiencia necesita respuestas rápidas o monitoreo
+              continuo; no es el formato para el día a día.</div>
+          </div>
+        </div>
+
+        <div class="fcard">
+          <div class="fcard-num">04</div>
+          <div class="fcard-body">
+            <div class="fcard-header">
+              <div class="fcard-name">Cabina (Cockpit)</div><span class="format-tag tag-red">Alertar</span>
+            </div>
+            <div class="fcard-def">Un panel de monitoreo con pocas métricas críticas y umbrales visuales (semáforos,
+              indicadores). Su función es responder una sola pregunta en segundos: ¿está todo dentro del rango normal?
+            </div>
+            <div class="fcard-example">
+              <div class="fcard-example-label">Ejemplo concreto</div>Panel de operaciones de un e-commerce visible en la
+              pantalla del equipo de tecnología durante el Buen Fin. Muestra 5 indicadores en tiempo real: tasa de error
+              en pagos (umbral: &lt;2%), tiempo de carga (umbral: &lt;3s), órdenes por minuto, disponibilidad del
+              servidor, tickets de soporte abiertos. Si algo cruza el umbral, la pantalla cambia a rojo.
+            </div>
+            <div class="fcard-limits">
+              <div class="fcard-limits-label">Limitaciones clave</div>No explica nada. Si una métrica entra en rojo, la
+              cabina no dice por qué; solo dice que hay un problema. Pierde efectividad si se le agregan demasiados
+              indicadores: con 15 métricas, nadie sabe cuál importa.
+            </div>
+            <div class="fcard-when"><span class="fwhen-yes">✓ Úsalo cuando</span> tienes umbrales claros de "normal vs.
+              anormal" y necesitas que alguien actúe rápido si algo sale del rango.<br><span class="fwhen-no">✗ No lo
+                uses cuando</span> no hay umbrales definidos; una cabina sin criterios de alerta es solo otro tablero
+              decorativo.</div>
+          </div>
+        </div>
+
+        <div class="fcard">
+          <div class="fcard-num">05</div>
+          <div class="fcard-body">
+            <div class="fcard-header">
+              <div class="fcard-name">Tablero Exploratorio (Exploratory Dashboard)</div><span
+                class="format-tag tag-blue">Explorar</span>
+            </div>
+            <div class="fcard-def">Un entorno interactivo de alta libertad diseñado para encontrar patrones sin
+              hipótesis previa. El usuario filtra, cruza dimensiones y navega sin un destino fijo; es el equivalente
+              digital de explorar un mapa.</div>
+            <div class="fcard-example">
+              <div class="fcard-example-label">Ejemplo concreto</div>El equipo de producto sospecha que están perdiendo
+              usuarios antes de que lleguen a la función principal, pero no saben dónde. El tablero permite filtrar por
+              tipo de dispositivo, sistema operativo, versión de app, geografía, fuente de adquisición y paso del
+              onboarding. El analista puede explorar hasta encontrar el patrón.
+            </div>
+            <div class="fcard-limits">
+              <div class="fcard-limits-label">Limitaciones clave</div>Requiere criterio analítico para usarlo. En manos
+              de alguien sin experiencia interpretando datos, puede generar conclusiones incorrectas; el tablero
+              mostrará correlaciones, pero no sabrá cuáles son causales.
+            </div>
+            <div class="fcard-when"><span class="fwhen-yes">✓ Úsalo cuando</span> el equipo tiene capacidad analítica y
+              la pregunta todavía no está definida; es la herramienta para encontrar la pregunta correcta.<br><span
+                class="fwhen-no">✗ No lo uses cuando</span> la audiencia no tiene contexto del negocio para distinguir
+              una correlación interesante de una coincidencia.</div>
+          </div>
+        </div>
+
+        <div class="fcard">
+          <div class="fcard-num">06</div>
+          <div class="fcard-body">
+            <div class="fcard-header">
+              <div class="fcard-name">Tablero (Dashboard)</div><span class="format-tag tag-gold">Decidir</span>
+            </div>
+            <div class="fcard-def">La vista de seguimiento recurrente de un conjunto definido de métricas para una
+              audiencia específica. Funciona cuando la pregunta ya está clara y el usuario sabe qué busca. Es la
+              herramienta más sobreusada y la más mal implementada.</div>
+            <div class="fcard-example">
+              <div class="fcard-example-label">Ejemplo concreto</div>Tablero mensual del equipo comercial: embudo total,
+              oportunidades por etapa, tasa de cierre por vendedor, pronóstico vs. real, ciclo de venta promedio, tratos
+              ganados y perdidos por razón. El equipo lo revisa cada lunes en 10 minutos y ajusta prioridades de la
+              semana.
+            </div>
+            <div class="fcard-limits">
+              <div class="fcard-limits-label">Limitaciones clave</div>El error más común: construir un tablero para
+              "todas las necesidades" agregando métricas hasta que nadie sabe qué mirar. Un tablero efectivo tiene entre
+              5 y 12 métricas; si tiene 30, ya no es un tablero, es un archivo de datos con formato bonito.
+            </div>
+            <div class="fcard-when"><span class="fwhen-yes">✓ Úsalo cuando</span> las preguntas están definidas, la
+              audiencia es estable y el monitoreo es recurrente.<br><span class="fwhen-no">✗ No lo uses cuando</span>
+              las preguntas cambian cada mes o la audiencia es mixta; un tablero que intenta servir a todos termina
+              sirviendo a nadie.</div>
+          </div>
+        </div>
+
+        <div class="fcard">
+          <div class="fcard-num">07</div>
+          <div class="fcard-body">
+            <div class="fcard-header">
+              <div class="fcard-name">Suite de Tableros (Dashboard Suite)</div><span
+                class="format-tag tag-gold">Decidir</span><span class="format-tag tag-red">Alertar</span>
+            </div>
+            <div class="fcard-def">Un ecosistema de tableros interconectados, cada uno diseñado para una audiencia
+              específica dentro de la misma organización. No es un tablero grande; son varios tableros coordinados que
+              hablan el mismo idioma de datos.</div>
+            <div class="fcard-example">
+              <div class="fcard-example-label">Ejemplo concreto</div>Una empresa de retail con tres capas: <strong>Vista
+                C-level:</strong> ingresos, margen, NPS, OKRs del trimestre. <strong>Vista gerencial:</strong> KPIs por
+              área: ventas, inventario, devoluciones, satisfacción por tienda. <strong>Vista operativa:</strong> tiempo
+              real: órdenes del día, incidencias, stock crítico.
+            </div>
+            <div class="fcard-limits">
+              <div class="fcard-limits-label">Limitaciones clave</div>Requiere gobernanza de datos sólida: si las
+              métricas no están definidas de forma consistente entre vistas, la dirección verá un número diferente al
+              que ve operaciones para el mismo indicador. Eso destruye la confianza en los datos.
+            </div>
+            <div class="fcard-when"><span class="fwhen-yes">✓ Úsalo cuando</span> la organización tiene diferentes
+              audiencias con necesidades distintas y un equipo de datos con capacidad para mantener el
+              ecosistema.<br><span class="fwhen-no">✗ No lo uses cuando</span> el equipo de datos es pequeño; el
+              mantenimiento de múltiples vistas puede consumir más tiempo del que produce valor.</div>
+          </div>
+        </div>
+
+        <div class="fcard">
+          <div class="fcard-num">08</div>
+          <div class="fcard-body">
+            <div class="fcard-header">
+              <div class="fcard-name">Agente de IA (AI Agent)</div><span
+                class="format-tag tag-blue">Explorar</span><span class="format-tag tag-gold">Decidir</span>
+            </div>
+            <div class="fcard-def">Un sistema conversacional que responde preguntas en lenguaje natural consultando los
+              datos de la organización. El usuario no necesita saber dónde está el dato ni cómo filtrar; solo pregunta.
+            </div>
+            <div class="fcard-example">
+              <div class="fcard-example-label">Ejemplo concreto</div>Un director escribe: "¿Cuál fue nuestro canal más
+              rentable el año pasado y qué lo diferencia del segundo?" El agente cruza datos de ventas, costos de
+              adquisición y márgenes, y devuelve un resumen en texto con la comparación.
+            </div>
+            <div class="fcard-limits">
+              <div class="fcard-limits-label">Limitaciones clave</div>Alta facilidad de uso, pero baja trazabilidad: el
+              usuario no siempre puede verificar de dónde viene el dato ni cómo se calculó. En contextos donde la
+              auditoría importa (finanzas, regulatorio), esto es un problema real.
+            </div>
+            <div class="fcard-when"><span class="fwhen-yes">✓ Úsalo cuando</span> la audiencia necesita respuestas
+              rápidas a preguntas cambiantes y no tiene tiempo ni criterio para navegar tableros.<br><span
+                class="fwhen-no">✗ No lo uses cuando</span> la organización aún no confía en sus propios datos; un
+              Agente de IA amplificará los errores, no los ocultará.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <hr>
+
+    <!-- MATRIX -->
+    <div class="section reveal" id="matriz">
+      <div class="section-number">Matriz comparativa</div>
+      <h2 class="section-title">Las 12 dimensiones de evaluación</h2>
+      <p class="section-intro">Basado en el framework de Aurélien Vautier (datavizclarity.com). Cada formato tiene
+        fortalezas reales; ninguno es mejor en todo. El criterio de selección siempre debe ser la necesidad de la
+        audiencia, no la disponibilidad de la herramienta.</p>
+      <div class="matrix-wrap">
+        <table class="matrix-table">
+          <thead>
+            <tr>
+              <th class="dim-col">Dimensión</th>
+              <th>Reporte Estándar</th>
+              <th>Archivo Export</th>
+              <th>Reporte Analítico</th>
+              <th>Cabina</th>
+              <th>Tablero Exploratorio</th>
+              <th>Tablero</th>
+              <th>Suite de Tableros</th>
+              <th>Agente de IA</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="dim-label"><span class="dim-name">Facilidad de uso</span><span class="dim-desc">¿Qué tan fácil
+                  es para el usuario final?</span></td>
+              <td><span class="mc mc-mod"></span></td>
+              <td><span class="mc mc-low"></span></td>
+              <td><span class="mc mc-low"></span></td>
+              <td><span class="mc mc-low"></span></td>
+              <td><span class="mc mc-mod"></span></td>
+              <td><span class="mc mc-mod"></span></td>
+              <td><span class="mc mc-mod"></span></td>
+              <td><span class="mc mc-high"></span></td>
+            </tr>
+            <tr>
+              <td class="dim-label"><span class="dim-name">Escalabilidad</span><span class="dim-desc">¿Escala con más
+                  datos, usuarios o preguntas?</span></td>
+              <td><span class="mc mc-mod"></span></td>
+              <td><span class="mc mc-low"></span></td>
+              <td><span class="mc mc-low"></span></td>
+              <td><span class="mc mc-mod"></span></td>
+              <td><span class="mc mc-mod"></span></td>
+              <td><span class="mc mc-high"></span></td>
+              <td><span class="mc mc-high"></span></td>
+              <td><span class="mc mc-high"></span></td>
+            </tr>
+            <tr>
+              <td class="dim-label"><span class="dim-name">Colaboración</span><span class="dim-desc">¿Facilita trabajo
+                  en equipo alrededor del dato?</span></td>
+              <td><span class="mc mc-low"></span></td>
+              <td><span class="mc mc-low"></span></td>
+              <td><span class="mc mc-mod"></span></td>
+              <td><span class="mc mc-mod"></span></td>
+              <td><span class="mc mc-mod"></span></td>
+              <td><span class="mc mc-high"></span></td>
+              <td><span class="mc mc-high"></span></td>
+              <td><span class="mc mc-mod"></span></td>
+            </tr>
+            <tr>
+              <td class="dim-label"><span class="dim-name">Funcionalidad</span><span class="dim-desc">¿Cuántas funciones
+                  y capacidades ofrece?</span></td>
+              <td><span class="mc mc-low"></span></td>
+              <td><span class="mc mc-low"></span></td>
+              <td><span class="mc mc-mod"></span></td>
+              <td><span class="mc mc-mod"></span></td>
+              <td><span class="mc mc-high"></span></td>
+              <td><span class="mc mc-high"></span></td>
+              <td><span class="mc mc-high"></span></td>
+              <td><span class="mc mc-low"></span></td>
+            </tr>
+            <tr>
+              <td class="dim-label"><span class="dim-name">Interactividad</span><span class="dim-desc">¿El usuario puede
+                  manipular la vista?</span></td>
+              <td><span class="mc mc-mod"></span></td>
+              <td><span class="mc mc-low"></span></td>
+              <td><span class="mc mc-mod"></span></td>
+              <td><span class="mc mc-mod"></span></td>
+              <td><span class="mc mc-high"></span></td>
+              <td><span class="mc mc-high"></span></td>
+              <td><span class="mc mc-high"></span></td>
+              <td><span class="mc mc-high"></span></td>
+            </tr>
+            <tr>
+              <td class="dim-label"><span class="dim-name">Uso de gráficas</span><span class="dim-desc">¿Aprovecha
+                  visualizaciones para comunicar?</span></td>
+              <td><span class="mc mc-low"></span></td>
+              <td><span class="mc mc-low"></span></td>
+              <td><span class="mc mc-mod"></span></td>
+              <td><span class="mc mc-high"></span></td>
+              <td><span class="mc mc-high"></span></td>
+              <td><span class="mc mc-high"></span></td>
+              <td><span class="mc mc-high"></span></td>
+              <td><span class="mc mc-mod"></span></td>
+            </tr>
+            <tr>
+              <td class="dim-label"><span class="dim-name">Centrado en el usuario</span><span class="dim-desc">¿Está
+                  diseñado pensando en quien lo recibe?</span></td>
+              <td><span class="mc mc-low"></span></td>
+              <td><span class="mc mc-low"></span></td>
+              <td><span class="mc mc-high"></span></td>
+              <td><span class="mc mc-high"></span></td>
+              <td><span class="mc mc-high"></span></td>
+              <td><span class="mc mc-high"></span></td>
+              <td><span class="mc mc-high"></span></td>
+              <td><span class="mc mc-high"></span></td>
+            </tr>
+            <tr>
+              <td class="dim-label"><span class="dim-name">Experiencia (UX)</span><span class="dim-desc">¿La experiencia
+                  de uso es fluida y clara?</span></td>
+              <td><span class="mc mc-low"></span></td>
+              <td><span class="mc mc-low"></span></td>
+              <td><span class="mc mc-high"></span></td>
+              <td><span class="mc mc-high"></span></td>
+              <td><span class="mc mc-high"></span></td>
+              <td><span class="mc mc-high"></span></td>
+              <td><span class="mc mc-high"></span></td>
+              <td><span class="mc mc-mod"></span></td>
+            </tr>
+            <tr>
+              <td class="dim-label"><span class="dim-name">Velocidad al hallazgo</span><span class="dim-desc">¿Qué tan
+                  rápido llega el usuario a la respuesta?</span></td>
+              <td><span class="mc mc-low"></span></td>
+              <td><span class="mc mc-low"></span></td>
+              <td><span class="mc mc-high"></span></td>
+              <td><span class="mc mc-high"></span></td>
+              <td><span class="mc mc-low"></span></td>
+              <td><span class="mc mc-mod"></span></td>
+              <td><span class="mc mc-mod"></span></td>
+              <td><span class="mc mc-high"></span></td>
+            </tr>
+            <tr>
+              <td class="dim-label"><span class="dim-name">Habilitar la decisión</span><span class="dim-desc">¿Habilita
+                  directamente una decisión de negocio?</span></td>
+              <td><span class="mc mc-mod"></span></td>
+              <td><span class="mc mc-mod"></span></td>
+              <td><span class="mc mc-high"></span></td>
+              <td><span class="mc mc-high"></span></td>
+              <td><span class="mc mc-high"></span></td>
+              <td><span class="mc mc-high"></span></td>
+              <td><span class="mc mc-low"></span></td>
+              <td><span class="mc mc-high"></span></td>
+            </tr>
+            <tr>
+              <td class="dim-label"><span class="dim-name">Narrativa</span><span class="dim-desc">¿Permite construir una
+                  narrativa con los datos?</span></td>
+              <td><span class="mc mc-low"></span></td>
+              <td><span class="mc mc-low"></span></td>
+              <td><span class="mc mc-high"></span></td>
+              <td><span class="mc mc-low"></span></td>
+              <td><span class="mc mc-low"></span></td>
+              <td><span class="mc mc-low"></span></td>
+              <td><span class="mc mc-low"></span></td>
+              <td><span class="mc mc-high"></span></td>
+            </tr>
+            <tr>
+              <td class="dim-label"><span class="dim-name">Economía</span><span class="dim-desc">¿Es de bajo costo
+                  producir y mantener?</span></td>
+              <td><span class="mc mc-high"></span></td>
+              <td><span class="mc mc-high"></span></td>
+              <td><span class="mc mc-mod"></span></td>
+              <td><span class="mc mc-low"></span></td>
+              <td><span class="mc mc-mod"></span></td>
+              <td><span class="mc mc-mod"></span></td>
+              <td><span class="mc mc-low"></span></td>
+              <td><span class="mc mc-low"></span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="matrix-legend">
+        <div class="legend-item"><span class="legend-dot legend-dot-high"></span> Alto: fortaleza real del formato</div>
+        <div class="legend-item"><span class="legend-dot legend-dot-mod"></span> Medio: capacidad parcial o contextual
+        </div>
+        <div class="legend-item"><span class="legend-dot legend-dot-low"></span> Bajo: limitación estructural</div>
+      </div>
+      <div class="noise-box" style="margin-top:24px;">
+        <div class="noise-title">📌 Lectura clave de la matriz</div>
+        <p>Ningún formato puntúa alto en todas las dimensiones. El Agente de IA tiene la mayor facilidad de uso y
+          velocidad al hallazgo, pero baja funcionalidad y casi nula trazabilidad. El Tablero tiene alta escalabilidad y
+          colaboración, pero baja narrativa; no está diseñado para convencer, sino para monitorear.</p>
+        <p>El Reporte Analítico es el único formato con puntuación alta en narrativa y en habilitar la decisión
+          simultáneamente, pero es el más costoso de producir y el más lento para entregar. <strong>Usar el formato
+            correcto no es un detalle estético: es la diferencia entre datos que mueven decisiones y datos que decoran
+            pantallas.</strong></p>
+      </div>
+    </div>
+    <hr>
+
+    <!-- EXERCISE -->
+    <div class="section reveal" id="ejercicio">
+      <div class="section-number">Sección 04</div>
+      <h2 class="section-title">Ejercicio de aplicación</h2>
+      <p class="section-intro">El aprendizaje real ocurre en el desacuerdo. Cuando el grupo no llega a la misma
+        respuesta, la conversación revela los supuestos ocultos sobre para quién es el dato y qué decisión debe
+        habilitar.</p>
+      <div class="exercise-block">
+        <h3>Del dato a la decisión</h3>
+        <div class="exercise-subtitle">Duración sugerida: 20 a 25 minutos · Individual o en pares · Retroalimentación
+          colectiva</div>
+        <div class="exercise-steps">
+          <div class="exercise-step">
+            <div class="step-num">01</div>
+            <div class="step-text"><strong>Elige uno de los escenarios</strong> y responde las tres preguntas del marco.
+            </div>
+          </div>
+          <div class="exercise-step">
+            <div class="step-num">02</div>
+            <div class="step-text"><strong>Identifica la necesidad:</strong> ¿es explorar, alertar, explicar o decidir?
+              Escribe en una frase la pregunta que el tablero debe responder.</div>
+          </div>
+          <div class="exercise-step">
+            <div class="step-num">03</div>
+            <div class="step-text"><strong>Construye tu pirámide mínima:</strong> ¿cuál sería la Métrica Estrella (North
+              Star)? ¿Qué OKR la justifica? ¿Qué 3 KPIs monitorearías? ¿Qué métricas individuales son necesarias, y
+              cuáles son solo ruido?</div>
+          </div>
+          <div class="exercise-step">
+            <div class="step-num">04</div>
+            <div class="step-text"><strong>Elige el formato:</strong> de los 8 tipos, ¿cuál es el más adecuado y por
+              qué? ¿Para quién lo estás diseñando exactamente?</div>
+          </div>
+        </div>
+        <div class="scenario-cards">
+          <div class="scenario-card">
+            <div class="scenario-label">Escenario A</div>
+            <div class="scenario-text">Una empresa de logística quiere saber si sus rutas de entrega están siendo
+              eficientes. El director de operaciones revisa resultados cada semana y toma decisiones de redistribución
+              de recursos.</div>
+          </div>
+          <div class="scenario-card">
+            <div class="scenario-label">Escenario B</div>
+            <div class="scenario-text">Un equipo de marketing digital acaba de terminar una campaña de 3 meses. La
+              dirección quiere entender qué funcionó, qué no, y cómo priorizar el presupuesto del siguiente trimestre.
+            </div>
+          </div>
+          <div class="scenario-card">
+            <div class="scenario-label">Escenario C</div>
+            <div class="scenario-text">Una clínica privada quiere monitorear la satisfacción del paciente en tiempo
+              real. Si algo sale mal en el proceso de atención, quieren saberlo ese mismo día, no a fin de mes.</div>
+          </div>
+          <div class="scenario-card">
+            <div class="scenario-label">Escenario D</div>
+            <div class="scenario-text">El equipo de producto de una app sospecha que están perdiendo usuarios nuevos
+              antes de que lleguen a usar la función principal. No saben exactamente dónde ni por qué.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="footer">
+    <div class="footer-brand">LifeStrategics</div>
+    <div class="footer-copy">Entiende. Decide. Actúa.</div>
+  </div>
+
+  <script>
+    const canvas = document.getElementById('particle-canvas'); if (canvas) {
+      const ctx = canvas.getContext('2d'); let particles = [], mouse = { x: null, y: null }; function init() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; particles = []; const c = window.innerWidth < 600 ? 30 : 50; for (let i = 0; i < c; i++)particles.push({ x: Math.random() * canvas.width, y: Math.random() * canvas.height, vx: (Math.random() - 0.5) * 0.3, vy: (Math.random() - 0.5) * 0.3, size: Math.random() * 1.8 + 0.5 }); }
+      function animate() { requestAnimationFrame(animate); ctx.clearRect(0, 0, canvas.width, canvas.height); particles.forEach((p, i) => { p.x += p.vx; p.y += p.vy; if (p.x < 0 || p.x > canvas.width) p.vx *= -1; if (p.y < 0 || p.y > canvas.height) p.vy *= -1; ctx.beginPath(); ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2); ctx.fillStyle = 'rgba(255,255,255,0.45)'; ctx.fill(); for (let j = i + 1; j < particles.length; j++) { const p2 = particles[j], dx = p.x - p2.x, dy = p.y - p2.y, d = Math.sqrt(dx * dx + dy * dy); if (d < 150) { ctx.beginPath(); ctx.strokeStyle = `rgba(255,255,255,${0.12 - d / 1250})`; ctx.lineWidth = 0.5; ctx.moveTo(p.x, p.y); ctx.lineTo(p2.x, p2.y); ctx.stroke(); } } if (mouse.x !== null) { const mdx = p.x - mouse.x, mdy = p.y - mouse.y, mD = Math.sqrt(mdx * mdx + mdy * mdy); if (mD < 180) { ctx.beginPath(); ctx.strokeStyle = `rgba(197,161,73,${0.5 - mD / 360})`; ctx.lineWidth = 0.8; ctx.moveTo(p.x, p.y); ctx.lineTo(mouse.x, mouse.y); ctx.stroke(); } } }); }
+      window.addEventListener('resize', init); window.addEventListener('mousemove', e => { mouse.x = e.clientX; mouse.y = e.clientY; }); window.addEventListener('touchmove', e => { if (e.touches.length > 0) { mouse.x = e.touches[0].clientX; mouse.y = e.touches[0].clientY; } }, { passive: true }); window.addEventListener('touchend', () => { mouse.x = null; mouse.y = null; }); init(); animate();
+    }
+
+    // Sticky nav
+    const stickyNav = document.getElementById('stickyNav'), coverEl = document.getElementById('coverSection');
+    const navObs = new IntersectionObserver(entries => { entries.forEach(e => { stickyNav.classList.toggle('visible', !e.isIntersecting); }); }, { threshold: 0 });
+    navObs.observe(coverEl);
+    // Active pill
+    const navPills = document.querySelectorAll('.nav-pill');
+    const secObs = new IntersectionObserver(entries => { entries.forEach(e => { if (e.isIntersecting) { navPills.forEach(p => p.classList.remove('active')); const a = document.querySelector(`.nav-pill[href="#${e.target.id}"]`); if (a) a.classList.add('active'); } }); }, { threshold: 0.3, rootMargin: '-60px 0px -60% 0px' });
+    document.querySelectorAll('.section[id]').forEach(s => secObs.observe(s));
+
+    // Scroll reveal
+    const revEls = document.querySelectorAll('.reveal');
+    if ('IntersectionObserver' in window) { const ro = new IntersectionObserver(es => { es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); ro.unobserve(e.target); } }); }, { threshold: 0.1 }); revEls.forEach(el => ro.observe(el)); } else { revEls.forEach(el => el.classList.add('visible')); }
+  </script>
+<script src="ls-protect.js"></script>
+</body>
+
+</html>
