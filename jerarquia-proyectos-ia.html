@@ -1,0 +1,2885 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AI Projects: Guia Estructural · mi-marca</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Wix+Madefor+Display:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet" />
+    <style>
+        :root {
+            --bg: #181818;
+            --surface: #202020;
+            --surface2: #262626;
+            --border: #2e2e2e;
+            --border2: #3a3a3a;
+            --text: #f0ece4;
+            --muted: #999;
+            --muted2: #555;
+            --blue: #4A9EFF;
+            --blue-dim: rgba(74, 158, 255, 0.10);
+            --blue-line: rgba(74, 158, 255, 0.28);
+            --yellow: #FFD84A;
+            --yellow-dim: rgba(255, 216, 74, 0.10);
+            --yellow-line: rgba(255, 216, 74, 0.28);
+            --red: #FF4A4A;
+            --red-dim: rgba(255, 74, 74, 0.10);
+            --red-line: rgba(255, 74, 74, 0.28);
+            --green: #3db87a;
+            --green-dim: rgba(61, 184, 122, 0.10);
+            --green-line: rgba(61, 184, 122, 0.28);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* PARTICLE CANVAS */
+        #particle-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            pointer-events: none;
+            z-index: 0;
+            opacity: 0.55;
+        }
+
+        body {
+            background: var(--bg);
+            color: var(--text);
+            font-family: 'Wix Madefor Display', sans-serif;
+            font-weight: 400;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* NAV — Glassmorphism Pill */
+        nav {
+            position: fixed;
+            top: 20px;
+            left: 0;
+            right: 0;
+            width: 92%;
+            max-width: 1280px;
+            margin: 0 auto;
+            z-index: 100;
+            background: rgba(26, 26, 28, 0.07);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border: 1px solid rgba(255, 255, 255, 0.10);
+            border-radius: 9999px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+            padding: 0 28px;
+            display: flex;
+            align-items: center;
+            gap: 2px;
+            height: 56px;
+            overflow: hidden;
+        }
+
+        nav::-webkit-scrollbar {
+            display: none;
+        }
+
+        .nav-logo {
+            height: 30px;
+            width: auto;
+            object-fit: contain;
+            opacity: 0.9;
+            margin-right: 20px;
+            padding-right: 20px;
+            border-right: 1px solid rgba(255, 255, 255, 0.10);
+            flex-shrink: 0;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 2px;
+            overflow-x: auto;
+            overflow-y: hidden;
+            flex: 1;
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+            position: relative;
+        }
+
+        .nav-links::-webkit-scrollbar {
+            display: none;
+        }
+
+        /* Nav scroll controller — ‹ › buttons */
+        .nav-scroll-ctrl {
+            display: flex;
+            align-items: center;
+            gap: 3px;
+            flex-shrink: 0;
+            margin-left: 6px;
+            padding-right: 2px;
+        }
+
+        .nav-scroll-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 26px;
+            height: 26px;
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.04);
+            color: rgba(255, 255, 255, 0.4);
+            cursor: pointer;
+            transition: all 0.2s;
+            -webkit-user-select: none;
+            user-select: none;
+        }
+
+        .nav-scroll-btn:hover {
+            background: rgba(255, 255, 255, 0.10);
+            color: rgba(255, 255, 255, 0.7);
+            border-color: rgba(255, 255, 255, 0.22);
+        }
+
+        .nav-scroll-btn.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        nav a {
+            color: rgba(255, 255, 255, 0.35);
+            text-decoration: none;
+            font-size: 0.62rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            font-weight: 600;
+            white-space: nowrap;
+            padding: 6px 10px;
+            border-radius: 9999px;
+            transition: all 0.2s;
+        }
+
+        nav a:hover {
+            color: var(--text);
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        nav a.active {
+            color: var(--blue);
+            background: rgba(74, 158, 255, 0.10);
+        }
+
+        /* PAGE */
+        .page {
+            position: relative;
+            z-index: 10;
+            max-width: 820px;
+            margin: 0 auto;
+            padding: 110px 32px 100px;
+        }
+
+        /* Scroll offset for fixed nav */
+        .section {
+            scroll-margin-top: 90px;
+        }
+
+        /* HEADER */
+        .header {
+            margin-bottom: 60px;
+            animation: fadeUp 0.5s ease both;
+        }
+
+        .eyebrow {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 0.65rem;
+            letter-spacing: 0.24em;
+            text-transform: uppercase;
+            color: var(--blue);
+            margin-bottom: 18px;
+            font-weight: 700;
+        }
+
+        .eyebrow::before {
+            content: '';
+            display: block;
+            width: 28px;
+            height: 2px;
+            background: var(--blue);
+        }
+
+        h1 {
+            font-size: clamp(2.2rem, 5.5vw, 3.2rem);
+            font-weight: 800;
+            line-height: 1.1;
+            letter-spacing: -0.02em;
+            margin-bottom: 16px;
+        }
+
+        h1 .hl-y {
+            color: var(--yellow);
+        }
+
+        h1 .hl-b {
+            color: var(--blue);
+        }
+
+        .header-sub {
+            font-size: 0.92rem;
+            color: var(--muted);
+            line-height: 1.85;
+            max-width: 560px;
+            font-weight: 400;
+        }
+
+        /* COLOR KEY */
+        .color-key {
+            display: inline-flex;
+            gap: 20px;
+            flex-wrap: wrap;
+            margin-top: 20px;
+            padding: 12px 16px;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+        }
+
+        .ck-item {
+            display: flex;
+            align-items: center;
+            gap: 7px;
+            font-size: 0.72rem;
+            color: var(--muted2);
+            font-weight: 500;
+        }
+
+        .ck-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+
+        /* FLOW BAR */
+        .flow {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 0;
+            margin-bottom: 60px;
+            padding: 20px 16px;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            animation: fadeUp 0.5s ease 0.05s both;
+        }
+
+        .flow-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 7px;
+            position: relative;
+            padding: 0 8px;
+        }
+
+        /* Arrow between items (rendered via CSS, no separate element needed) */
+        .flow-item:not(:last-child)::after {
+            content: '›';
+            position: absolute;
+            right: -6px;
+            top: 0;
+            color: var(--muted2);
+            font-size: 1rem;
+            line-height: 1;
+        }
+
+        .flow-dot {
+            width: 9px;
+            height: 9px;
+            border-radius: 50%;
+            background: var(--blue);
+        }
+
+        .flow-dot.y {
+            background: var(--yellow);
+        }
+
+        .flow-dot.r {
+            background: var(--red);
+        }
+
+        .flow-label {
+            font-size: 0.62rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--muted2);
+            text-align: center;
+            font-weight: 600;
+            line-height: 1.4;
+        }
+
+        /* SECTION */
+        .section {
+            margin-bottom: 80px;
+        }
+
+        .section-head {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 12px;
+        }
+
+        .section-num {
+            font-size: 0.6rem;
+            letter-spacing: 0.2em;
+            font-weight: 700;
+            padding: 4px 9px;
+            border-radius: 5px;
+            flex-shrink: 0;
+        }
+
+        .num-b {
+            background: var(--blue-dim);
+            color: var(--blue);
+        }
+
+        .num-y {
+            background: var(--yellow-dim);
+            color: var(--yellow);
+        }
+
+        .num-r {
+            background: var(--red-dim);
+            color: var(--red);
+        }
+
+        .section-head h2 {
+            font-size: 1.1rem;
+            font-weight: 700;
+            letter-spacing: -0.01em;
+        }
+
+        .section-head::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: var(--border);
+        }
+
+        .section-intro {
+            font-size: 0.87rem;
+            color: var(--muted);
+            line-height: 1.85;
+            margin-bottom: 22px;
+            max-width: 700px;
+        }
+
+        .section-intro strong {
+            color: var(--text);
+            font-weight: 600;
+        }
+
+        /* CARDS */
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+        }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+        }
+
+        .card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 20px 18px;
+        }
+
+        .card.top-b {
+            border-top: 2px solid var(--blue);
+        }
+
+        .card.top-y {
+            border-top: 2px solid var(--yellow);
+        }
+
+        .card.top-r {
+            border-top: 2px solid var(--red);
+        }
+
+        .card.top-g {
+            border-top: 2px solid var(--green);
+        }
+
+        .card.full {
+            grid-column: 1 / -1;
+        }
+
+        .card-label {
+            font-size: 0.62rem;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            font-weight: 700;
+            margin-bottom: 7px;
+        }
+
+        .lb {
+            color: var(--blue);
+        }
+
+        .ly {
+            color: var(--yellow);
+        }
+
+        .lr {
+            color: var(--red);
+        }
+
+        .lg {
+            color: var(--green);
+        }
+
+        .lm {
+            color: var(--muted2);
+        }
+
+        .card h3 {
+            font-size: 0.95rem;
+            font-weight: 700;
+            line-height: 1.3;
+            margin-bottom: 8px;
+        }
+
+        .card p {
+            font-size: 0.8rem;
+            color: var(--muted);
+            line-height: 1.7;
+        }
+
+        .card p strong {
+            color: var(--text);
+            font-weight: 600;
+        }
+
+        .card ul {
+            list-style: none;
+            border-top: 1px solid var(--border);
+            padding-top: 11px;
+            margin-top: 11px;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .card ul li {
+            font-size: 0.76rem;
+            color: var(--muted);
+            line-height: 1.5;
+            display: flex;
+            gap: 7px;
+        }
+
+        .card.top-b ul li::before {
+            content: '→';
+            color: var(--blue);
+            flex-shrink: 0;
+        }
+
+        .card.top-y ul li::before {
+            content: '→';
+            color: var(--yellow);
+            flex-shrink: 0;
+        }
+
+        .card.top-r ul li::before {
+            content: '→';
+            color: var(--red);
+            flex-shrink: 0;
+        }
+
+        /* BADGE */
+        .badge {
+            display: inline-block;
+            font-size: 0.57rem;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            font-weight: 700;
+            padding: 3px 7px;
+            border-radius: 4px;
+        }
+
+        .badge-b {
+            background: var(--blue-dim);
+            color: var(--blue);
+        }
+
+        .badge-y {
+            background: var(--yellow-dim);
+            color: var(--yellow);
+        }
+
+        .badge-r {
+            background: var(--red-dim);
+            color: var(--red);
+        }
+
+        .badge-g {
+            background: var(--green-dim);
+            color: var(--green);
+        }
+
+        .badge-m {
+            background: rgba(255, 255, 255, 0.06);
+            color: var(--muted2);
+        }
+
+        /* CALLOUT */
+        .callout {
+            border-radius: 10px;
+            padding: 18px 22px;
+            margin-top: 14px;
+        }
+
+        .callout-label {
+            font-size: 0.62rem;
+            letter-spacing: 0.22em;
+            text-transform: uppercase;
+            font-weight: 700;
+            margin-bottom: 7px;
+        }
+
+        .callout p {
+            font-size: 0.84rem;
+            color: var(--muted);
+            line-height: 1.8;
+            font-weight: 400;
+        }
+
+        .callout p strong {
+            color: var(--text);
+            font-weight: 600;
+        }
+
+        .callout-b {
+            background: var(--blue-dim);
+            border: 1px solid var(--blue-line);
+        }
+
+        .callout-b .callout-label {
+            color: var(--blue);
+        }
+
+        .callout-y {
+            background: var(--yellow-dim);
+            border: 1px solid var(--yellow-line);
+        }
+
+        .callout-y .callout-label {
+            color: var(--yellow);
+        }
+
+        .callout-r {
+            background: var(--red-dim);
+            border: 1px solid var(--red-line);
+        }
+
+        .callout-r .callout-label {
+            color: var(--red);
+        }
+
+        .callout-g {
+            background: var(--green-dim);
+            border: 1px solid var(--green-line);
+        }
+
+        .callout-g .callout-label {
+            color: var(--green);
+        }
+
+        /* COMPARE TABLE */
+        .compare-wrap {
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .compare-row {
+            display: grid;
+            grid-template-columns: 110px 1fr 1fr;
+            border-bottom: 1px solid var(--border);
+            font-size: 0.8rem;
+        }
+
+        .compare-row:last-child {
+            border-bottom: none;
+        }
+
+        .compare-row:nth-child(even) .compare-cell {
+            background: rgba(255, 255, 255, 0.015);
+        }
+
+        .compare-cell {
+            padding: 12px 16px;
+            color: var(--muted);
+            line-height: 1.6;
+            font-weight: 400;
+            border-right: 1px solid var(--border);
+        }
+
+        .compare-cell:last-child {
+            border-right: none;
+        }
+
+        .compare-cell.key {
+            color: var(--muted2);
+            font-size: 0.68rem;
+            letter-spacing: 0.08em;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .compare-cell.head-b {
+            color: var(--blue);
+            font-weight: 700;
+            font-size: 0.85rem;
+            background: var(--blue-dim);
+        }
+
+        .compare-cell.head-r {
+            color: var(--red);
+            font-weight: 700;
+            font-size: 0.85rem;
+            background: var(--red-dim);
+        }
+
+        /* VFLOW */
+        .vflow {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .vnode {
+            padding: 10px 14px;
+            border-radius: 8px;
+            font-size: 0.79rem;
+            font-weight: 600;
+            text-align: center;
+            line-height: 1.3;
+        }
+
+        .vnode-title {
+            font-size: 0.82rem;
+            font-weight: 700;
+        }
+
+        .vnode-sub {
+            font-size: 0.71rem;
+            font-weight: 400;
+            margin-top: 3px;
+            color: var(--muted);
+        }
+
+        .vnode-b {
+            background: var(--blue-dim);
+            border: 1px solid var(--blue-line);
+            color: var(--blue);
+        }
+
+        .vnode-b .vnode-sub {
+            color: rgba(74, 158, 255, 0.6);
+        }
+
+        .vnode-y {
+            background: var(--yellow-dim);
+            border: 1px solid var(--yellow-line);
+            color: var(--yellow);
+        }
+
+        .vnode-y .vnode-sub {
+            color: rgba(255, 216, 74, 0.6);
+        }
+
+        .vnode-r {
+            background: var(--red-dim);
+            border: 1px solid var(--red-line);
+            color: var(--red);
+        }
+
+        .vnode-r .vnode-sub {
+            color: rgba(255, 74, 74, 0.6);
+        }
+
+        .vnode-g {
+            background: var(--green-dim);
+            border: 1px solid var(--green-line);
+            color: var(--green);
+        }
+
+        .vnode-gr {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            color: var(--muted);
+        }
+
+        .varrow {
+            text-align: center;
+            color: var(--muted2);
+            font-size: 1.1rem;
+            line-height: 1.3;
+            margin: 3px 0;
+        }
+
+        .vflow-note {
+            font-size: 0.73rem;
+            color: var(--muted2);
+            margin-top: 10px;
+            padding-top: 10px;
+            border-top: 1px solid var(--border);
+            line-height: 1.65;
+        }
+
+        .vflow-note strong {
+            color: var(--text);
+        }
+
+        /* TIMELINE ESPECTRO */
+        .timeline {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 28px 24px;
+        }
+
+        .timeline-axis-label {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.67rem;
+            color: var(--muted2);
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .timeline-bar-wrap {
+            position: relative;
+            height: 8px;
+            margin-bottom: 0;
+        }
+
+        .timeline-bar {
+            height: 8px;
+            border-radius: 4px;
+            background: linear-gradient(to right, var(--blue), #7070e0, #c05050, var(--red));
+        }
+
+        .timeline-stops {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+            margin-top: 32px;
+        }
+
+        .tl-stop {
+            display: flex;
+            flex-direction: column;
+            gap: 0;
+        }
+
+        .tl-dot-row {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 16px;
+        }
+
+        .tl-dot {
+            width: 11px;
+            height: 11px;
+            border-radius: 50%;
+            border: 2px solid var(--bg);
+            position: relative;
+            top: -10px;
+        }
+
+        .tl-dot-b {
+            background: var(--blue);
+        }
+
+        .tl-dot-by {
+            background: #7070e0;
+        }
+
+        .tl-dot-yr {
+            background: #c05050;
+        }
+
+        .tl-dot-r {
+            background: var(--red);
+        }
+
+        .tl-label {
+            font-size: 0.7rem;
+            font-weight: 700;
+            letter-spacing: 0.06em;
+            text-align: center;
+            margin-bottom: 6px;
+            text-transform: uppercase;
+        }
+
+        .tl-label-b {
+            color: var(--blue);
+        }
+
+        .tl-label-by {
+            color: #9090e8;
+        }
+
+        .tl-label-yr {
+            color: #d08060;
+        }
+
+        .tl-label-r {
+            color: var(--red);
+        }
+
+        .tl-desc {
+            font-size: 0.74rem;
+            color: var(--muted);
+            line-height: 1.6;
+            text-align: center;
+        }
+
+        .tl-highlight {
+            background: rgba(255, 216, 74, 0.06);
+            border: 1px solid var(--yellow-line);
+            border-radius: 8px;
+            padding: 8px;
+            margin-top: 8px;
+        }
+
+        .tl-highlight-label {
+            font-size: 0.6rem;
+            color: var(--yellow);
+            font-weight: 700;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            text-align: center;
+            margin-bottom: 3px;
+        }
+
+        .tl-highlight p {
+            font-size: 0.72rem;
+            color: var(--muted);
+            text-align: center;
+        }
+
+        /* FOLDER TREE */
+        .tree {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 22px 26px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.8rem;
+            line-height: 2.1;
+        }
+
+        .t-b {
+            color: var(--blue);
+        }
+
+        .t-y {
+            color: var(--yellow);
+        }
+
+        .t-r {
+            color: var(--red);
+        }
+
+        .t-m {
+            color: var(--muted2);
+        }
+
+        .t-t {
+            color: var(--muted);
+        }
+
+        .t-note {
+            font-family: 'Wix Madefor Display', sans-serif;
+            font-size: 0.68rem;
+            color: var(--muted2);
+            margin-left: 8px;
+        }
+
+        /* BAR ROWS */
+        .bar-row {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 9px;
+        }
+
+        .bar-lbl {
+            font-size: 0.72rem;
+            color: var(--muted);
+            width: 124px;
+            flex-shrink: 0;
+            font-weight: 500;
+        }
+
+        .bar-track {
+            flex: 1;
+            height: 11px;
+            background: var(--border);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .bar-fill {
+            height: 100%;
+            border-radius: 4px;
+        }
+
+        .bf-r {
+            background: var(--red);
+        }
+
+        .bf-b {
+            background: var(--blue);
+        }
+
+        .bf-y {
+            background: var(--yellow);
+        }
+
+        .bf-g {
+            background: var(--green);
+        }
+
+        .bar-pct {
+            font-size: 0.71rem;
+            color: var(--muted2);
+            width: 30px;
+            text-align: right;
+            flex-shrink: 0;
+            font-weight: 700;
+        }
+
+        /* CODE BLOCK */
+        .code-block {
+            background: #111;
+            border: 1px solid var(--border2);
+            border-radius: 7px;
+            padding: 14px 16px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.76rem;
+            line-height: 1.95;
+            overflow-x: auto;
+        }
+
+        /* INFO PILLS */
+        .info-row {
+            display: flex;
+            gap: 12px;
+            margin-top: 14px;
+        }
+
+        .info-pill {
+            background: var(--surface2);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 12px 14px;
+            flex: 1;
+            font-size: 0.77rem;
+            color: var(--muted);
+            line-height: 1.6;
+        }
+
+        .info-pill strong {
+            display: block;
+            font-size: 0.8rem;
+            color: var(--text);
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        /* LAYER HIERARCHY */
+        .layer-stack {
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .layer-block {
+            padding: 16px 20px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .layer-block:last-child {
+            border-bottom: none;
+        }
+
+        .layer-tag {
+            font-size: 0.6rem;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+
+        .layer-title {
+            font-size: 0.95rem;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+
+        .layer-desc {
+            font-size: 0.79rem;
+            color: var(--muted);
+            line-height: 1.7;
+        }
+
+        .file-chips {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-top: 10px;
+        }
+
+        .chip {
+            font-family: 'Courier New', monospace;
+            font-size: 0.68rem;
+            padding: 3px 8px;
+            border-radius: 4px;
+        }
+
+        /* LOAD LOGIC */
+        .load-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+        }
+
+        .load-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 14px;
+        }
+
+        .load-title {
+            font-size: 0.68rem;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            margin-bottom: 10px;
+        }
+
+        .load-line {
+            font-family: 'Courier New', monospace;
+            font-size: 0.72rem;
+            color: var(--muted);
+            line-height: 1.9;
+        }
+
+        .load-note {
+            font-size: 0.7rem;
+            color: var(--muted2);
+            margin-top: 8px;
+            line-height: 1.5;
+        }
+
+        /* PASS/FAIL */
+        .pf-row {
+            display: flex;
+            gap: 8px;
+            align-items: flex-start;
+            margin-bottom: 7px;
+        }
+
+        .pf-tag {
+            font-size: 0.67rem;
+            font-weight: 700;
+            flex-shrink: 0;
+            width: 36px;
+        }
+
+        .pf-pass {
+            color: var(--green);
+        }
+
+        .pf-fail {
+            color: var(--red);
+        }
+
+        .pf-text {
+            font-size: 0.74rem;
+            color: var(--muted);
+            line-height: 1.45;
+        }
+
+        /* ANIM */
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(14px);
+            }
+
+            to {
+                opacity: 1;
+                transform: none;
+            }
+        }
+
+        .fade {
+            opacity: 0;
+            transform: translateY(14px);
+            transition: opacity 0.5s ease, transform 0.5s ease;
+        }
+
+        .fade.vis {
+            opacity: 1;
+            transform: none;
+        }
+
+        /* FOOTER */
+        footer {
+            margin-top: 40px;
+        }
+
+        .footer-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 18px 0;
+            border-top: 1px solid var(--border);
+        }
+
+        .footer-brand {
+            font-size: 0.7rem;
+            color: var(--muted2);
+            letter-spacing: 0.06em;
+            font-weight: 500;
+        }
+
+        .footer-brand a {
+            color: var(--blue);
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.2s;
+        }
+
+        .footer-brand a:hover {
+            color: var(--yellow);
+        }
+
+        .footer-note {
+            font-size: 0.7rem;
+            color: var(--blue);
+            font-weight: 600;
+            letter-spacing: 0.06em;
+        }
+
+        .footer-bottom {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 14px;
+            padding: 28px 0 20px;
+        }
+
+        .footer-logo {
+            height: 32px;
+            opacity: 0.6;
+            transition: opacity 0.3s;
+        }
+
+        .footer-logo:hover {
+            opacity: 1;
+        }
+
+        .footer-tagline {
+            font-size: 0.72rem;
+            font-weight: 700;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+        }
+
+        .footer-tagline .tag-blue { color: var(--blue); }
+        .footer-tagline .tag-yellow { color: var(--yellow); }
+        .footer-tagline .tag-red { color: var(--red); }
+        .footer-tagline .tag-sep {
+            color: var(--muted2);
+            margin: 0 6px;
+            font-weight: 400;
+        }
+
+        /* EXPANDABLE SEE-MORE */
+        .see-more-toggle {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            margin-top: 12px;
+            padding: 8px 14px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.72rem;
+            font-weight: 600;
+            color: var(--muted2);
+            letter-spacing: 0.06em;
+            transition: all 0.3s ease;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .see-more-toggle:hover {
+            color: var(--blue);
+            border-color: var(--blue-line);
+            background: var(--blue-dim);
+        }
+
+        .see-more-toggle .chevron {
+            transition: transform 0.3s ease;
+            font-size: 0.6rem;
+        }
+
+        .see-more-toggle.open .chevron {
+            transform: rotate(180deg);
+        }
+
+        .see-more-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .see-more-content.open {
+            max-height: 600px;
+        }
+
+        .see-more-tree {
+            margin-top: 10px;
+            background: #111;
+            border: 1px solid var(--border2);
+            border-radius: 7px;
+            padding: 14px 16px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.74rem;
+            line-height: 1.95;
+            color: var(--muted);
+        }
+
+        /* CONCLUSION SECTION */
+        .conclusion-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+        }
+
+        .conclusion-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 22px 18px;
+            transition: border-color 0.3s ease;
+        }
+
+        .conclusion-card:hover {
+            border-color: var(--border2);
+        }
+
+        .conclusion-icon {
+            font-size: 1.4rem;
+            margin-bottom: 10px;
+        }
+
+        .conclusion-card h3 {
+            font-size: 0.9rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .conclusion-card p {
+            font-size: 0.79rem;
+            color: var(--muted);
+            line-height: 1.7;
+        }
+
+        .conclusion-card .section-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-top: 10px;
+        }
+
+        .conclusion-card .section-links a {
+            font-size: 0.65rem;
+            color: var(--blue);
+            text-decoration: none;
+            padding: 3px 8px;
+            border-radius: 4px;
+            background: var(--blue-dim);
+            border: 1px solid var(--blue-line);
+            transition: all 0.2s;
+            font-weight: 600;
+            letter-spacing: 0.04em;
+        }
+
+        .conclusion-card .section-links a:hover {
+            background: rgba(74, 158, 255, 0.18);
+        }
+
+        .conclusion-wrap-up {
+            margin-top: 20px;
+            padding: 24px;
+            background: linear-gradient(135deg, var(--blue-dim), var(--yellow-dim));
+            border: 1px solid var(--blue-line);
+            border-radius: 12px;
+            text-align: center;
+        }
+
+        .conclusion-wrap-up p {
+            font-size: 0.92rem;
+            color: var(--text);
+            line-height: 1.8;
+            font-weight: 400;
+        }
+
+        .conclusion-wrap-up strong {
+            color: var(--yellow);
+            font-weight: 700;
+        }
+
+        @media(max-width:640px) {
+            nav {
+                top: 12px;
+                width: 94%;
+                padding: 0 16px;
+                height: 48px;
+                gap: 0;
+            }
+
+            .nav-logo {
+                height: 24px;
+                margin-right: 12px;
+                padding-right: 12px;
+            }
+
+            nav a {
+                font-size: 0.55rem;
+                padding: 4px 7px;
+            }
+
+            .page {
+                padding: 85px 18px 60px;
+            }
+
+            .section {
+                scroll-margin-top: 75px;
+            }
+
+            .grid-3,
+            .load-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .grid-2 {
+                grid-template-columns: 1fr;
+            }
+
+            .compare-row {
+                grid-template-columns: 72px 1fr 1fr;
+                font-size: 0.74rem;
+            }
+
+            .info-row {
+                flex-direction: column;
+            }
+
+            /* Timeline mobile: vertical layout */
+            .timeline-stops {
+                grid-template-columns: 1fr;
+                gap: 0;
+                position: relative;
+                padding-left: 28px;
+            }
+
+            .timeline-stops::before {
+                content: '';
+                position: absolute;
+                left: 5px;
+                top: 0;
+                bottom: 0;
+                width: 3px;
+                border-radius: 2px;
+                background: linear-gradient(to bottom, var(--blue), #7070e0, #c05050, var(--red));
+            }
+
+            .tl-stop {
+                position: relative;
+                padding: 14px 0;
+                border-bottom: 1px solid var(--border);
+            }
+
+            .tl-stop:last-child {
+                border-bottom: none;
+            }
+
+            .tl-dot-row {
+                position: absolute;
+                left: -28px;
+                top: 18px;
+                margin-bottom: 0;
+            }
+
+            .tl-dot {
+                top: 0 !important;
+                margin-top: 0 !important;
+            }
+
+            .tl-label,
+            .tl-desc {
+                text-align: left;
+            }
+
+            .tl-label {
+                font-size: 0.75rem;
+                margin-bottom: 4px;
+            }
+
+            .tl-desc {
+                font-size: 0.76rem;
+            }
+
+            .tl-highlight {
+                margin-top: 10px;
+                text-align: left;
+            }
+
+            .tl-highlight-label,
+            .tl-highlight p {
+                text-align: left;
+            }
+
+            .conclusion-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .color-key {
+                gap: 12px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <canvas id="particle-canvas"></canvas>
+
+    <nav>
+        <img src="lifestrategics_logo_plain.png" alt="LifeStrategics" class="nav-logo">
+        <div class="nav-links">
+            <a href="#md">Archivos .md</a>
+            <a href="#wfag">Workflow vs Agent</a>
+            <a href="#espectro">Espectro</a>
+            <a href="#output">Output determinista</a>
+            <a href="#sbs">Side by side</a>
+            <a href="#contencion">Contención</a>
+            <a href="#jerarquia">Jerarquía</a>
+            <a href="#tokens">Tokens</a>
+            <a href="#marca">Mi marca</a>
+            <a href="#conclusiones">Conclusiones</a>
+        </div>
+        <div class="nav-scroll-ctrl">
+            <div class="nav-scroll-btn hidden" id="nav-scroll-left">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+            </div>
+            <div class="nav-scroll-btn" id="nav-scroll-right">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+            </div>
+        </div>
+    </nav>
+
+    <div class="page">
+
+        <!-- HERO -->
+        <header class="header">
+            <div class="eyebrow">Guía de referencia · AI Projects</div>
+            <h1>Estructura, jerarquía<br>y <span class="hl-y">control</span> en<br>proyectos <span class="hl-b">con
+                    IA</span></h1>
+            <p class="header-sub">
+                Una guía completa sobre cómo organizar proyectos de IA para maximizar
+                consistencia, eliminar retrabajo y optimizar el uso de tokens. Cada concepto
+                explicado de forma independiente: puedes leer cualquier sección sin contexto previo.
+            </p>
+
+            <!-- Color key -->
+            <div class="color-key">
+                <div class="ck-item">
+                    <div class="ck-dot" style="background:var(--blue)"></div>
+                    <span><span style="color:var(--blue);font-weight:700">Azul</span> = comprender / lineamientos</span>
+                </div>
+                <div class="ck-item">
+                    <div class="ck-dot" style="background:var(--yellow)"></div>
+                    <span><span style="color:var(--yellow);font-weight:700">Amarillo</span> = decidir</span>
+                </div>
+                <div class="ck-item">
+                    <div class="ck-dot" style="background:var(--red)"></div>
+                    <span><span style="color:var(--red);font-weight:700">Rojo</span> = ejecutar / tomar acción</span>
+                </div>
+                <div class="ck-item">
+                    <div class="ck-dot" style="background:var(--green)"></div>
+                    <span><span style="color:var(--green);font-weight:700">Verde</span> = resultado positivo</span>
+                </div>
+            </div>
+        </header>
+
+        <!-- FLOW -->
+        <div class="flow">
+            <div class="flow-item">
+                <div class="flow-dot"></div>
+                <div class="flow-label">Brand layer (capa de marca)</div>
+            </div>
+            <div class="flow-item">
+                <div class="flow-dot y"></div>
+                <div class="flow-label">Formato activo</div>
+            </div>
+            <div class="flow-item">
+                <div class="flow-dot r"></div>
+                <div class="flow-label">Brief del run (ejecución)</div>
+            </div>
+            <div class="flow-item">
+                <div class="flow-dot" style="background:var(--green)"></div>
+                <div class="flow-label" style="color:var(--green)">Output (resultado) consistente</div>
+            </div>
+        </div>
+
+
+        <!-- 01 ARCHIVOS MD -->
+        <div class="section fade" id="md" data-nav="md">
+            <div class="section-head"><span class="section-num num-b">01</span>
+                <h2>Los tres tipos de archivo .md</h2>
+            </div>
+            <p class="section-intro">
+                Un archivo <strong>.md (Markdown)</strong> es un archivo de texto con formato ligero. La confusión viene
+                de que todos tienen la misma extensión. La diferencia no está en el formato, sino en <strong>quién los
+                    lee y para qué</strong>. Hay tres usos completamente distintos y es crítico no mezclarlos.
+            </p>
+
+            <div class="grid-3">
+                <div class="card top-b">
+                    <div class="card-label lb">Para humanos</div>
+                    <h3>README.md</h3>
+                    <p>
+                        El brochure del proyecto. Lo lee una persona cuando abre el repositorio
+                        por primera vez. No lo lee la IA, no consume tokens. Existe para que
+                        no tengas que explicar el proyecto desde cero cada vez que alguien
+                        nuevo lo toca.
+                    </p>
+                    <ul>
+                        <li>Qué hace este proyecto y cuál es su objetivo</li>
+                        <li>Cómo se usa, qué va en cada carpeta</li>
+                        <li>Quién lo creó y cómo contribuir</li>
+                    </ul>
+                </div>
+                <div class="card top-y">
+                    <div class="card-label ly">Instrucciones para la IA</div>
+                    <h3>CLAUDE.md</h3>
+                    <p>
+                        El briefing del agente. Claude Code lo lee automáticamente al inicio
+                        de cada sesión, sin que tengas que mencionarlo ni pegarlo. Si no existe,
+                        Claude empieza a explorar el proyecto a ciegas sin contexto ni reglas.
+                    </p>
+                    <ul>
+                        <li>Reglas específicas de este proyecto</li>
+                        <li>Qué carpetas existen y para qué</li>
+                        <li>Orden en que debe cargar el contexto</li>
+                        <li>Lo que NO debe modificar jamás</li>
+                    </ul>
+                </div>
+                <div class="card top-r">
+                    <div class="card-label lr">Para lo que definas</div>
+                    <h3>mi-workflow.md</h3>
+                    <p>
+                        Un archivo .md con nombre libre. Su función depende de lo que pongas
+                        ahí y de quién lo recibe. Puede ser contexto para la IA si lo adjuntas
+                        al chat, o documentación interna si lo compartes con tu equipo.
+                    </p>
+                    <ul>
+                        <li>Guías de proceso o workflow (flujo de trabajo)</li>
+                        <li>Templates (plantillas) de contenido</li>
+                        <li>Contexto manual para la IA</li>
+                        <li>Notas de operación internas</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="callout callout-b">
+                <div class="callout-label">La regla de oro</div>
+                <p>
+                    README.md y CLAUDE.md tienen <strong>nombres con convención fija</strong>.
+                    Las herramientas los buscan por ese nombre exacto de forma automática.
+                    Un archivo llamado brand-voice.md puede contener lo mismo que un CLAUDE.md
+                    si lo adjuntas manualmente, pero no se cargará automático. El nombre importa.
+                </p>
+            </div>
+
+            <div class="callout callout-y" style="margin-top:10px">
+                <div class="callout-label">CLAUDE.md como contexto persistente</div>
+                <p>
+                    En Claude Code, el CLAUDE.md funciona como <strong>memoria del proyecto entre sesiones</strong>.
+                    Cada vez que abres el proyecto, Claude lo lee primero. Esto significa que no tienes
+                    que re-explicar el contexto, las reglas ni la arquitectura en cada sesión. Es la diferencia
+                    entre un colaborador que recuerda todo versus uno que empieza desde cero cada día.
+                </p>
+            </div>
+        </div>
+
+
+        <!-- 02 WORKFLOW VS AGENT -->
+        <div class="section fade" id="wfag" data-nav="wfag">
+            <div class="section-head"><span class="section-num num-b">02</span>
+                <h2>Workflow (flujo de trabajo) vs Agent (agente)</h2>
+            </div>
+            <p class="section-intro">
+                Esta es la distinción que más confunde porque ambos hacen cosas con IA.
+                La diferencia fundamental es una sola pregunta: <strong>quién decide el siguiente paso</strong>.
+                La respuesta lo cambia todo en términos de control, previsibilidad y auditabilidad.
+            </p>
+
+            <div class="grid-2">
+                <!-- Workflow flow -->
+                <div class="card">
+                    <div class="card-label lb" style="margin-bottom:14px">Workflow: tú defines el camino</div>
+                    <div class="vflow">
+                        <div class="vnode vnode-gr">
+                            <div class="vnode-title">Input (entrada)</div>
+                            <div class="vnode-sub">Brief o contexto del run (ejecución)</div>
+                        </div>
+                        <div class="varrow">↓</div>
+                        <div class="vnode vnode-b">
+                            <div class="vnode-title">Paso 1: definido por ti</div>
+                            <div class="vnode-sub">Prompt fijo, skill (habilidad) asignado</div>
+                        </div>
+                        <div class="varrow">↓</div>
+                        <div class="vnode vnode-b">
+                            <div class="vnode-title">Paso 2: definido por ti</div>
+                            <div class="vnode-sub">Estructura determinada</div>
+                        </div>
+                        <div class="varrow">↓</div>
+                        <div class="vnode vnode-b">
+                            <div class="vnode-title">Paso 3: definido por ti</div>
+                            <div class="vnode-sub">Output (resultado) esperado especificado</div>
+                        </div>
+                        <div class="varrow">↓</div>
+                        <div class="vnode vnode-gr">
+                            <div class="vnode-title">Output (resultado)</div>
+                            <div class="vnode-sub">Predecible entre runs (ejecuciones)</div>
+                        </div>
+                    </div>
+                    <div class="vflow-note">Quién decide los pasos: <strong>Tú, antes de correrlo.</strong><br>La IA
+                        ejecuta dentro de los carriles que trazaste.</div>
+                </div>
+
+                <!-- Agent flow -->
+                <div class="card">
+                    <div class="card-label lr" style="margin-bottom:14px">Agent (agente): la IA decide el camino</div>
+                    <div class="vflow">
+                        <div class="vnode vnode-gr">
+                            <div class="vnode-title">Goal (objetivo)</div>
+                            <div class="vnode-sub">Instrucción general del objetivo</div>
+                        </div>
+                        <div class="varrow">↓</div>
+                        <div class="vnode vnode-y">
+                            <div class="vnode-title">IA decide cómo abordar</div>
+                            <div class="vnode-sub">Interpreta el goal (objetivo)</div>
+                        </div>
+                        <div class="varrow">↓</div>
+                        <div class="vnode vnode-r" style="padding:13px">
+                            <div class="vnode-title" style="margin-bottom:8px">IA ejecuta en loop (ciclo)</div>
+                            <div
+                                style="background:rgba(0,0,0,0.2);border-radius:4px;padding:7px;font-size:0.72rem;color:rgba(255,74,74,0.75);margin-bottom:5px">
+                                ¿Qué herramienta uso ahora?</div>
+                            <div
+                                style="background:rgba(0,0,0,0.2);border-radius:4px;padding:7px;font-size:0.72rem;color:rgba(255,74,74,0.75);margin-bottom:5px">
+                                ¿Qué hago con el resultado?</div>
+                            <div
+                                style="background:rgba(0,0,0,0.2);border-radius:4px;padding:7px;font-size:0.72rem;color:rgba(255,74,74,0.75)">
+                                ¿Necesito buscar más info?</div>
+                        </div>
+                        <div class="varrow">↓</div>
+                        <div class="vnode vnode-gr">
+                            <div class="vnode-title">Output (resultado)</div>
+                            <div class="vnode-sub">Variable entre runs (ejecuciones)</div>
+                        </div>
+                    </div>
+                    <div class="vflow-note">Quién decide los pasos: <strong>La IA, en tiempo real.</strong><br>Ella
+                        decide qué hacer, con qué tool (herramienta), si iterar.</div>
+                </div>
+            </div>
+
+            <!-- Tabla comparativa -->
+            <div class="compare-wrap" style="margin-top:14px">
+                <div class="compare-row">
+                    <div class="compare-cell key"></div>
+                    <div class="compare-cell head-b">Workflow: tú defines</div>
+                    <div class="compare-cell head-r">Agent: la IA ejecuta</div>
+                </div>
+                <div class="compare-row">
+                    <div class="compare-cell key">Qué es</div>
+                    <div class="compare-cell">Secuencia de pasos que diseñaste antes de correr. La IA ejecuta
+                        instrucciones dentro de carriles fijos.</div>
+                    <div class="compare-cell">Le das un objetivo general. La IA decide qué herramientas usar, en qué
+                        orden, y si necesita iterar.</div>
+                </div>
+                <div class="compare-row">
+                    <div class="compare-cell key">Control</div>
+                    <div class="compare-cell">Defines cada nodo, cada prompt, cada transición. Nada ocurre sin que lo
+                        hayas previsto.</div>
+                    <div class="compare-cell">La IA toma decisiones autónomamente en tiempo real. No ves el proceso
+                        hasta que termina.</div>
+                </div>
+                <div class="compare-row">
+                    <div class="compare-cell key">Previsibilidad</div>
+                    <div class="compare-cell">Alta. El run 1 y el run 47 producen la misma estructura de output.</div>
+                    <div class="compare-cell">Variable. Puede ser excelente o inconsistente según cómo interpretó el
+                        goal (objetivo).</div>
+                </div>
+                <div class="compare-row">
+                    <div class="compare-cell key">Cómo luce en Antigravity</div>
+                    <div class="compare-cell">Un archivo .md con pasos numerados, prerrequisitos y skills (habilidades) asignados. No
+                        es un canvas visual: es texto estructurado que el agente lee y sigue.</div>
+                    <div class="compare-cell">Una sesión donde el agente reporta lo que va haciendo: "voy a leer este
+                        archivo... encontré el problema... voy a corregirlo". Es un stream (flujo) de acciones.</div>
+                </div>
+                <div class="compare-row">
+                    <div class="compare-cell key">Auditoría</div>
+                    <div class="compare-cell">Fácil. Cada nodo es inspeccionable, reproducible y modificable de forma
+                        aislada.</div>
+                    <div class="compare-cell">Difícil. El razonamiento del agente no siempre es transparente ni
+                        exactamente reproducible.</div>
+                </div>
+                <div class="compare-row">
+                    <div class="compare-cell key">Fragilidad</div>
+                    <div class="compare-cell">Frágil ante lo inesperado. Si algo sale diferente a lo previsto, puede
+                        romper el flujo.</div>
+                    <div class="compare-cell">Robusto ante variaciones. Se adapta a inputs (entradas) inesperados porque decide en
+                        tiempo real.</div>
+                </div>
+            </div>
+
+            <!-- Ejemplo de workflow .md -->
+            <div style="margin-top:18px">
+                <div
+                    style="font-size:0.68rem;letter-spacing:0.18em;text-transform:uppercase;font-weight:700;color:var(--muted2);margin-bottom:8px">
+                    .agent &gt; workflows &gt; ejemplo-workflow.md
+                </div>
+                <div class="code-block">
+                    <span style="color:var(--blue)"># Workflow: [Nombre del entregable]</span><br>
+                    <br>
+                    <span style="color:var(--muted2)">Descripción breve de lo que genera este workflow.</span><br>
+                    <br>
+                    <span style="color:var(--yellow)">## Prerrequisitos</span><br>
+                    <span style="color:var(--muted2)">- Dato o contexto que necesita el agente antes de
+                        empezar</span><br>
+                    <span style="color:var(--muted2)">- Objetivo principal del run (ejecución)</span><br>
+                    <br>
+                    <span style="color:var(--yellow)">## Pasos</span><br>
+                    <br>
+                    <span style="color:var(--green)">### 1. Nombre del primer paso</span><br>
+                    <span style="color:var(--muted2)">Usa el skill `nombre-del-skill` - sección "Nombre".</span><br>
+                    <span style="color:var(--muted2)">- Instrucción específica a ejecutar</span><br>
+                    <span style="color:var(--muted2)">- Pregunta o decisión que debe resolver</span><br>
+                    <br>
+                    <span style="color:var(--green)">### 2. Nombre del segundo paso</span><br>
+                    <span style="color:var(--muted2)">Usa el skill `otro-skill`.</span><br>
+                    <span style="color:var(--muted2)">- Qué seleccionar o generar en este paso</span><br>
+                    <span style="color:var(--muted2)">- Criterio de decisión</span><br>
+                    <br>
+                    <span style="color:var(--yellow)">## Output (resultado) esperado</span><br>
+                    <span style="color:var(--muted2)">- Formato: [descripción del formato final]</span><br>
+                    <span style="color:var(--muted2)">- Listo para: [uso final del entregable]</span>
+                </div>
+            </div>
+
+            <div class="callout callout-y" style="margin-top:14px">
+                <div class="callout-label">El workflow .md en Antigravity</div>
+                <p>
+                    El archivo <strong>.md del workflow es el guion</strong>. El agente en ejecución es quien lo
+                    interpreta.
+                    El workflow define qué pasos ejecutar y en qué orden, con qué skill (habilidad), y qué se espera al final.
+                    El agente decide cómo ejecuta cada paso: qué busca, cómo interpreta el resultado, cuándo considera
+                    que un paso está completo. El guion es tuyo. La interpretación es de la IA.
+                </p>
+            </div>
+        </div>
+
+
+        <!-- 03 ESPECTRO -->
+        <div class="section fade" id="espectro" data-nav="espectro">
+            <div class="section-head"><span class="section-num num-b">03</span>
+                <h2>El espectro y el "hand-held agent" (agente guiado)</h2>
+            </div>
+            <p class="section-intro">
+                Workflow y Agent no son dos opciones binarias. Son los extremos de un espectro
+                con dos dimensiones independientes: <strong>quién define la secuencia de pasos</strong>
+                y <strong>quién elige las herramientas</strong>. Combinando esas dos dimensiones obtienes
+                cuatro posiciones en el espectro, desde control total hasta autonomía total.
+            </p>
+
+            <!-- TIMELINE -->
+            <div class="timeline">
+                <div class="timeline-axis-label">
+                    <span>Comprender / Definir</span>
+                    <span>Ejecutar / Autonomía</span>
+                </div>
+                <div class="timeline-bar-wrap">
+                    <div class="timeline-bar"></div>
+                </div>
+                <div class="timeline-stops">
+
+                    <div class="tl-stop">
+                        <div class="tl-dot-row">
+                            <div class="tl-dot tl-dot-b" style="margin-top:-19px"></div>
+                        </div>
+                        <div class="tl-label tl-label-b">Workflow puro</div>
+                        <div class="tl-desc">
+                            Tú defines la secuencia de pasos
+                            y las herramientas disponibles.
+                            Máxima previsibilidad.
+                            Nada ocurre fuera de lo que definiste.
+                        </div>
+                    </div>
+
+                    <div class="tl-stop">
+                        <div class="tl-dot-row">
+                            <div class="tl-dot tl-dot-by" style="margin-top:-19px"></div>
+                        </div>
+                        <div class="tl-label tl-label-by">Agentic workflow (flujo agéntico)</div>
+                        <div class="tl-desc">
+                            Tú fijas la secuencia y las tools (herramientas) disponibles.
+                            La IA decide cómo ejecuta cada paso
+                            dentro del sandbox (entorno controlado) que construiste.
+                        </div>
+                        <div class="tl-highlight">
+                            <div class="tl-highlight-label">Punto óptimo para entregables</div>
+                            <p>Balance entre control y flexibilidad</p>
+                        </div>
+                    </div>
+
+                    <div class="tl-stop">
+                        <div class="tl-dot-row">
+                            <div class="tl-dot tl-dot-yr" style="margin-top:-19px"></div>
+                        </div>
+                        <div class="tl-label tl-label-yr">Tool freedom (libertad de herramientas)</div>
+                        <div class="tl-desc">
+                            Tú defines los pasos pero la IA
+                            elige las herramientas para cada uno.
+                            Raro en la práctica.
+                        </div>
+                    </div>
+
+                    <div class="tl-stop">
+                        <div class="tl-dot-row">
+                            <div class="tl-dot tl-dot-r" style="margin-top:-19px"></div>
+                        </div>
+                        <div class="tl-label tl-label-r">Agent (agente) puro</div>
+                        <div class="tl-desc">
+                            La IA decide todo: secuencia, herramientas,
+                            criterio de éxito, cuándo detenerse.
+                            Máxima autonomía, mínimo control.
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- Dos dimensiones explicadas -->
+            <div class="grid-2" style="margin-top:12px">
+                <div class="card top-b">
+                    <div class="card-label lb">Dimensión 1</div>
+                    <h3>Secuencia de pasos</h3>
+                    <p>
+                        Si tú defines la secuencia, sabes exactamente qué va a pasar y en qué orden.
+                        Si la IA la define, ella decide qué hacer después de cada resultado,
+                        con la flexibilidad de cambiar el camino según lo que encuentre.
+                    </p>
+                </div>
+                <div class="card top-r">
+                    <div class="card-label lr">Dimensión 2</div>
+                    <h3>Herramientas disponibles</h3>
+                    <p>
+                        Si tú defines el menú de tools (herramientas), la IA no puede improvisar ni usar
+                        nada fuera de lo que habilitaste. Si la IA elige libremente,
+                        puede adaptarse mejor pero también puede sorprenderte.
+                    </p>
+                </div>
+            </div>
+
+            <div class="callout callout-y">
+                <div class="callout-label">Qué es exactamente el "hand-held agent" (agente guiado)</div>
+                <p>
+                    Cuando defines el workflow <strong>y</strong> le indicas qué skills (habilidades) usar, estás en
+                    <strong>agentic workflow (flujo agéntico)</strong>. Los dos dials están fijados por ti:
+                    la secuencia de pasos es tuya, y el menú de herramientas es tuyo.
+                    La IA opera con agencia real pero dentro del sandbox (entorno controlado) que construiste.
+                    Puede decidir cómo ejecuta, pero no puede improvisar herramientas
+                    nuevas ni salirse del guion.
+                </p>
+            </div>
+        </div>
+
+
+        <!-- 04 OUTPUT DETERMINISTA -->
+        <div class="section fade" id="output" data-nav="output">
+            <div class="section-head"><span class="section-num num-b">04</span>
+                <h2>Output determinista</h2>
+            </div>
+            <p class="section-intro">
+                Cuando produces entregables de cliente, no hay opcionalidad. Una inconsistencia
+                en tono, formato o menciones tiene costo real: retrabajo, tiempo perdido y
+                percepción de falta de profesionalismo. <strong>El error común es pensar que el
+                    problema es el prompt</strong>. El problema es dónde pones la responsabilidad
+                de la interpretación.
+            </p>
+
+            <div class="callout callout-b">
+                <div class="callout-label">El problema raíz</div>
+                <p>
+                    Cuando le dices a la IA "escribe en tono profesional y menciona X", le estás
+                    delegando la <strong>interpretación</strong> de esas instrucciones. Cada vez que corre,
+                    interpreta distinto. Eso produce variación. Más instrucciones en el prompt no
+                    equivalen a más determinismo: equivalen a más superficie para que la IA interprete
+                    de formas distintas cada vez.
+                </p>
+            </div>
+
+            <p style="font-size:0.87rem;color:var(--muted);margin:20px 0 16px;line-height:1.85">
+                La solución es mover la responsabilidad de la IA a la estructura.
+                Hay tres mecanismos que, combinados, eliminan la variación.
+            </p>
+
+            <div class="grid-3">
+                <div class="card top-b">
+                    <div class="card-label lb">Mecanismo 01</div>
+                    <h3>Template (plantilla) con slots (espacios)</h3>
+                    <p>
+                        En lugar de decirle cómo debe ser el output (resultado), dale el output con huecos.
+                        La IA llena los slots, no inventa la estructura. El número de secciones,
+                        el orden, el uso de negritas, si hay conclusión o no: ya está resuelto
+                        antes de correr el workflow.
+                    </p>
+                    <div class="code-block" style="margin-top:12px;font-size:0.71rem">
+                        <span style="color:var(--muted2)">## [TÍTULO DEL ARTÍCULO]</span><br>
+                        <span style="color:var(--blue)">**Categoría:** [Estrategia / Ops / Tech]</span><br>
+                        <br>
+                        <span style="color:var(--muted2)">[Párrafo 1: contexto, 2-3 oraciones]</span><br>
+                        <br>
+                        <span style="color:var(--muted2)">[Párrafo 2: insight principal]</span><br>
+                        <br>
+                        <span style="color:var(--yellow)">**Conclusión:** [una oración con verbo]</span>
+                    </div>
+                </div>
+                <div class="card top-y">
+                    <div class="card-label ly">Mecanismo 02</div>
+                    <h3>Constraints (restricciones) separados</h3>
+                    <p>
+                        Tono, menciones y límites van aparte del template, como checklist
+                        explícito. Nunca mezclados en el prompt principal. La IA los procesa
+                        diferente cuando están aislados como lista que cuando están enterrados
+                        en un párrafo de instrucciones.
+                    </p>
+                    <div class="code-block" style="margin-top:12px;font-size:0.71rem">
+                        <span style="color:var(--yellow)">RESTRICCIONES (no negociables):</span><br>
+                        <span style="color:var(--muted2)">- Mencionar "mi-marca" en parrafo 1</span><br>
+                        <span style="color:var(--muted2)">- No usar "termino-prohibido"</span><br>
+                        <span style="color:var(--muted2)">- Tutear al lector</span><br>
+                        <span style="color:var(--muted2)">- Maximo 180 palabras totales</span>
+                    </div>
+                </div>
+                <div class="card top-r">
+                    <div class="card-label lr">Mecanismo 03</div>
+                    <h3>Validation pass (paso de validación)</h3>
+                    <p>
+                        Un segundo llamado cuyo único trabajo es verificar el output (resultado) del primero
+                        contra tus criterios, y devolver pass o fail (corrección) si falla.
+                        No es retrabajo tuyo: es un nodo más en el workflow. Es el mecanismo que
+                        más cambia el juego para entregables sin margen de error.
+                    </p>
+                    <div
+                        style="background:var(--bg);border:1px solid var(--border2);border-radius:6px;padding:12px;margin-top:12px">
+                        <div class="pf-row"><span class="pf-tag pf-pass">PASS</span><span class="pf-text">Menciona
+                                "mi-marca" en p1</span></div>
+                        <div class="pf-row"><span class="pf-tag pf-pass">PASS</span><span class="pf-text">No usa
+                                "termino-prohibido"</span></div>
+                        <div class="pf-row"><span class="pf-tag pf-fail">FAIL</span><span class="pf-text">Usa "usted" en
+                                parrafo 2</span></div>
+                        <div style="margin-top:8px;font-size:0.7rem;color:var(--red)">→ Corrigiendo parrafo 2...</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="callout callout-r" style="margin-top:14px">
+                <div class="callout-label">Para entregables de cliente: los tres juntos</div>
+                <p>
+                    Cualquiera de los tres mecanismos solo no es suficiente. El template resuelve
+                    estructura, los constraints (restricciones) resuelven tono y menciones, el validation pass
+                    resuelve la variación residual. Una corrección típica cuesta
+                    <strong>3 a 5 veces más tokens</strong> que el output original.
+                    La estructura correcta es prevención, no corrección.
+                </p>
+            </div>
+        </div>
+
+
+        <!-- 05 SIDE BY SIDE -->
+        <div class="section fade" id="sbs" data-nav="sbs">
+            <div class="section-head"><span class="section-num num-r">05</span>
+                <h2>El mismo proceso: cómo luce en cada modo</h2>
+            </div>
+            <p class="section-intro">
+                El mismo objetivo: producir un entregable de cliente aplicando los tres mecanismos
+                de output determinista. La diferencia es arquitectural.
+                <span style="color:var(--blue);font-weight:600">Azul</span> = lineamientos que tú definiste.
+                <span style="color:var(--yellow);font-weight:600">Amarillo</span> = decisión o punto de validación.
+                <span style="color:var(--red);font-weight:600">Rojo</span> = ejecución de la IA.
+            </p>
+
+            <div class="grid-2">
+                <div class="card">
+                    <div class="card-label lb" style="margin-bottom:14px">Workflow: cada nodo lo defines tú</div>
+                    <div class="vflow">
+                        <div class="vnode vnode-gr">
+                            <div class="vnode-title">Input</div>
+                            <div class="vnode-sub">Brief del cliente</div>
+                        </div>
+                        <div class="varrow">↓</div>
+                        <div class="vnode vnode-b">
+                            <div class="vnode-title">Template (plantilla) con slots</div>
+                            <div class="vnode-sub">Lineamientos: tú diseñaste la estructura</div>
+                        </div>
+                        <div class="varrow">↓</div>
+                        <div class="vnode vnode-b">
+                            <div class="vnode-title">Constraints (restricciones) como checklist</div>
+                            <div class="vnode-sub">Lineamientos: tú escribiste las reglas</div>
+                        </div>
+                        <div class="varrow">↓</div>
+                        <div class="vnode vnode-y">
+                            <div class="vnode-title">Validación</div>
+                            <div class="vnode-sub">Decisión: pass o fail según tus criterios</div>
+                        </div>
+                        <div class="varrow">↓</div>
+                        <div class="vnode vnode-gr">
+                            <div class="vnode-title">Output (resultado)</div>
+                            <div class="vnode-sub">Predecible, sin variación</div>
+                        </div>
+                    </div>
+                    <div
+                        style="margin-top:12px;padding:10px 12px;background:var(--yellow-dim);border:1px solid var(--yellow-line);border-radius:7px;font-size:0.74rem;color:var(--muted);line-height:1.65">
+                        <strong style="color:var(--yellow)">El fail loop (ciclo de corrección):</strong> si la validación no pasa,
+                        vuelve siempre al mismo punto fijo: el nodo de template. Determinista.
+                        Siempre el mismo nodo, siempre los mismos criterios.
+                    </div>
+                    <div class="vflow-note">Cada nodo fue definido por ti antes de correr el workflow.</div>
+                </div>
+
+                <div class="card">
+                    <div class="card-label lr" style="margin-bottom:14px">Agentic: cada nodo lo decide la IA</div>
+                    <div class="vflow">
+                        <div class="vnode vnode-gr">
+                            <div class="vnode-title">Input (entrada) + goal (objetivo)</div>
+                            <div class="vnode-sub">Brief + instrucción general</div>
+                        </div>
+                        <div class="varrow">↓</div>
+                        <div class="vnode vnode-y">
+                            <div class="vnode-title">IA interpreta</div>
+                            <div class="vnode-sub">Decide cómo abordar el problema</div>
+                        </div>
+                        <div class="varrow">↓</div>
+                        <div class="vnode vnode-r">
+                            <div class="vnode-title">IA genera</div>
+                            <div class="vnode-sub">Ejecuta con su propia estructura</div>
+                        </div>
+                        <div class="varrow">↓</div>
+                        <div class="vnode vnode-y">
+                            <div class="vnode-title">IA auto-evalúa</div>
+                            <div class="vnode-sub">Decide si el resultado es suficiente</div>
+                        </div>
+                        <div class="varrow">↓</div>
+                        <div class="vnode vnode-gr">
+                            <div class="vnode-title">Output (resultado)</div>
+                            <div class="vnode-sub">Variable entre runs (ejecuciones)</div>
+                        </div>
+                    </div>
+                    <div
+                        style="margin-top:12px;padding:10px 12px;background:var(--red-dim);border:1px solid var(--red-line);border-radius:7px;font-size:0.74rem;color:var(--muted);line-height:1.65">
+                        <strong style="color:var(--red)">Sin punto fijo:</strong> si la IA decide reiterar,
+                        ella decide también desde dónde y con qué criterio. No hay un nodo
+                        invariante al que siempre volver.
+                    </div>
+                    <div class="vflow-note">Cada nodo fue decidido por la IA en tiempo real.</div>
+                </div>
+            </div>
+
+            <div class="callout callout-b" style="margin-top:14px">
+                <div class="callout-label">La distinción crítica</div>
+                <p>
+                    El workflow tiene un fail loop (ciclo de corrección) que siempre regresa al mismo punto.
+                    El agente no tiene punto fijo al que volver: si reitera, decide también
+                    desde dónde y con qué criterio. El template y los constraints en el workflow
+                    no son pasos previos que la IA vio antes de empezar. Son las paredes dentro
+                    de las cuales opera en <strong>todo momento</strong>.
+                    La contención es la clave, no la secuencia.
+                </p>
+            </div>
+        </div>
+
+
+        <!-- 06 CONTENCION -->
+        <div class="section fade" id="contencion" data-nav="contencion">
+            <div class="section-head"><span class="section-num num-b">06</span>
+                <h2>El modelo de contención</h2>
+            </div>
+            <p class="section-intro">
+                Hay un error conceptual común al combinar workflow y agente: dibujar template
+                y constraints como <strong>pasos previos</strong> que ocurren antes de que la IA entre.
+                Eso implica que la IA podría ignorarlos una vez que empieza. El modelo correcto
+                es de <strong>contención</strong>: la IA opera dentro del sandbox (entorno controlado) que tú construiste.
+            </p>
+
+            <div class="grid-2">
+                <div class="card">
+                    <div class="card-label lr" style="margin-bottom:14px">Lectura incorrecta: secuencia lineal</div>
+                    <div class="vflow">
+                        <div class="vnode vnode-b">
+                            <div class="vnode-title">Template</div>
+                        </div>
+                        <div class="varrow">↓</div>
+                        <div class="vnode vnode-b">
+                            <div class="vnode-title">Constraints</div>
+                        </div>
+                        <div class="varrow">↓</div>
+                        <div class="vnode vnode-y">
+                            <div class="vnode-title">Validación</div>
+                        </div>
+                        <div class="varrow">↓</div>
+                        <div class="vnode vnode-r">
+                            <div class="vnode-title">IA interpreta</div>
+                        </div>
+                        <div class="varrow">↓</div>
+                        <div class="vnode vnode-r">
+                            <div class="vnode-title">IA genera</div>
+                        </div>
+                    </div>
+                    <div
+                        style="margin-top:12px;padding:10px 12px;background:var(--red-dim);border:1px solid var(--red-line);border-radius:7px;font-size:0.74rem;color:var(--muted);line-height:1.65">
+                        Implica que template y constraints son pasos que ocurren antes de la IA.
+                        Una vez que la IA pasa esos nodos, podría no respetarlos.
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-label lg" style="margin-bottom:14px">Lectura correcta: contención</div>
+                    <div
+                        style="background:var(--blue-dim);border:1px solid var(--blue-line);border-radius:10px;padding:14px">
+                        <div
+                            style="font-size:0.7rem;font-weight:700;color:var(--blue);margin-bottom:3px;text-transform:uppercase;letter-spacing:0.08em">
+                            Tu sandbox (entorno controlado)</div>
+                        <div style="font-size:0.71rem;color:var(--muted);margin-bottom:14px">Template + Constraints +
+                            Validación</div>
+                        <div
+                            style="background:var(--red-dim);border:1px solid var(--red-line);border-radius:7px;padding:12px">
+                            <div
+                                style="font-size:0.7rem;font-weight:700;color:var(--red);margin-bottom:8px;text-transform:uppercase;letter-spacing:0.08em">
+                                IA opera aquí dentro</div>
+                            <div
+                                style="background:rgba(0,0,0,0.2);border-radius:4px;padding:7px;font-size:0.72rem;color:var(--muted);margin-bottom:5px">
+                                Interpreta el brief</div>
+                            <div
+                                style="background:rgba(0,0,0,0.2);border-radius:4px;padding:7px;font-size:0.72rem;color:var(--muted);margin-bottom:5px">
+                                Llena los slots del template</div>
+                            <div
+                                style="background:rgba(0,0,0,0.2);border-radius:4px;padding:7px;font-size:0.72rem;color:var(--muted);margin-bottom:5px">
+                                Respeta los constraints</div>
+                            <div
+                                style="background:rgba(0,0,0,0.2);border-radius:4px;padding:7px;font-size:0.72rem;color:var(--muted)">
+                                Pasa la validación</div>
+                        </div>
+                    </div>
+                    <div
+                        style="margin-top:12px;padding:10px 12px;background:var(--green-dim);border:1px solid var(--green-line);border-radius:7px;font-size:0.74rem;color:var(--muted);line-height:1.65">
+                        <strong style="color:var(--green)">Por qué funciona:</strong> la IA no puede generar nada que no
+                        quepa dentro del sandbox. Las paredes son permanentes, no un paso que ya pasó.
+                    </div>
+                </div>
+            </div>
+
+            <div class="callout callout-y" style="margin-top:14px">
+                <div class="callout-label">Cómo se implementa</div>
+                <p>
+                    El template y los constraints van <strong>dentro del prompt</strong> que recibe la IA, no antes de
+                    él.
+                    En cada paso del workflow, esos elementos están presentes en el contexto de ejecución.
+                    La IA no los recuerda de antes: los tiene frente a ella en cada momento.
+                </p>
+            </div>
+        </div>
+
+
+        <!-- 07 JERARQUÍA -->
+        <div class="section fade" id="jerarquia" data-nav="jerarquia">
+            <div class="section-head"><span class="section-num num-b">07</span>
+                <h2>La jerarquía de contexto</h2>
+            </div>
+            <p class="section-intro">
+                Con múltiples formatos de contenido, cada uno con su template y constraints (restricciones), necesitas
+                una organización que cumpla dos objetivos simultáneos: <strong>maximizar la consistencia
+                    de los elementos compartidos</strong> (tono, voz, restricciones globales) y
+                <strong>maximizar el uso de tokens</strong> cargando solo el contexto necesario por run (ejecución).
+                El principio que resuelve ambos: <strong>lo que es común sube, lo que es específico baja</strong>.
+            </p>
+
+            <div class="layer-stack">
+                <div class="layer-block" style="background:var(--blue-dim)">
+                    <div class="layer-tag" style="color:var(--blue)">Capa 0 · Global · Siempre se carga</div>
+                    <div class="layer-title" style="color:var(--blue)">00-brand/</div>
+                    <div class="layer-desc">
+                        Son los lineamientos que gobiernan todo lo que produce la marca: contenido, web y app por igual.
+                        Si un constraint aplica a más de un formato, vive aquí y nunca se duplica abajo.
+                        Un botón de la app tiene el mismo tono que un post de LinkedIn.
+                    </div>
+                    <div class="file-chips">
+                        <span class="chip" style="background:var(--blue-dim);color:var(--blue)">brand-voice.md</span>
+                        <span class="chip" style="background:var(--blue-dim);color:var(--blue)">product-guide.md</span>
+                        <span class="chip" style="background:var(--blue-dim);color:var(--blue)">use-cases.md</span>
+                        <span class="chip"
+                            style="background:var(--blue-dim);color:var(--blue)">global-constraints.md</span>
+                        <span class="chip" style="background:var(--blue-dim);color:var(--blue)">glossary.md</span>
+                    </div>
+                    <div class="see-more-toggle" onclick="this.classList.toggle('open');this.nextElementSibling.classList.toggle('open')">
+                        <span class="chevron">▼</span> Ver ejemplo de estructura de carpetas
+                    </div>
+                    <div class="see-more-content">
+                        <div class="see-more-tree">
+📁 00-brand/<br>
+  📄 brand-voice.md<br>
+  📄 product-guide.md<br>
+  📄 use-cases.md<br>
+  📄 global-constraints.md<br>
+  📄 glossary.md<br>
+  📄 visual-identity.md
+                        </div>
+                    </div>
+                </div>
+
+                <div class="layer-block">
+                    <div class="layer-tag" style="color:var(--yellow)">Capa 1 · Por dominio · Solo el activo</div>
+                    <div class="layer-title" style="color:var(--yellow)">01-content/ &nbsp;·&nbsp; 02-web/ &nbsp;·&nbsp;
+                        03-app/</div>
+                    <div class="layer-desc">
+                        En cualquier ejecución, solo se carga el dominio activo y dentro de ese dominio
+                        solo el módulo o formato que se está trabajando. Si corres un newsletter,
+                        no cargas el template de TikTok. Si trabajas en billing, no cargas auth ni dashboard.
+                    </div>
+                    <div class="file-chips">
+                        <span class="chip" style="background:var(--yellow-dim);color:var(--yellow)">newsletter.md</span>
+                        <span class="chip"
+                            style="background:var(--yellow-dim);color:var(--yellow)">design-system.md</span>
+                        <span class="chip"
+                            style="background:var(--yellow-dim);color:var(--yellow)">architecture.md</span>
+                        <span class="chip"
+                            style="background:var(--yellow-dim);color:var(--yellow)">modules/billing.md</span>
+                        <span class="chip"
+                            style="background:var(--yellow-dim);color:var(--yellow)">validation-rules.md</span>
+                    </div>
+                    <div class="see-more-toggle" onclick="this.classList.toggle('open');this.nextElementSibling.classList.toggle('open')">
+                        <span class="chevron">▼</span> Ver ejemplo de estructura de carpetas
+                    </div>
+                    <div class="see-more-content">
+                        <div class="see-more-tree">
+📁 01-content/<br>
+  📁 formats/<br>
+    📄 newsletter.md<br>
+    📄 linkedin-post.md<br>
+    📄 blog-article.md<br>
+    📄 tiktok-script.md<br>
+  📄 validation-rules.md<br>
+<br>
+📁 02-web/<br>
+  📄 design-system.md<br>
+  📄 seo-rules.md<br>
+  📁 pages/<br>
+    📄 home.md · landing-a.md<br>
+<br>
+📁 03-app/<br>
+  📄 architecture.md<br>
+  📁 modules/<br>
+    📄 auth.md · billing.md<br>
+  📁 sprints/<br>
+    📄 sprint-01.md
+                        </div>
+                    </div>
+
+                <div class="layer-block">
+                    <div class="layer-tag" style="color:var(--red)">Capa 2 · Por ejecución · Solo las variables del run (ejecución)
+                    </div>
+                    <div class="layer-title" style="color:var(--red)">04-runs/</div>
+                    <div class="layer-desc">
+                        Solo lo que cambia entre runs: tema de la semana, datos del cliente,
+                        requerimiento específico del sprint (iteración). Todo lo invariante ya está resuelto arriba.
+                        Un brief bien estructurado tiene pocas líneas.
+                    </div>
+                    <div class="file-chips">
+                        <span class="chip"
+                            style="background:var(--red-dim);color:var(--red)">brief-cliente-s12.md</span>
+                        <span class="chip" style="background:var(--red-dim);color:var(--red)">brief-sprint-02.md</span>
+                    </div>
+                    <div class="see-more-toggle" onclick="this.classList.toggle('open');this.nextElementSibling.classList.toggle('open')">
+                        <span class="chevron">▼</span> Ver ejemplo de estructura de carpetas
+                    </div>
+                    <div class="see-more-content">
+                        <div class="see-more-tree">
+📁 04-runs/<br>
+  📁 content/<br>
+    📄 brief-s12.md · brief-s13.md<br>
+  📁 web/<br>
+    📄 brief-landing-launch.md<br>
+  📁 app/<br>
+    📄 brief-sprint-01.md
+                        </div>
+                    </div>
+                </div>
+
+                <div class="layer-block" style="background:rgba(255,255,255,0.02)">
+                    <div class="layer-tag" style="color:var(--muted2)">Raíz del proyecto · Siempre presentes</div>
+                    <div class="layer-title">CLAUDE.md &nbsp;+&nbsp; README.md</div>
+                    <div class="layer-desc">
+                        CLAUDE.md le dice al agente la lógica de carga según qué tipo de run (ejecución) se ejecuta.
+                        README.md le dice a un humano cómo opera el sistema. Ambos en la raíz.
+                    </div>
+                </div>
+            </div>
+
+            <div class="grid-3" style="gap:10px;margin-top:10px">
+                <div class="callout callout-b" style="margin:0">
+                    <div class="callout-label">Sube si es compartido</div>
+                    <p>Si un constraint aplica a más de un formato, vive en global-constraints.md. Duplicarlo abajo crea
+                        divergencia silenciosa y acumulativa.</p>
+                </div>
+                <div class="callout callout-y" style="margin:0">
+                    <div class="callout-label">Baja si es específico</div>
+                    <p>El template de newsletter, su largo, sus secciones: eso no contamina el brand layer. Cada capa
+                        tiene su scope exacto.</p>
+                </div>
+                <div class="callout callout-r" style="margin:0">
+                    <div class="callout-label">El brief es mínimo</div>
+                    <p>Solo las variables que cambian por run (ejecución). Todo lo invariante ya está resuelto arriba. El brief no
+                        repite contexto que ya existe.</p>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- 08 TOKENS -->
+        <div class="section fade" id="tokens" data-nav="tokens">
+            <div class="section-head"><span class="section-num num-b">08</span>
+                <h2>Optimización de tokens</h2>
+            </div>
+            <p class="section-intro">
+                La frustración con los límites de tokens no viene de los límites en sí mismos.
+                Viene de <strong>trabajar sin estructura</strong>. Sin estructura, cada sesión carga todo el
+                contexto desde cero, repite información que ya existía, y gasta presupuesto en
+                repetición en lugar de en trabajo nuevo. La jerarquía resuelve exactamente eso.
+            </p>
+
+            <div class="grid-2" style="margin-bottom:14px">
+                <div class="card">
+                    <div class="card-label lr" style="margin-bottom:14px">Sin estructura: sesión libre</div>
+                    <div class="bar-row">
+                        <span class="bar-lbl">Re-explicar brand</span>
+                        <div class="bar-track">
+                            <div class="bar-fill bf-r" style="width:70%"></div>
+                        </div>
+                        <span class="bar-pct" style="color:var(--red)">35%</span>
+                    </div>
+                    <div class="bar-row">
+                        <span class="bar-lbl">Re-explicar formato</span>
+                        <div class="bar-track">
+                            <div class="bar-fill bf-r" style="width:40%"></div>
+                        </div>
+                        <span class="bar-pct" style="color:var(--red)">20%</span>
+                    </div>
+                    <div class="bar-row">
+                        <span class="bar-lbl">Correcciones</span>
+                        <div class="bar-track">
+                            <div class="bar-fill bf-r" style="width:30%"></div>
+                        </div>
+                        <span class="bar-pct" style="color:var(--red)">15%</span>
+                    </div>
+                    <div class="bar-row">
+                        <span class="bar-lbl">Trabajo real</span>
+                        <div class="bar-track">
+                            <div class="bar-fill bf-g" style="width:30%"></div>
+                        </div>
+                        <span class="bar-pct" style="color:var(--green)">30%</span>
+                    </div>
+                    <div
+                        style="margin-top:12px;padding-top:10px;border-top:1px solid var(--border);display:flex;justify-content:space-between;font-size:0.8rem">
+                        <span style="color:var(--muted)">Tokens en trabajo real</span>
+                        <span style="color:var(--red);font-weight:700;font-size:0.9rem">30%</span>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-label lg" style="margin-bottom:14px">Con estructura jerárquica</div>
+                    <div class="bar-row">
+                        <span class="bar-lbl">Brand (lineamientos)</span>
+                        <div class="bar-track">
+                            <div class="bar-fill bf-b" style="width:24%"></div>
+                        </div>
+                        <span class="bar-pct" style="color:var(--blue)">12%</span>
+                    </div>
+                    <div class="bar-row">
+                        <span class="bar-lbl">Formato activo</span>
+                        <div class="bar-track">
+                            <div class="bar-fill bf-y" style="width:16%"></div>
+                        </div>
+                        <span class="bar-pct" style="color:var(--yellow)">8%</span>
+                    </div>
+                    <div class="bar-row">
+                        <span class="bar-lbl">Brief del run</span>
+                        <div class="bar-track">
+                            <div class="bar-fill bf-r" style="width:10%"></div>
+                        </div>
+                        <span class="bar-pct" style="color:var(--red)">5%</span>
+                    </div>
+                    <div class="bar-row">
+                        <span class="bar-lbl">Trabajo real</span>
+                        <div class="bar-track">
+                            <div class="bar-fill bf-g" style="width:80%"></div>
+                        </div>
+                        <span class="bar-pct" style="color:var(--green)">75%</span>
+                    </div>
+                    <div
+                        style="margin-top:12px;padding-top:10px;border-top:1px solid var(--border);display:flex;justify-content:space-between;font-size:0.8rem">
+                        <span style="color:var(--muted)">Tokens en trabajo real</span>
+                        <span style="color:var(--green);font-weight:700;font-size:0.9rem">75%</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="info-row">
+                <div class="info-pill">
+                    <strong>El system prompt (instrucción del sistema) no cuenta igual</strong>
+                    El brand layer (capa de marca) en system prompt se carga una vez por sesión, no por mensaje.
+                    En una sesión de 10 outputs, pagas ese contexto 1 vez, no 10.
+                </div>
+                <div class="info-pill">
+                    <strong>La corrección es el mayor desperdicio</strong>
+                    Una corrección típica cuesta entre 3 y 5 veces más tokens que el output original.
+                    Estructura correcta es prevención pura.
+                </div>
+                <div class="info-pill">
+                    <strong>Los sprints (iteraciones) como unidad de medida</strong>
+                    El límite de tokens se convierte en una unidad de sprint. Diseñas el scope (alcance) para que quepa,
+                    terminas con algo funcional y documentado.
+                </div>
+            </div>
+        </div>
+
+
+        <!-- 09 MI MARCA -->
+        <div class="section fade" id="marca" data-nav="marca">
+            <div class="section-head"><span class="section-num num-r">09</span>
+                <h2>Estructura completa: mi-marca</h2>
+            </div>
+            <p class="section-intro">
+                Content system + web/landing + web app. Tres ramas, una raíz compartida.
+                Cada rama tiene su propia capa de reglas de operación, pero todas heredan
+                del mismo brand system (sistema de marca).
+            </p>
+
+            <div class="tree" style="margin-bottom:14px">
+                <span style="color:var(--text);font-weight:700">📁 mi-marca/</span><br>
+                <span class="t-y">│ 📄 CLAUDE.md</span><span class="badge badge-y"
+                    style="margin-left:8px;vertical-align:middle;font-size:0.55rem">lee la IA</span><span
+                    class="t-note">mapa del proyecto + lógica de carga por tipo de run (ejecución)</span><br>
+                <span class="t-m">│ 📄 README.md</span><span class="badge badge-m"
+                    style="margin-left:8px;vertical-align:middle;font-size:0.55rem">lee humano</span><span
+                    class="t-note">qué es, cómo se usa, qué hay en cada carpeta</span><br>
+                <br>
+                <span class="t-b">│ 📁 00-brand/</span><span class="badge badge-b"
+                    style="margin-left:8px;vertical-align:middle;font-size:0.55rem">Capa 0 · global · siempre</span><br>
+                <span class="t-b">│ │ brand-voice.md</span><span class="t-note">tono, voz, personalidad de
+                    marca</span><br>
+                <span class="t-b">│ │ visual-identity.md</span><span class="t-note">colores, tipografía, uso de
+                    logo</span><br>
+                <span class="t-b">│ │ product-guide.md</span><span class="t-note">qué ofrece la marca, qué no</span><br>
+                <span class="t-b">│ │ global-constraints.md</span><span class="t-note">lo que NUNCA se hace en ningún
+                    formato</span><br>
+                <span class="t-b">│ │ use-cases.md &nbsp; glossary.md</span><br>
+                <br>
+                <span class="t-y">│ 📁 01-content/</span><span class="badge badge-y"
+                    style="margin-left:8px;vertical-align:middle;font-size:0.55rem">Capa 1 · content</span><br>
+                <span class="t-y">│ │ formats/ → newsletter · linkedin · blog · tiktok-script · caso-exito ·
+                    ···</span><br>
+                <span class="t-t">│ │ validation-rules.md</span><span class="t-note">criterios de QA por
+                    formato</span><br>
+                <br>
+                <span class="t-y">│ 📁 02-web/</span><span class="badge badge-y"
+                    style="margin-left:8px;vertical-align:middle;font-size:0.55rem">Capa 1 · web</span><br>
+                <span class="t-y">│ │ design-system.md &nbsp; seo-rules.md &nbsp; copy-guidelines.md</span><br>
+                <span class="t-y">│ │ pages/ → home · landing-a · landing-b · about · ···</span><br>
+                <br>
+                <span class="t-y">│ 📁 03-app/</span><span class="badge badge-y"
+                    style="margin-left:8px;vertical-align:middle;font-size:0.55rem">Capa 1 · app</span><br>
+                <span class="t-y">│ │ architecture.md &nbsp; ux-rules.md &nbsp; data-models.md</span><br>
+                <span class="t-y">│ │ modules/ → auth · dashboard · billing · notifications · ···</span><br>
+                <span class="t-y">│ │ sprints/ → sprint-01.md · sprint-02.md · ···</span><br>
+                <br>
+                <span class="t-m">│ 📁 04-runs/</span><span class="badge badge-m"
+                    style="margin-left:8px;vertical-align:middle;font-size:0.55rem">Capa 2 · ejecución</span><br>
+                <span class="t-r">│ │ content/ → brief-s12.md · brief-s13.md</span><br>
+                <span class="t-r">│ │ web/ → brief-landing-launch.md · brief-redesign-hero.md</span><br>
+                <span class="t-r">│ │ app/ → brief-sprint-01.md · brief-sprint-02.md</span><br>
+                <br>
+                <span class="t-m">│ 📁 05-outputs/</span><span class="t-note">resultados por run</span>
+            </div>
+
+            <!-- Load logic -->
+            <div class="card" style="margin-bottom:14px">
+                <div class="card-label lm" style="margin-bottom:14px">Lógica de carga en cada ejecución</div>
+                <div class="load-grid">
+                    <div class="load-card">
+                        <div class="load-title" style="color:var(--muted)">Content run</div>
+                        <div class="load-line">
+                            <span class="t-b">00-brand/</span> completo<br>
+                            + <span class="t-y">formats/newsletter.md</span><br>
+                            + <span class="t-r">runs/content/brief.md</span>
+                        </div>
+                        <div class="load-note">Los otros 9 formatos no existen en este contexto.</div>
+                    </div>
+                    <div class="load-card">
+                        <div class="load-title" style="color:var(--muted)">Web sprint</div>
+                        <div class="load-line">
+                            <span class="t-b">00-brand/</span> completo<br>
+                            + <span class="t-y">02-web/design-system.md</span><br>
+                            + <span class="t-y">pages/landing-a.md</span><br>
+                            + <span class="t-r">runs/web/brief.md</span>
+                        </div>
+                        <div class="load-note">Las otras páginas no se cargan.</div>
+                    </div>
+                    <div class="load-card">
+                        <div class="load-title" style="color:var(--muted)">App sprint</div>
+                        <div class="load-line">
+                            <span class="t-b">00-brand/</span> completo<br>
+                            + <span class="t-y">03-app/architecture.md</span><br>
+                            + <span class="t-y">modules/billing.md</span><br>
+                            + <span class="t-r">runs/app/brief.md</span>
+                        </div>
+                        <div class="load-note">auth y dashboard no se cargan.</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="callout callout-b">
+                <div class="callout-label">Por qué 00-brand/ está en toda ejecución</div>
+                <p>
+                    El brand system (sistema de marca) no es solo para contenido: <strong>gobierna cualquier output que lleve
+                        el nombre de la marca</strong>. Si vive separado por rama, cada rama empieza a interpretar
+                    el tono de forma distinta. La divergencia entre ramas es silenciosa y acumulativa:
+                    no la ves hasta que ya es un problema de percepción.
+                </p>
+            </div>
+
+            <div class="callout callout-y" style="margin-top:10px">
+                <div class="callout-label">Lo que el CLAUDE.md de la raíz debe decir exactamente</div>
+                <p>
+                    No solo la descripción del proyecto. Debe incluir la <strong>lógica operativa de carga</strong>:
+                    "antes de cualquier ejecución carga 00-brand/ completo. Luego carga solo el archivo de
+                    formato que corresponda al run. Luego el brief. No cargues todos los formatos juntos.
+                    Si el run es de app, carga architecture.md más solo el módulo activo."
+                    Eso convierte la estructura de carpetas en instrucción operativa para el agente.
+                </p>
+            </div>
+        </div>
+
+
+        <!-- 10 CONCLUSIONES -->
+        <div class="section fade" id="conclusiones" data-nav="conclusiones">
+            <div class="section-head"><span class="section-num num-b">10</span>
+                <h2>Conclusiones: por qué la estructura lo cambia todo</h2>
+            </div>
+            <p class="section-intro">
+                Cada sección de esta guía resuelve una pieza del mismo problema: <strong>cómo
+                    hacer que la IA produzca resultados consistentes, auditables y eficientes</strong>.
+                No se trata de un solo truco ni de un prompt mágico. Se trata de un sistema
+                donde cada decisión arquitectural refuerza las demás.
+            </p>
+
+            <div class="conclusion-grid">
+                <div class="conclusion-card">
+                    <div class="conclusion-icon">🏗️</div>
+                    <h3>Estructura elimina ambigüedad</h3>
+                    <p>
+                        Sin estructura, cada sesión empieza desde cero.
+                        Con jerarquía, el contexto ya existe antes de que la IA comience.
+                        No interpretas tú. No interpreta la IA. La estructura habla por sí sola.
+                    </p>
+                    <div class="section-links">
+                        <a href="#md">Archivos .md</a>
+                        <a href="#jerarquia">Jerarquía</a>
+                        <a href="#marca">Mi marca</a>
+                    </div>
+                </div>
+                <div class="conclusion-card">
+                    <div class="conclusion-icon">🔄</div>
+                    <h3>Consistencia entre ejecuciones</h3>
+                    <p>
+                        El run 1 y el run 47 producen la misma estructura.
+                        Templates con slots fijan el formato. Constraints fijan el tono.
+                        El validation pass atrapa lo que se escapa.
+                    </p>
+                    <div class="section-links">
+                        <a href="#output">Output determinista</a>
+                        <a href="#sbs">Side by side</a>
+                    </div>
+                </div>
+                <div class="conclusion-card">
+                    <div class="conclusion-icon">🛡️</div>
+                    <h3>Control y resiliencia</h3>
+                    <p>
+                        La contención no es un paso previo: es una pared permanente.
+                        La IA opera dentro del sandbox que tú construiste.
+                        El fail loop siempre regresa al mismo punto fijo.
+                    </p>
+                    <div class="section-links">
+                        <a href="#contencion">Contención</a>
+                        <a href="#wfag">Workflow vs Agent</a>
+                        <a href="#espectro">Espectro</a>
+                    </div>
+                </div>
+                <div class="conclusion-card">
+                    <div class="conclusion-icon">⚡</div>
+                    <h3>Eficiencia de tokens</h3>
+                    <p>
+                        Sin estructura: 30% de tokens en trabajo real.
+                        Con estructura jerárquica: 75%.
+                        La diferencia no es teórica — es medible en cada sesión, en cada factura.
+                    </p>
+                    <div class="section-links">
+                        <a href="#tokens">Tokens</a>
+                        <a href="#jerarquia">Jerarquía</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="conclusion-wrap-up">
+                <p>
+                    La IA no necesita mejores prompts.<br>
+                    Necesita <strong>mejor arquitectura alrededor</strong>.<br>
+                    Estructura primero. Instrucciones después. Resultados siempre.
+                </p>
+            </div>
+        </div>
+
+
+        <footer>
+            <div class="footer-bar">
+                <span class="footer-brand">LifeStrategics 2026 | AI Project Guide by <a href="https://links.lifestrategics.com" target="_blank" rel="noopener">Mónica De Salazar</a></span>
+                <span class="footer-note">V3 2026</span>
+            </div>
+            <div class="footer-bottom">
+                <img src="lifestrategics_logo_plain.png" alt="LifeStrategics" class="footer-logo">
+                <div class="footer-tagline">
+                    <span class="tag-blue">UNDERSTAND</span><span class="tag-sep">·</span><span class="tag-yellow">DECIDE</span><span class="tag-sep">·</span><span class="tag-red">TAKE ACTION</span>
+                </div>
+            </div>
+        </footer>
+
+    </div>
+
+    <script>
+        // Fade-in observer
+        const obs = new IntersectionObserver(entries => {
+            entries.forEach(e => {
+                if (e.isIntersecting) { e.target.classList.add('vis'); obs.unobserve(e.target); }
+            });
+        }, { threshold: 0.06 });
+        document.querySelectorAll('.fade').forEach(el => obs.observe(el));
+
+        // Active nav link on scroll
+        const sections = document.querySelectorAll('.section[data-nav]');
+        const navLinks = document.querySelectorAll('nav a');
+        const navObs = new IntersectionObserver(entries => {
+            entries.forEach(e => {
+                if (e.isIntersecting) {
+                    const id = e.target.getAttribute('data-nav');
+                    navLinks.forEach(a => {
+                        a.classList.toggle('active', a.getAttribute('href') === '#' + id);
+                    });
+                }
+            });
+        }, { threshold: 0.15, rootMargin: '-80px 0px -60% 0px' });
+        sections.forEach(s => navObs.observe(s));
+
+        // Nav scroll controller — ‹ › snap-to-pill buttons
+        (function () {
+            const navLinksEl = document.querySelector('.nav-links');
+            const btnL = document.getElementById('nav-scroll-left');
+            const btnR = document.getElementById('nav-scroll-right');
+            if (!navLinksEl || !btnL || !btnR) return;
+
+            function update() {
+                const atStart = navLinksEl.scrollLeft <= 4;
+                const atEnd = navLinksEl.scrollLeft + navLinksEl.clientWidth >= navLinksEl.scrollWidth - 4;
+                btnL.classList.toggle('hidden', atStart);
+                btnR.classList.toggle('hidden', atEnd);
+            }
+
+            function scrollToNextPill(direction) {
+                const links = Array.from(navLinksEl.querySelectorAll('a'));
+                const containerLeft = navLinksEl.scrollLeft;
+                const containerWidth = navLinksEl.clientWidth;
+                const containerRight = containerLeft + containerWidth;
+
+                if (direction === 1) {
+                    // Moving Right: Find the first link that is partially or completely cut off on the right
+                    for (const link of links) {
+                        const linkLeft = link.offsetLeft;
+                        const linkRight = linkLeft + link.offsetWidth;
+                        if (linkRight > containerRight + 2) {
+                            // Scroll just enough so this link's right edge aligns with the container's right edge
+                            const target = linkRight - containerWidth;
+                            navLinksEl.scrollTo({ left: target, behavior: 'smooth' });
+                            return;
+                        }
+                    }
+                } else {
+                    // Moving Left: Find the last link that is partially or completely cut off on the left
+                    for (let i = links.length - 1; i >= 0; i--) {
+                        const link = links[i];
+                        const linkLeft = link.offsetLeft;
+                        if (linkLeft < containerLeft - 2) {
+                            // Scroll so this link's left edge aligns with the container's left edge
+                            navLinksEl.scrollTo({ left: linkLeft, behavior: 'smooth' });
+                            return;
+                        }
+                    }
+                    navLinksEl.scrollTo({ left: 0, behavior: 'smooth' });
+                }
+            }
+
+            btnL.addEventListener('click', e => { e.preventDefault(); e.stopPropagation(); scrollToNextPill(-1); });
+            btnR.addEventListener('click', e => { e.preventDefault(); e.stopPropagation(); scrollToNextPill(1); });
+            navLinksEl.addEventListener('scroll', update);
+            window.addEventListener('resize', update);
+            
+            // Prevent browser scroll-restoration from starting the nav in a cut-off state
+            requestAnimationFrame(() => {
+                navLinksEl.scrollLeft = 0;
+                update();
+            });
+        })();
+
+        // Particle canvas (refined — matches index.html aesthetic)
+        (function () {
+            const canvas = document.getElementById('particle-canvas');
+            if (!canvas) return;
+            const ctx = canvas.getContext('2d');
+            let particles = [];
+            let mouse = { x: null, y: null };
+
+            function init() {
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+                particles = [];
+                const count = window.innerWidth < 600 ? 30 : 50;
+                for (let i = 0; i < count; i++) {
+                    particles.push({
+                        x: Math.random() * canvas.width,
+                        y: Math.random() * canvas.height,
+                        vx: (Math.random() - 0.5) * 0.3,
+                        vy: (Math.random() - 0.5) * 0.3,
+                        size: Math.random() * 1.5 + 0.4
+                    });
+                }
+            }
+
+            function animate() {
+                requestAnimationFrame(animate);
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                particles.forEach((p, i) => {
+                    p.x += p.vx;
+                    p.y += p.vy;
+                    if (p.x < 0 || p.x > canvas.width) p.vx *= -1;
+                    if (p.y < 0 || p.y > canvas.height) p.vy *= -1;
+                    ctx.beginPath();
+                    ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+                    ctx.fillStyle = 'rgba(255,255,255,0.30)';
+                    ctx.fill();
+
+                    // Inter-particle connections (subtle, always visible)
+                    for (let j = i + 1; j < particles.length; j++) {
+                        const p2 = particles[j];
+                        const dx = p.x - p2.x;
+                        const dy = p.y - p2.y;
+                        const dist = Math.sqrt(dx * dx + dy * dy);
+                        if (dist < 130) {
+                            ctx.beginPath();
+                            ctx.strokeStyle = `rgba(255,255,255,${0.10 - dist / 1400})`;
+                            ctx.lineWidth = 0.4;
+                            ctx.moveTo(p.x, p.y);
+                            ctx.lineTo(p2.x, p2.y);
+                            ctx.stroke();
+                        }
+                    }
+
+                    // Mouse proximity connections
+                    if (mouse.x !== null && mouse.y !== null) {
+                        const mdx = p.x - mouse.x;
+                        const mdy = p.y - mouse.y;
+                        const mDist = Math.sqrt(mdx * mdx + mdy * mdy);
+                        if (mDist < 180) {
+                            ctx.beginPath();
+                            ctx.strokeStyle = `rgba(255,255,255,${0.34 - mDist / 530})`;
+                            ctx.lineWidth = 0.7;
+                            ctx.moveTo(p.x, p.y);
+                            ctx.lineTo(mouse.x, mouse.y);
+                            ctx.stroke();
+                        }
+                    }
+                });
+            }
+
+            window.addEventListener('resize', init);
+            window.addEventListener('mousemove', (e) => { mouse.x = e.x; mouse.y = e.y; });
+            window.addEventListener('touchmove', (e) => {
+                if (e.touches.length > 0) { mouse.x = e.touches[0].clientX; mouse.y = e.touches[0].clientY; }
+            });
+            window.addEventListener('touchend', () => { mouse.x = null; mouse.y = null; });
+            init();
+            animate();
+        })();
+    </script>
+    <script src="ls-protect.js"></script>
+</body>
+
+</html>
